@@ -32,7 +32,7 @@
         ></v-text-field>
         <v-text-field
           :append-icon="show_pw_check ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="[rules.required, this.rules.pwMatch]"
+          :rules="[rules.required, this.form.pwMatch]"
           :type="show_pw_check ? 'text' : 'password'"
           v-model="user.password_check"
           label="비밀번호 확인"
@@ -48,7 +48,6 @@
           block
           v-on:click="signUp"
         >가 입 하 기</v-btn>
-        <v-btn v-on:click="check_form">log</v-btn>
         <br />
       </v-col>
     </v-row>
@@ -81,12 +80,7 @@ export default {
       show_pw: true,
       show_pw_check: true,
       rules: {
-        required: value => !!value || "Required.", // ||을 기준으로 왼쪽은 기준, 오른쪽은 씌여지는 문구
-        min_pw: v => v.length >= 8 || "Min 8 characters",
-        min_student_id: v => v.length == 9 || "학번을 정확히 입력해주세요",
-        pwMatch: val =>
-          !!(this.user.password === this.user.password_check) ||
-          "password you entered don't match"
+        required: value => !!value || "Required." // ||을 기준으로 왼쪽은 기준, 오른쪽은 씌여지는 문구
       }
     };
   },
@@ -110,19 +104,18 @@ export default {
       if (this.formHasErrors) return;
 
       var check_error = 0;
-      if (this.form.min_pw() == "Min 8 characters") {
-        check_error = 1;
-        alert("비밀번호는 8자리 이상이어야 합니다!");
-      }
       if (this.form.min_student_id() == "학번을 정확히 입력해주세요") {
         check_error = 1;
         alert("학번을 정확히 입력해 주세요!");
+      }
+      if (this.form.min_pw() == "Min 8 characters") {
+        check_error = 1;
+        alert("비밀번호는 8자리 이상이어야 합니다!");
       }
       if (this.form.pwMatch() == "password you entered don't match") {
         check_error = 1;
         alert("비밀번호와 확인이 서로 맞지 않습니다!");
       }
-      console.log("checkform %d", check_error);
       this.formHasErrors = check_error;
     },
 
@@ -134,7 +127,6 @@ export default {
         }
       });
       if (check_error) alert("적지 않은 필수 항목이 존재합니다!");
-      console.log("form error is tf %s", check_error);
       this.formHasErrors = check_error;
       return;
     },

@@ -3,10 +3,10 @@ var Schema = mongoose.Schema
 
 var userSchema = new Schema({
   name: String,
-  organization: String,
   student_id: String,
-  email: Number,
+  email: String,
   password: String,
+  organization: String,
   create_date: { type: Date, default: Date.now },
   Updated_date: { type: Date, default: Date.now },
 })

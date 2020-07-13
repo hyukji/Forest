@@ -9,7 +9,7 @@ import AboutCourse from "../views/AboutCourse.vue"
 import User_Header from "../components/User_Header.vue"
 import hello from "../components/HelloWorld.vue"
 
-import Header from "../components/Header.vue"
+import Header from "../components/Main_Header.vue"
 
 Vue.use(VueRouter)
 

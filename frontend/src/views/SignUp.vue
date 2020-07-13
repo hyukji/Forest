@@ -48,6 +48,7 @@
           block
           v-on:click="signUp"
         >가 입 하 기</v-btn>
+        <v-btn v-on:click="log">ss</v-btn>
         <br />
       </v-col>
     </v-row>
@@ -94,12 +95,19 @@ export default {
           this.user.student_id.length == 9 || "학번을 정확히 입력해주세요",
         pwMatch: val =>
           !!(this.user.password === this.user.password_check) ||
-          "password you entered don't match"
+          "password you entered don't match",
+        email_form(user) {
+          user.email = user.email + "@dgist.ac.kr";
+        }
       };
     }
   },
 
   methods: {
+    log() {
+      console.log("user is %s", this.user);
+    },
+
     check_form() {
       if (this.formHasErrors) return;
 
@@ -137,18 +145,19 @@ export default {
       if (this.formHasErrors) {
         return;
       }
+      this.form.email_form(this.user);
       this.$http
         .post("/api/login/signUp", {
           //axios 사용
           user: this.user
         })
         .then(response => {
-          if (response.data.result === 0) {
-            alert("Error, please, try again");
-          }
-          if (response.data.result === 1) {
-            alert("Success");
-            this.$router.push("/signin"); // Login 페이지로 보내줌
+          if (response.data.result) {
+            alert(response.data.message);
+            this.$router.push("/"); // Login 페이지로 보내줌
+          } else {
+            console.log(response.data);
+            alert(response.data.message);
           }
         })
         .catch(function(error) {

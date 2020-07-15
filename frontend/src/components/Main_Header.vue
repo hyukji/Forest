@@ -105,7 +105,7 @@ export default {
       user_menus: [
         { title: "계정 관리", route: "/account", icon: "fas fa-user-cog" },
         { title: "로그아웃", route: "/logout", icon: "fas fa-sign-out-alt" },
-        { title: "FAQ", route: "/managing/FAQ", icon: "fas fa-home" },
+        { title: "FAQ", route: "/managing/FAQ", icon: "fas fa-question" },
         { title: "QnA", route: "/managing/FAQ", icon: "fas fa-home" }
       ]
     };

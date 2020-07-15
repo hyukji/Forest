@@ -5,14 +5,24 @@
         <a href="http://localhost:8080/" class="text_logo">SIGNUP</a>
       </v-col>
       <v-col>
-        <v-text-field :rules="[rules.required]" v-model="user.name" label="이름" outlined></v-text-field>
+        <v-text-field
+          :rules="[rules.required]"
+          v-model="user.name"
+          label="이름"
+          outlined
+        ></v-text-field>
         <v-text-field
           :rules="[rules.required, this.form.min_student_id]"
           v-model="user.student_id"
           label="학번"
           outlined
         ></v-text-field>
-        <v-text-field :rules="[rules.required]" v-model="user.organization" label="소속기관" outlined></v-text-field>
+        <v-text-field
+          :rules="[rules.required]"
+          v-model="user.organization"
+          label="소속기관"
+          outlined
+        ></v-text-field>
         <v-text-field
           :rules="[rules.required]"
           v-model="user.email"
@@ -47,7 +57,8 @@
           x-large
           block
           v-on:click="signUp"
-        >가 입 하 기</v-btn>
+          >가 입 하 기</v-btn
+        >
         <v-btn v-on:click="log">ss</v-btn>
         <br />
       </v-col>
@@ -75,93 +86,93 @@ export default {
         email: "",
         password: "",
         password_check: "",
-        organization: "DGIST"
+        organization: "DGIST",
       },
       formHasErrors: 0,
       show_pw: true,
       show_pw_check: true,
       rules: {
-        required: value => !!value || "Required." // ||을 기준으로 왼쪽은 기준, 오른쪽은 씌여지는 문구
-      }
-    };
+        required: (value) => !!value || "Required.", // ||을 기준으로 왼쪽은 기준, 오른쪽은 씌여지는 문구
+      },
+    }
   },
 
   computed: {
     form() {
       return {
         //name_require: value => !!this.user.name || "Required.",
-        min_pw: v => this.user.password.length >= 8 || "Min 8 characters",
-        min_student_id: v =>
+        min_pw: (v) => this.user.password.length >= 8 || "Min 8 characters",
+        min_student_id: (v) =>
           this.user.student_id.length == 9 || "학번을 정확히 입력해주세요",
-        pwMatch: val =>
+        pwMatch: (val) =>
           !!(this.user.password === this.user.password_check) ||
-          "password you entered don't match"
-      };
-    }
+          "password you entered don't match",
+      }
+    },
   },
 
   methods: {
     log() {
-      console.log("user is %s", this.user);
+      console.log("user is %s", req.user)
     },
 
     check_form() {
-      if (this.formHasErrors) return;
+      if (this.formHasErrors) return
 
-      var check_error = 0;
+      var check_error = 0
       if (this.form.min_student_id() == "학번을 정확히 입력해주세요") {
-        check_error = 1;
-        alert("학번을 정확히 입력해 주세요!");
+        check_error = 1
+        alert("학번을 정확히 입력해 주세요!")
       }
       if (this.form.min_pw() == "Min 8 characters") {
-        check_error = 1;
-        alert("비밀번호는 8자리 이상이어야 합니다!");
+        check_error = 1
+        alert("비밀번호는 8자리 이상이어야 합니다!")
       }
       if (this.form.pwMatch() == "password you entered don't match") {
-        check_error = 1;
-        alert("비밀번호와 확인이 서로 맞지 않습니다!");
+        check_error = 1
+        alert("비밀번호와 확인이 서로 맞지 않습니다!")
       }
-      this.formHasErrors = check_error;
+      this.formHasErrors = check_error
     },
 
     check_inform_require() {
-      var check_error = 0;
-      Object.values(this.user).forEach(content => {
+      var check_error = 0
+      Object.values(this.user).forEach((content) => {
         if (!content) {
-          check_error = 1;
+          check_error = 1
         }
-      });
-      if (check_error) alert("적지 않은 필수 항목이 존재합니다!");
-      this.formHasErrors = check_error;
-      return;
+      })
+      if (check_error) alert("적지 않은 필수 항목이 존재합니다!")
+      this.formHasErrors = check_error
+      return
     },
 
     signUp: function(event) {
-      this.check_inform_require();
-      this.check_form();
+      this.check_inform_require()
+      this.check_form()
       if (this.formHasErrors) {
-        return;
+        return
       }
       this.$http
         .post("/api/login/signUp", {
           //axios 사용
-          user: this.user
+          user: this.user,
         })
-        .then(response => {
+        .then((response) => {
           if (response.data.result) {
-            alert(response.data.message);
-            this.$router.push("/"); // Login 페이지로 보내줌
+            alert(response.data.message)
+            this.$router.push("/") // Login 페이지로 보내줌
           } else {
-            console.log(response.data);
-            alert(response.data.message);
+            console.log(response.data)
+            alert(response.data.message)
           }
         })
         .catch(function(error) {
-          alert("error");
-        });
-    }
-  }
-};
+          alert("error")
+        })
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -191,5 +202,3 @@ li {
   font-weight: 350;
 }
 </style>
-
-

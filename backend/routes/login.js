@@ -19,15 +19,10 @@ router.post("/signUp", async function (req, res, next) {
   new_user.email = req.body.user.email + "@dgist.ac.kr"
   new_user.organization = req.body.user.organization
 
-<<<<<<< HEAD
   const salt = bcrypt.genSaltSync(10) // salt값 생성, 10이 default
   new_user.salt = salt
   new_user.password = bcrypt.hashSync(req.body.user.password, salt)
 
-=======
-  var check_bool = 1
-  try {
->>>>>>> 2500e948d91580f3570585c113a24ae0b0bd7616
   await User.findOne({ email: new_user.email }, function (err, db_user) {
     if (db_user == null) {
       console.log("낫 존재!")
@@ -43,9 +38,7 @@ router.post("/signUp", async function (req, res, next) {
       res.json({ result: 0, message: "이미 존재하는 Email입니다." })
       return
     }
-  }) } catch (error) {
-    console.log(error)
-  }
+  })
 
   /*
   try {

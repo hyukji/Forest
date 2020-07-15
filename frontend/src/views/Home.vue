@@ -6,7 +6,11 @@
         <v-card class="sign_in" outlined>
           <v-card-text>
             <v-text-field v-model="user.email" label="아이디"></v-text-field>
-            <v-text-field v-model="user.password" :type="'password'" label="비밀번호"></v-text-field>
+            <v-text-field
+              v-model="user.password"
+              :type="'password'"
+              label="비밀번호"
+            ></v-text-field>
             <v-btn
               color="primary white--text"
               height="40pt"
@@ -15,7 +19,8 @@
               large
               block
               v-on:click="signIn"
-            >로그인</v-btn>
+              >로그인</v-btn
+            >
             <br />
             <ul>
               <li>
@@ -42,9 +47,15 @@ export default {
     return {
       user: {
         email: "",
-        password: ""
-      }
-    };
+        password: "",
+      },
+    }
+  },
+  computed: {
+    isaut() {
+      console.log("11111")
+      return this.$store.state.isauth
+    },
   },
   methods: {
     signIn: function(event) {
@@ -52,23 +63,24 @@ export default {
         .post("/api/login/signIn", {
           //axios 사용
           email: this.user.email,
-          password: this.user.password
+          password: this.user.password,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.result == 0) {
-            alert(res.data.message);
+            alert(res.data.message)
           }
           if (res.data.result == 1) {
-            alert(res.data.message);
-            this.$router.push("/mycourse"); // Login 페이지로 보내줌
+            alert(res.data.message)
+
+            this.$router.push("/mycourse") // Login 페이지로 보내줌
           }
         })
         .catch(function(error) {
-          alert("error");
-        });
-    }
-  }
-};
+          alert("error")
+        })
+    },
+  },
+}
 </script>
 
 <style scoped>

@@ -36,8 +36,9 @@
           text-lg-center
           depressed
           small
-          v-on:click="mail"
-        >인증하기</v-btn>
+          v-on:click="log"
+          >인증하기</v-btn
+        >
         <v-text-field
           :rules="[rules.required]"
           label="인증번호"

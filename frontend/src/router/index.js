@@ -6,20 +6,21 @@ import Signin from "../views/SignIn.vue"
 import SignUp from "../views/SignUp.vue"
 import MyCourse from "../views/MyCourse.vue"
 import AboutCourse from "../views/AboutCourse.vue"
-import User_Header from "../components/User_Header.vue"
 import hello from "../components/HelloWorld.vue"
+import e404 from "../views/E404.vue"
 
+import User_Header from "../components/User_Header.vue"
 import Header from "../components/Main_Header.vue"
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/1",
-    name: "11",
+    path: "*",
+    name: "e404",
     components: {
       header: User_Header,
-      body: hello,
+      body: e404,
     },
   },
   {

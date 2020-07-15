@@ -147,10 +147,6 @@ export default {
   },
 
   methods: {
-    log() {
-      console.log("user is %s", req.user)
-    },
-
     check_form() {
       if (this.formHasErrors) return
 

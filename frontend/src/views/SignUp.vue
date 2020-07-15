@@ -238,4 +238,8 @@ li {
   font-size: 1.05rem;
   font-weight: 350;
 }
+.email-btn {
+
+  font-weight: 700;
+}
 </style>

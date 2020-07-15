@@ -20,6 +20,19 @@
           suffix="@dgist.ac.kr"
           outlined
         ></v-text-field>
+        <v-btn
+          color="secondary white--text"
+          height="40pt"
+          text-lg-center
+          depressed
+          small
+          v-on:click="mail"
+        >인증하기</v-btn>
+        <v-text-field
+          :rules="[rules.required]"
+          label="인증번호"
+          outlined
+        ></v-text-field>
         <v-text-field
           :append-icon="show_pw ? 'mdi-eye' : 'mdi-eye-off'"
           :rules="[rules.required, this.form.min_pw]"
@@ -195,5 +208,3 @@ li {
   font-weight: 350;
 }
 </style>
-
-

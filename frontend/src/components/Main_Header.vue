@@ -3,7 +3,9 @@
     <div class="wrap-appbar">
       <v-row>
         <div class="appbar-left">
-          <v-img :src="require('../assets/Forest_logo.jpg')" class="my-3" contain height="60" />
+          <router-link to="/mycourse">
+            <v-img :src="require('../assets/Forest_logo.jpg')" class="my-3" contain height="60" />
+          </router-link>
         </div>
         <div class="appbar-right">
           <v-row no-gutters justify="end" align="center">

@@ -28,7 +28,14 @@ app.use(express.static("public"))
 let url =
   //"mongodb+srv://seul:1234@cluster0-usnbq.mongodb.net/test?retryWrites=true&w=majority"
   "mongodb://127.0.0.1:27017/web_vue"
+<<<<<<< HEAD
 mongoose.connect(url, { useNewUrlParser: true })
+=======
+mongoose.connect(url, { useNewUrlParser: true,
+                        useUnifiedTopology: true}).catch(error => {
+                          console.log(error)
+                        })
+>>>>>>> 2500e948d91580f3570585c113a24ae0b0bd7616
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //app.use(require("connect-history-api-fallback")());

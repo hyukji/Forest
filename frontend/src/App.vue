@@ -24,7 +24,9 @@ export default {
 .wrap-page {
   width: 100%;
   height: 100%;
-  background-color: #f9fcfc;
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff;
   font-family: "Nanum Gothic";
 }
 </style>

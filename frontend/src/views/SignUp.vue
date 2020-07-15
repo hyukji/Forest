@@ -140,8 +140,10 @@ export default {
       Object.values(this.user).forEach((content) => {
         if (!content) {
           check_error = 1
+          console.log("d")
         }
       })
+
       if (check_error) alert("적지 않은 필수 항목이 존재합니다!")
       this.formHasErrors = check_error
       return

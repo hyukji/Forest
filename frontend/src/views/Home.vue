@@ -51,7 +51,8 @@ export default {
       this.$http
         .post("/api/login/signIn", {
           //axios 사용
-          user: this.user
+          email: this.user.email,
+          password: this.user.password
         })
         .then(res => {
           if (res.data.result == 0) {
@@ -105,5 +106,3 @@ a {
   font-size: 37pt;
 }
 </style>
-
-

@@ -4,7 +4,7 @@ var path = require("path")
 var cookieParser = require("cookie-parser")
 var logger = require("morgan")
 
-var app = express()
+var session = require("express-session")
 
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
@@ -13,17 +13,26 @@ var indexRouter = require("./routes/index")
 var loginRouter = require("./routes/login")
 var postingRouter = require("./routes/posting")
 
+var passport = require("passport"),
+  LocalStrategy = require("passport-local").Strategy
+var User = require("../backend/models/user")
+const passportConfig = require("./passport")
+
 const history = require("connect-history-api-fallback")
+
+const app = express()
+
 app.use(history())
 app.use(express.static("public"))
 
 let url =
   //"mongodb+srv://seul:1234@cluster0-usnbq.mongodb.net/test?retryWrites=true&w=majority"
   "mongodb://127.0.0.1:27017/web_vue"
-mongoose.connect(url, { useNewUrlParser: true,
-                        useUnifiedTopology: true}).catch(error => {
-                          console.log(error)
-                        })
+mongoose
+  .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .catch((error) => {
+    console.log(error)
+  })
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //app.use(require("connect-history-api-fallback")());
@@ -35,8 +44,22 @@ app.set("view engine", "jade")
 app.use(logger("dev"))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
+app.use(cookieParser("#JDKLF439jsdlfsjl"))
 app.use(express.static(path.join(__dirname, "public")))
+
+app.use(
+  session({
+    //secret: process.env.COOKIE_ID,
+    secret: "#JDKLF439jsdlfsjl",
+    resave: false,
+    saveUninitialized: true,
+  })
+)
+
+app.use(passport.initialize()) // passport 초기화
+app.use(passport.session())
+
+passportConfig()
 
 app.use("/api/login", loginRouter)
 app.use("/api/posting", postingRouter)

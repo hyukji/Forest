@@ -19,6 +19,7 @@ router.post("/signUp", async function (req, res, next) {
   new_user.organization = req.body.user.organization
 
   var check_bool = 1
+  try {
   await User.findOne({ email: new_user.email }, function (err, db_user) {
     if (db_user == null) {
       check_bool = 0
@@ -26,7 +27,9 @@ router.post("/signUp", async function (req, res, next) {
     } else {
       console.log("존재! " + check_bool)
     }
-  })
+  }) } catch (error) {
+    console.log(error)
+  }
 
   console.log("CHEK IS " + check_bool)
   if (check_bool) {

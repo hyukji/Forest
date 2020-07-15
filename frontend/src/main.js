@@ -5,7 +5,7 @@ import vuetify from "./plugins/vuetify"
 import axios from "axios"
 
 Vue.prototype.$http = axios
-
+//연습
 Vue.config.productionTip = false
 
 export const eventBus = new Vue({

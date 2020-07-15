@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <v-card dark>
+    <v-card dark class="pa-1 ma-3">
       <v-toolbar flat dark>
         <v-btn fab text small color="grey darken-2" @click="prev">
           <v-icon small>mdi-chevron-left</v-icon>
@@ -14,7 +14,7 @@
           <v-icon small>mdi-chevron-right</v-icon>
         </v-btn>
       </v-toolbar>
-      <v-sheet height="300%">
+      <v-sheet>
         <v-calendar dark ref="calendar"
         v-model="value" type="month"
         :events="events"
@@ -24,7 +24,7 @@
       </v-sheet>
     </v-card>
 
-    <v-card class="my-6" tile>
+    <v-card class="ma-3" title>
       <v-list :two-line="true" color="dark_gray" dark dense>
         <v-subheader class="subheader">새 알림
           <v-spacer/>
@@ -43,7 +43,6 @@
         </v-list-item-group>
       </v-list>
     </v-card>
-    </v-col>
 
   </div>
 </template>
@@ -129,12 +128,10 @@ export default {
 
 <style scoped>
 .wrap {
-  padding: 3%;
+  padding: 1%;
   height: 100%;
+  width: 280pt;
   background-color: #3d3d3d;
-}
-.card {
-  float: left;
 }
 .subheader{
   font-weight: bold;

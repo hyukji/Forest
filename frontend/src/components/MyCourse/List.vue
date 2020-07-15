@@ -1,5 +1,5 @@
 <template>
-<div class="wrap">
+<div >
   <v-chip class="body-title" color="secondary" label text-color="white" large>
     <v-icon left>mdi-label</v-icon>
     내 강의실
@@ -35,7 +35,6 @@ export default {
 
 <style scoped>
 .wrap {
-  padding-left: 2%;
 }
 .body-title {
   font-size: 1.3rem;
@@ -43,6 +42,5 @@ export default {
   margin-top: 2%;
 }
 .card {
-  float: left;
 }
 </style>

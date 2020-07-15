@@ -18,8 +18,8 @@
           suffix="@dgist.ac.kr" outlined></v-text-field>
         </v-col>
         <v-col cols="3" class="py-0">
-          <v-btn color="secondary white--text" height="40pt"
-          text-lg-center depressed small v-on:click="log">전송하기</v-btn>
+          <v-btn class="email-btn" color="secondary white--text" height="40pt"
+          text-lg-center outlined small v-on:click="log">전송하기</v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -28,8 +28,8 @@
           label="인증번호" outlined></v-text-field>
         </v-col>
         <v-col cols="3" class="py-0">
-          <v-btn color="secondary white--text" height="40pt"
-          text-lg-center depressed small v-on:click="log">인증하기</v-btn>
+          <v-btn class="email-btn" color="secondary white--text" height="40pt"
+          text-lg-center outlined small v-on:click="log">인증하기</v-btn>
         </v-col>
       </v-row>
       <v-text-field :append-icon="show_pw ? 'mdi-eye' : 'mdi-eye-off'"
@@ -188,5 +188,9 @@ li {
 .v-btn {
   font-size: 1.05rem;
   font-weight: 350;
+}
+.email-btn {
+
+  font-weight: 700;
 }
 </style>

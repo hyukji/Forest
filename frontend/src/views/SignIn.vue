@@ -2,7 +2,7 @@
   <v-container fluid background-color="teal lighten-5" class="wrap-content">
     <v-row class="text-center">
       <v-col class cols="12">
-        <a href="http://localhost:8080/" class="text_logo">UGRPWEB</a>
+        <a href="/" class="text_logo">UGRPWEB</a>
       </v-col>
       <v-col>
         <v-text-field v-model="user.id" label="아이디"></v-text-field>
@@ -25,7 +25,7 @@
             <a>비밀번호 찾기</a>
           </li>
           <li>
-            <a href="http://localhost:8080/signup">회원가입</a>
+            <a href="/signup">회원가입</a>
           </li>
         </ul>
       </v-col>
@@ -90,5 +90,3 @@ a {
   font-size: 37pt;
 }
 </style>
-
-

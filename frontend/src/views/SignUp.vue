@@ -36,7 +36,7 @@
           text-lg-center
           depressed
           small
-          v-on:click="log"
+          v-on:click="mail"
           >인증하기</v-btn
         >
         <v-text-field
@@ -91,6 +91,8 @@
 </template>
 
 <script>
+const mailfunc = require("../router/mail")
+
 export default {
   data: function() {
     return {
@@ -129,6 +131,7 @@ export default {
     log() {
       console.log("user is %s", req.user)
     },
+    mail() {},
 
     check_form() {
       if (this.formHasErrors) return

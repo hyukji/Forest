@@ -3,11 +3,68 @@
     <div class="wrap-appbar">
       <v-row>
         <div class="appbar-left">
-          <router-link to="/">
+          <router-link to="/mycourse">
             <v-img :src="require('../assets/Forest_logo.jpg')" class="my-3" contain height="60" />
           </router-link>
         </div>
-        <div class="appbar-right"></div>
+        <div class="appbar-right">
+          <v-row no-gutters justify="end" align="center">
+            <a class="to-mycourse" href="/mycourse">내 강의실</a>
+            <div class="text-center">
+              <v-menu :offset-y="true" left>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon color="white" dark v-on="on" active-class="false">
+                    <v-icon size="20pt" color="white">fas fa-bell</v-icon>
+                  </v-btn>
+                </template>
+
+                <v-list class="menus" width="250pt">
+                  <v-list-item-content
+                    two-line
+                    v-for="(item, index) in bell_menus"
+                    :key="index"
+                    @click="menu_bell_func(item.route)"
+                  >
+                    <v-list-item-subtitle class="menu-bell-main">{{item.main}}</v-list-item-subtitle>
+                    <v-list-item-title class="menu-bell-title">{{ item.title }}</v-list-item-title>
+                    <v-list-item-subtitle class="menu-bell-date">{{item.date}}</v-list-item-subtitle>
+                    <v-divider></v-divider>
+                  </v-list-item-content>
+                </v-list>
+              </v-menu>
+            </div>
+
+            <div class="text-center">
+              <v-menu :offset-y="true" left>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon color="white" dark v-on="on" active-class="false">
+                    <v-icon size="20pt" color="white">fas fa-user</v-icon>
+                  </v-btn>
+                </template>
+
+                <v-list>
+                  <v-list-item-content two-line>
+                    <v-list-item-title class="menu-user_name">{{ user.name }}</v-list-item-title>
+                    <v-list-item-subtitle class="menu-user_mail">{{user.mail}}</v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-divider></v-divider>
+                  <v-list-item
+                    class="menu-user-list"
+                    v-for="(item, index) in user_menus"
+                    :key="index"
+                    v-on:click="menu_user_func(item.route)"
+                  >
+                    <v-list-item-icon>
+                      <v-icon v-text="item.icon" size="15pt"></v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </div>
+          </v-row>
+        </div>
       </v-row>
     </div>
   </v-app-bar>
@@ -105,7 +162,6 @@ li {
   display: inline-block;
 }
 .to-mycourse {
-  width: 100%;
   padding-right: 1.5%;
   font-size: 12pt;
   color: white;

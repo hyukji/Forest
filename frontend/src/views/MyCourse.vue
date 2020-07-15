@@ -1,12 +1,13 @@
 <template>
 <div class="wrap-body">
-  <v-row no-gutters>
-    <v-col :cols="3">
+  <v-row >
+    <v-col class="py-0">
       <side />
     </v-col>
-    <v-col :cols="9" class="pa-4">
+    <v-col>
       <list />
     </v-col>
+    <v-spacer/>
   </v-row>
 </div>
 </template>

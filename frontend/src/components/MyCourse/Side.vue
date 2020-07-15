@@ -7,14 +7,20 @@
         </v-btn>
         <v-spacer />
         <v-toolbar-title v-if="$refs.calendar">
-          {{ $refs.calendar.title }}
+          {{ $refs.calendar.start }}
         </v-toolbar-title>
+        <v-spacer />
         <v-btn fab text small color="grey darken-2" @click="next">
           <v-icon small>mdi-chevron-right</v-icon>
         </v-btn>
       </v-toolbar>
       <v-sheet height="300%">
-        <v-calendar dark ref="calendar" v-model="value" type="month" :events="events" :event-overlap-threshold="30" :event-color="getEventColor" @change="getEvents"></v-calendar>
+        <v-calendar dark ref="calendar"
+        v-model="value" type="month"
+        :events="events"
+        :event-overlap-threshold="30"
+        :event-color="getEventColor"
+        @change="getEvents"></v-calendar>
       </v-sheet>
     </v-card>
 

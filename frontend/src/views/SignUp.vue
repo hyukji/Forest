@@ -95,10 +95,7 @@ export default {
           this.user.student_id.length == 9 || "학번을 정확히 입력해주세요",
         pwMatch: val =>
           !!(this.user.password === this.user.password_check) ||
-          "password you entered don't match",
-        email_form(user) {
-          user.email = user.email + "@dgist.ac.kr";
-        }
+          "password you entered don't match"
       };
     }
   },
@@ -145,7 +142,6 @@ export default {
       if (this.formHasErrors) {
         return;
       }
-      this.form.email_form(this.user);
       this.$http
         .post("/api/login/signUp", {
           //axios 사용

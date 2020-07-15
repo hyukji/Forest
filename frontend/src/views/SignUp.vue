@@ -194,6 +194,7 @@ export default {
         .then((response) => {
           if (response.data.result) {
             alert(response.data.message)
+
             this.$router.push("/") // Login 페이지로 보내줌
           } else {
             console.log(response.data)

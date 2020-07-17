@@ -22,7 +22,7 @@ export default {
   max-width: 1000pt;
 }
 a {
-  font-size: x-large;
+  font-size: large;
   text-decoration: none;
   text-align: center;
 }

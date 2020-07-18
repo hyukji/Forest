@@ -14,17 +14,17 @@
 
 <script>
 // @ is an alias to /src
-import { authentication } from "../mixins/authentication";
+import { authentication } from "../mixins/authentication"
 
 export default {
   name: "Mycourse",
   components: {
     list: () => import("@/components/MyCourse/List"),
-    side: () => import("@/components/MyCourse/Side")
+    side: () => import("@/components/MyCourse/Side"),
   },
   data: () => ({}),
-  mixins: [authentication]
-};
+  mixins: [authentication],
+}
 </script>
 
 <style scoped>

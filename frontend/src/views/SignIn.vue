@@ -6,7 +6,11 @@
       </v-col>
       <v-col>
         <v-text-field v-model="user.id" label="아이디"></v-text-field>
-        <v-text-field v-model="user.password" :type="show1 ? 'text' : 'password'" label="비밀번호"></v-text-field>
+        <v-text-field
+          v-model="user.password"
+          :type="password"
+          label="비밀번호"
+        ></v-text-field>
         <v-btn
           color="teal white--text"
           height="40pt"
@@ -15,7 +19,8 @@
           large
           block
           v-on:click="signIn"
-        >로그인</v-btn>
+          >로그인</v-btn
+        >
         <br />
         <ul>
           <li>
@@ -39,32 +44,32 @@ export default {
     return {
       user: {
         id: "",
-        password: ""
-      }
-    };
+        password: "",
+      },
+    }
   },
   methods: {
     signIn: function(event) {
       this.$http
         .post("/api/login/signIn", {
           //axios 사용
-          user: this.user
+          user: this.user,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data.result === 0) {
-            alert("Error, please, try again");
+            alert("Error, please, try again")
           }
           if (res.data.result === 1) {
-            alert("Success");
-            this.$router.push("/mycourse"); // Login 페이지로 보내줌
+            alert("Success")
+            this.$router.push("/mycourse") // Login 페이지로 보내줌
           }
         })
         .catch(function(error) {
-          alert("error");
-        });
-    }
-  }
-};
+          alert("error")
+        })
+    },
+  },
+}
 </script>
 
 <style scoped>

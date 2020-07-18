@@ -61,11 +61,18 @@ router.post(
 )
 
 router.get("/logOut", function (req, res) {
+  if (!req.isAuthenticated()) {
+    return
+  }
   req.logout()
+  console.log("로그아웃 1")
   req.session.destroy(function (err) {
     if (err) {
+      console.log("로그아웃 에러 1")
       return next(err)
     }
+    console.log("로그아웃 2")
+    return
     // The response should indicate that the user is no longer authenticated.
   })
 })

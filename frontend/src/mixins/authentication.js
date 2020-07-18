@@ -1,12 +1,23 @@
 export const authentication = {
+  data: function() {
+    return {
+      user_data: {
+        email: "",
+        name: "",
+        position: "",
+      },
+    }
+  },
   methods: {
     check_isauth() {
-      console.log("mixins은 성공.")
       this.$http
         .get("/api/home/authentication")
         .then((res) => {
-          console.log("권한 :" + res.data.isauth)
+          //console.log("권한 :" + res.data.email)
           if (res.data.isauth) {
+            this.user_data.email = res.data.email
+            this.user_data.name = res.data.name
+            this.user_data.position = res.data.position
           } else {
             this.$router.push("/signin") // signin 페이지로 보내줌
           }

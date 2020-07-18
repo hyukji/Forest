@@ -9,6 +9,9 @@ var session = require("express-session")
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
+const MongoStore = require("connect-mongo")
+const Store = MongoStore(session)
+
 var indexRouter = require("./routes/index")
 var loginRouter = require("./routes/login")
 var postingRouter = require("./routes/posting")
@@ -18,6 +21,7 @@ var mycourseRouter = require("./routes/mycourse")
 var passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy
 var User = require("../backend/models/user")
+
 const passportConfig = require("./passport")
 
 const history = require("connect-history-api-fallback")
@@ -54,7 +58,8 @@ app.use(
     //secret: process.env.COOKIE_ID,
     secret: "#JDKLF439jsdlfsjl",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    store: new Store({ mongooseConnection: mongoose.connection }),
   })
 )
 

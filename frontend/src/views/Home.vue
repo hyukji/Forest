@@ -6,15 +6,10 @@
       </div>
 
       <div class="right_div">
-
         <v-card class="sign_in" outlined>
           <v-card-text>
             <v-text-field v-model="user.email" label="아이디"></v-text-field>
-            <v-text-field
-              v-model="user.password"
-              :type="'password'"
-              label="비밀번호"
-            ></v-text-field>
+            <v-text-field v-model="user.password" :type="'password'" label="비밀번호"></v-text-field>
             <v-btn
               color="primary white--text"
               height="40pt"
@@ -23,8 +18,7 @@
               large
               block
               v-on:click="signIn"
-              >로그인</v-btn
-            >
+            >로그인</v-btn>
             <br />
             <ul>
               <li>
@@ -40,7 +34,6 @@
           </v-card-text>
         </v-card>
       </div>
-
     </v-row>
   </div>
 </template>
@@ -51,15 +44,15 @@ export default {
     return {
       user: {
         email: "",
-        password: "",
-      },
-    }
+        password: ""
+      }
+    };
   },
   computed: {
     isaut() {
-      console.log("11111")
-      return this.$store.state.isauth
-    },
+      console.log("11111");
+      return this.$store.state.isauth;
+    }
   },
   methods: {
     signIn: function(event) {
@@ -67,39 +60,39 @@ export default {
         .post("/api/login/signIn", {
           //axios 사용
           email: this.user.email,
-          password: this.user.password,
+          password: this.user.password
         })
-        .then((res) => {
+        .then(res => {
           if (res.data.result == 0) {
-            alert(res.data.message)
+            alert(res.data.message);
           }
           if (res.data.result == 1) {
-            alert(res.data.message)
+            alert(res.data.message);
 
-            this.$router.push("/mycourse") // Login 페이지로 보내줌
+            this.$router.push("/mycourse"); // Login 페이지로 보내줌
           }
         })
         .catch(function(error) {
-          alert("error")
-        })
-    },
-  },
-}
+          alert("error");
+        });
+    }
+  }
+};
 </script>
 
 <style scoped>
 .wrap-content {
-  padding-right:10%;
-  padding-left:10%;
-  padding-top:10%;
-  padding-bottom:20%;
-  margin-right : 0;
-  min-width:800px;        /* Suppose you want minimum width of 1000px */
-  background-color: rgb(120,120,120);
+  padding-right: 10%;
+  padding-left: 10%;
+  padding-top: 10%;
+  padding-bottom: 20%;
+  margin-right: 0;
+  min-width: 800px; /* Suppose you want minimum width of 1000px */
+  background-color: rgb(120, 120, 120);
 }
-.row_div{
+.row_div {
 }
-.image1{
+.image1 {
 }
 .left_div {
   width: 50%;

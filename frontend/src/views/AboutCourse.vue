@@ -61,6 +61,7 @@
 import { eventBus } from "../main.js";
 
 // @ is an alias to /src
+
 import notice from "@/components/AboutCourses/board/notice.vue";
 import freeboard from "@/components/AboutCourses/board/freeboard.vue";
 import qnaboard from "@/components/AboutCourses/board/qnaboard.vue";
@@ -71,6 +72,7 @@ import dashboard from "@/components/AboutCourses/dashboard.vue";
 import grade from "@/components/AboutCourses/grade.vue";
 import introduction from "@/components/AboutCourses/introduction.vue";
 import lectures from "@/components/AboutCourses/lectures.vue";
+import assignments from "@/components/AboutCourses/assignments.vue";
 
 export default {
   name: "Mycourse",

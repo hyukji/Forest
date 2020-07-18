@@ -1,4 +1,68 @@
-<template></template>
+<template>
+  <v-card>
+    <v-toolbar card color="grey lighten-3">
+      <v-icon>mdi-silverware</v-icon>
+      <v-toolbar-title>Local hotspots</v-toolbar-title>
+    </v-toolbar>
+
+    <v-layout>
+      <v-flex>
+        <v-card-text>
+          <v-treeview
+            v-model="tree"
+            :load-children="fetch"
+            :items="items"
+            activatable
+            active-class="grey lighten-4 indigo--text"
+            selected-color="indigo"
+            open-on-click
+            selectable
+            expand-icon="mdi-chevron-down"
+            on-icon="mdi-bookmark"
+            off-icon="mdi-bookmark-outline"
+            indeterminate-icon="mdi-bookmark-minus"
+          >
+          </v-treeview>
+        </v-card-text>
+      </v-flex>
+
+      <v-divider vertical></v-divider>
+
+      <v-flex
+        xs12
+        md6
+      >
+        <v-card-text>
+          <div
+            v-if="selections.length === 0"
+            key="title"
+            class="title font-weight-light grey--text pa-3 text-xs-center"
+          >
+            Select your favorite breweries
+          </div>
+
+          <v-scroll-x-transition
+            group
+            hide-on-leave
+          >
+            <v-chip
+              v-for="(selection, i) in selections"
+              :key="i"
+              color="grey"
+              dark
+              small
+            >
+              <v-icon left small>mdi-beer</v-icon>
+              {{ selection.name }}
+            </v-chip>
+          </v-scroll-x-transition>
+        </v-card-text>
+      </v-flex>
+    </v-layout>
+
+  </v-card>
+</template>
+
 
 <script>
 // @ is an alias to /src
@@ -27,6 +91,11 @@ export default {
 </script>
 
 <style scoped>
+.content{
+  border : 1px solid black;
+  width : 800px
+}
+
 .wrap-dashboard {
   padding-top: 1%;
 }
@@ -74,4 +143,3 @@ li {
   margin: 0;
 }
 </style>
-

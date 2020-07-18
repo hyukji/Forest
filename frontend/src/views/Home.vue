@@ -34,7 +34,7 @@
                 <a>비밀번호 찾기</a>
               </li>
               <li>
-                <a href="http://localhost:8080/signup">회원가입</a>
+                <a href="/signup">회원가입</a>
               </li>
             </ul>
           </v-card-text>

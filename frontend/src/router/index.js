@@ -7,10 +7,12 @@ import SignUp from "../views/SignUp.vue"
 import MyCourse from "../views/MyCourse.vue"
 import AboutCourse from "../views/AboutCourse.vue"
 import hello from "../components/HelloWorld.vue"
-import e404 from "../views/E404.vue"
+import E404 from "../views/E404.vue"
+import Editor from "../views/Editor.vue"
 
 import User_Header from "../components/User_Header.vue"
 import Main_Header from "../components/Main_Header.vue"
+import Editor_Header from "../components/Editor_Header.vue"
 
 Vue.use(VueRouter)
 
@@ -26,10 +28,10 @@ isAuthenticated = (to, from, next) => {
 const routes = [
   {
     path: "*",
-    name: "e404",
+    name: "E404",
     components: {
       header: Main_Header,
-      body: e404,
+      body: E404,
     },
   },
   {
@@ -77,6 +79,14 @@ const routes = [
       body: AboutCourse,
     },
   },
+  {
+    path: "/editor/:lecture",
+    name: "Editor",
+    components: {
+      header: Editor_Header,
+      body: Editor,
+    },
+  }
 ]
 
 const router = new VueRouter({

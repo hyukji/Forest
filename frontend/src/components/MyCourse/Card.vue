@@ -7,7 +7,7 @@
 
         <v-card-subtitle>prof. 신동훈</v-card-subtitle>
         <div class="btn-nowlearn">
-          <v-btn class="teal white--text" small>바로학습</v-btn>
+          <v-btn class="teal white--text" small @click="open_editor">바로학습</v-btn>
         </div>
 
         <v-divider class="mx-4"></v-divider>
@@ -25,7 +25,13 @@ export default {
   components: {},
   data: () => ({
     progess_data: 70
-  })
+  }),
+  methods: {
+    open_editor(event) {
+      console.log(event)
+      window.open("/editor/lecture2")
+    }
+  }
 };
 </script>
 

@@ -1,29 +1,30 @@
 <template>
-<div class="wrap-body">
-  <v-row >
-    <v-col class="py-0">
-      <side />
-    </v-col>
-    <v-col>
-      <list />
-    </v-col>
-    <v-spacer/>
-  </v-row>
-</div>
+  <div class="wrap-body">
+    <v-row>
+      <v-col class="py-0">
+        <side />
+      </v-col>
+      <v-col>
+        <list />
+      </v-col>
+      <v-spacer />
+    </v-row>
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import { authentication } from "../mixins/authentication";
 
 export default {
   name: "Mycourse",
   components: {
-    list: () => import('@/components/MyCourse/List'),
-    side: () => import('@/components/MyCourse/Side')
+    list: () => import("@/components/MyCourse/List"),
+    side: () => import("@/components/MyCourse/Side")
   },
-  data: () => ({
-  })
-}
+  data: () => ({}),
+  mixins: [authentication]
+};
 </script>
 
 <style scoped>

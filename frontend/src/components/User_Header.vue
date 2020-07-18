@@ -106,18 +106,34 @@ export default {
         { title: "계정 관리", route: "/account", icon: "fas fa-user-cog" },
         { title: "로그아웃", route: "/logout", icon: "fas fa-sign-out-alt" },
         { title: "FAQ", route: "/managing/FAQ", icon: "fas fa-question" },
-        { title: "QnA", route: "/managing/FAQ", icon: "fas fa-home" }
+        { title: "QnA", route: "/managing/FAQ", icon: "fas fa-comments" }
       ]
     };
   },
   methods: {
     menu_user_func: function(route) {
-      this.$router.push({
-        path: route,
-        params: { user: "username" },
-        query: { group: "member" }
-      });
-      // route==logout이면 백이용해서 로그아웃하고홈으로
+      if (route == "/logout") {
+        this.$http
+          .get("/api/login/logOut", {
+            //axios 사용
+          })
+          .then(res => {
+            if (res.data.result == 1) {
+              alert(res.data.message);
+              this.$router.push("/");
+              //this.$router.push("/mycourse"); // Login 페이지로 보내줌
+            }
+          })
+          .catch(function(error) {
+            alert("error");
+          });
+      } else {
+        this.$router.push({
+          path: route,
+          params: { user: "username" },
+          query: { group: "member" }
+        });
+      }
     },
     menu_bell_func: function(route) {
       eventBus.bell_route(route);

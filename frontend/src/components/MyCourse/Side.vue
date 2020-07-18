@@ -24,7 +24,7 @@
       </v-sheet>
     </v-card>
 
-    <v-card class="ma-3" title>
+    <v-card dark class="pa-1 ma-3" title>
       <v-list :two-line="true" color="dark_gray" dark dense>
         <v-subheader class="subheader">새 알림
           <v-spacer/>

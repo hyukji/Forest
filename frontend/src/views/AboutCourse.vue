@@ -34,7 +34,7 @@
         <v-btn class="menu-title" text v-on:click="change_middle_title('대시보드')">대시보드</v-btn>
         <v-btn class="menu-title" text v-on:click="change_middle_title('강의소개')" depressed>강의소개</v-btn>
         <v-btn class="menu-title" text v-on:click="change_middle_title('수업목록')" depressed>수업목록</v-btn>
-
+        <v-btn class="menu-title" text v-on:click="change_middle_title('과제목록')" depressed>과제목록</v-btn>
         <v-btn class="menu-title" text v-on:click="change_middle_title('공지사항')" depressed>게시판</v-btn>
         <v-btn class="menu-title" text v-on:click="change_middle_title('학습현황')" depressed>학습현황</v-btn>
       </div>
@@ -46,6 +46,7 @@
     <grade v-else-if="middle_title == '학습현황'"></grade>
     <introduction v-else-if="middle_title == '강의소개'"></introduction>
     <lectures v-else-if="middle_title == '수업목록'"></lectures>
+    <assignments v-else-if="middle_title == '과제목록'"></assignments>
 
     <div v-else class="wrap-board">
       <sidebar_board :sidebar_title="middle_title" @ChangeComponent="change_middle_title"></sidebar_board>
@@ -60,6 +61,7 @@
 import { eventBus } from "../main.js";
 
 // @ is an alias to /src
+
 import notice from "@/components/AboutCourses/board/notice.vue";
 import freeboard from "@/components/AboutCourses/board/freeboard.vue";
 import qnaboard from "@/components/AboutCourses/board/qnaboard.vue";
@@ -70,6 +72,7 @@ import dashboard from "@/components/AboutCourses/dashboard.vue";
 import grade from "@/components/AboutCourses/grade.vue";
 import introduction from "@/components/AboutCourses/introduction.vue";
 import lectures from "@/components/AboutCourses/lectures.vue";
+import assignments from "@/components/AboutCourses/assignments.vue";
 
 export default {
   name: "Mycourse",
@@ -167,4 +170,3 @@ export default {
   margin: 0 auto;
 }
 </style>
-

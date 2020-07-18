@@ -2,6 +2,20 @@ var mongoose = require("mongoose")
 var passportLocalMongoose = require("passport-local-mongoose")
 var Schema = mongoose.Schema
 
+var notifiSchema = new Schema({
+  text: String,
+  uploaded_date: Date,
+})
+
+var mycourseSchema = new Schema({
+  title: String,
+  professor: [String],
+  progress: Number, //percent
+  logo_name: String, //img
+  last_learned: String, //link
+  isfinish: Boolean,
+})
+
 var userSchema = new Schema({
   name: String,
   student_id: String,
@@ -9,17 +23,12 @@ var userSchema = new Schema({
   salt: String,
   password: String,
   organization: String,
+  position: { type: String, default: "stud" }, //stud, prof, adimin
   create_date: { type: Date, default: Date.now },
   Updated_date: { type: Date, default: Date.now },
+  notification: [notifiSchema],
+  mycourse: [mycourseSchema],
 })
-
-userSchema.methods.comparePassword = function (inputPassword, cb) {
-  if (inputPassword === this.password) {
-    cb(null, true)
-  } else {
-    cb("error")
-  }
-}
 
 userSchema.plugin(passportLocalMongoose, {
   usernameField: "email",

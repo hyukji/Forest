@@ -104,4 +104,14 @@ router.post(
   
   */
 
+router.get("/logOut", function (req, res) {
+  req.logout()
+  console.log("로그인 유저 정보" + req.user.email)
+  res.json({
+    result: 1,
+    message: "로그아웃 되었습니다!",
+    username: req.user.email,
+  })
+})
+
 module.exports = router

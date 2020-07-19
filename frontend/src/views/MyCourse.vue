@@ -1,30 +1,41 @@
 <template>
   <div class="wrap-body">
     <v-row>
-      <v-col class="py-0">
+      <div>
         <side />
+      </div>
+      <v-col class="pl-10">
+        <list v-model="user_course_info"></list>
       </v-col>
-      <v-col>
-        <list />
-      </v-col>
-      <v-spacer />
     </v-row>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import { authentication } from "../mixins/authentication"
 
 export default {
   name: "Mycourse",
   components: {
     list: () => import("@/components/MyCourse/List"),
-    side: () => import("@/components/MyCourse/Side"),
+    side: () => import("@/components/MyCourse/Side")
   },
-  data: () => ({}),
-  mixins: [authentication],
-}
+  data: function() {
+    return {
+      user_course_info: []
+    };
+  },
+  created() {
+    this.$http
+      .get("/api/home/mycourse")
+      .then(res => {
+        this.user_course_info = res.data.course_info;
+      })
+      .catch(function(error) {
+        alert("error");
+      });
+  }
+};
 </script>
 
 <style scoped>

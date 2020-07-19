@@ -17,6 +17,25 @@ router.post("/signUp", async function (req, res, next) {
   new_user.student_id = req.body.user.student_id
   new_user.email = req.body.user.email + "@dgist.ac.kr"
   new_user.organization = req.body.user.organization
+  var new_mycourse = [
+    {
+      title: "교과목예시",
+      professor: "교수예시",
+      progress: 30, //percent
+      logo_name: "python", //img
+      last_learned: "", //link
+      isfinish: false,
+    },
+    {
+      title: "교과목예시2",
+      professor: "교수예시2",
+      progress: 90, //percent
+      logo_name: "python", //img
+      last_learned: "", //link
+      isfinish: true,
+    },
+  ]
+  new_user.mycourse = new_mycourse
 
   const salt = bcrypt.genSaltSync(10) // salt값 생성, 10이 default
   new_user.salt = salt
@@ -42,10 +61,10 @@ router.post("/signUp", async function (req, res, next) {
 
 const authenticateUser = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    console.log("로그인 x")
+    //console.log("로그인 x")
     next()
   } else {
-    console.log("로그인 유저 정보" + req.user)
+    //console.log("로그인 유저 정보" + req.user)
     res.json({ result: 0, message: "이미 로그인이 되어있씁니다." })
     return
   }
@@ -65,13 +84,13 @@ router.get("/logOut", function (req, res) {
     return
   }
   req.logout()
-  console.log("로그아웃 1")
+  //console.log("로그아웃 1")
   req.session.destroy(function (err) {
     if (err) {
       console.log("로그아웃 에러 1")
       return next(err)
     }
-    console.log("로그아웃 2")
+    //console.log("로그아웃 2")
     return
     // The response should indicate that the user is no longer authenticated.
   })

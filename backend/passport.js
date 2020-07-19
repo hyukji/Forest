@@ -6,16 +6,16 @@ var User = require("../backend/models/user")
 const bcrypt = require("bcrypt")
 
 module.exports = () => {
-  passport.serializeUser((user, done) => {
+  passport.serializeUser((userform, done) => {
     // Strategy 성공 시 호출됨
-    console.log("serializeUser" + user.email)
-    done(null, user.email) // 여기의 user가 deserializeUser의 첫 번째 매개변수로 이동
+    console.log("serializeUser" + userform)
+    done(null, userform) // 여기의 user가 deserializeUser의 첫 번째 매개변수로 이동
   })
 
-  passport.deserializeUser((user, done) => {
+  passport.deserializeUser((userform, done) => {
     console.log("deserializeUser")
     // 매개변수 user는 serializeUser의 done의 인자 user를 받은 것
-    done(null, user) // 여기의 user가 req.user가 o
+    done(null, userform) // 여기의 user가 req.user가 o
   })
 
   passport.use(
@@ -26,7 +26,7 @@ module.exports = () => {
       },
       (email, password, done) => {
         // id, pw는 위에서 받은 값 입니다.
-        console.log("email = " + email, password)
+        //console.log("email = " + email, password)
 
         User.findOne({ email: email }, async (findError, user) => {
           if (findError) {
@@ -41,12 +41,17 @@ module.exports = () => {
             }) // 임의 에러 처리
           }
 
-          console.log("user = " + user)
+          //console.log("user = " + user)
 
           bcrypt.compare(password, user.password).then((isMatch) => {
             if (isMatch) {
+              let userform = {
+                email: user.email,
+                name: user.name,
+                position: user.position,
+              }
               console.log("success")
-              return done(null, user) // 검증 성공
+              return done(null, userform) // 검증 성공
             }
             console.log("wrong")
 

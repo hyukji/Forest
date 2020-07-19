@@ -12,7 +12,7 @@
                     color="teal darken-2"
                     size="27"
                     v-if="el.complete == 0"
-                  >far fa-check-circle</v-icon>
+                    >far fa-check-circle</v-icon>
                   <v-icon color="teal darken-2" size="24" v-else>fas fa-check-circle</v-icon>
                   <p class="li-title">{{el.list_title}}</p>
                   <p class="li-title li-date">{{ printDatePast(el.date) }}</p>
@@ -268,4 +268,3 @@ li {
   color: #9c9c9c;
 }
 </style>
-

@@ -1,75 +1,90 @@
 <template>
-  <v-card>
-    <v-toolbar card color="grey lighten-3">
-      <v-icon>mdi-silverware</v-icon>
-      <v-toolbar-title>Local hotspots</v-toolbar-title>
-    </v-toolbar>
-
-    <v-layout>
-      <v-flex>
-        <v-card-text>
-          <v-treeview
-            v-model="tree"
-            :load-children="fetch"
-            :items="items"
-            activatable
-            active-class="grey lighten-4 indigo--text"
-            selected-color="indigo"
-            open-on-click
-            selectable
-            expand-icon="mdi-chevron-down"
-            on-icon="mdi-bookmark"
-            off-icon="mdi-bookmark-outline"
-            indeterminate-icon="mdi-bookmark-minus"
-          >
-          </v-treeview>
-        </v-card-text>
-      </v-flex>
-
-      <v-divider vertical></v-divider>
-
-      <v-flex
-        xs12
-        md6
+  <v-card
+    max-width="1000"
+    class="ma-10"
+  >
+    <v-list>
+      <v-list-group
+        v-for="item in items"
+        :key="item.title"
+        v-model="item.active"
+        :prepend-icon="item.icon"
+        no-action
       >
-        <v-card-text>
-          <div
-            v-if="selections.length === 0"
-            key="title"
-            class="title font-weight-light grey--text pa-3 text-xs-center"
-          >
-            Select your favorite breweries
-          </div>
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-row>
+            <v-col cols="1">
+              <v-list-item-title v-text="item.title" class="font-weight-medium" s></v-list-item-title>
+            </v-col>
+            <v-col>
+              <v-progress-linear
+                v-model="skill"
+                color="light-green lighten-3"
+                height="13"
+              >
+                <template v-slot="{ value }">
+                  <strong>{{ Math.ceil(value) }}%</strong>
+                </template>
+              </v-progress-linear>
+            </v-col>
+            </v-row>
+          </v-list-item-content>
 
-          <v-scroll-x-transition
-            group
-            hide-on-leave
-          >
-            <v-chip
-              v-for="(selection, i) in selections"
-              :key="i"
-              color="grey"
-              dark
-              small
-            >
-              <v-icon left small>mdi-beer</v-icon>
-              {{ selection.name }}
-            </v-chip>
-          </v-scroll-x-transition>
-        </v-card-text>
-      </v-flex>
-    </v-layout>
+        </template>
 
+        <v-list-item
+          v-for="subItem in item.items"
+          :key="subItem.title"
+          @click=""
+        >
+          <v-list-item-content>
+            <v-list-item-title v-text="subItem.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
+    </v-list>
   </v-card>
-</template>
 
+</template>
 
 <script>
 // @ is an alias to /src
 export default {
   name: "Dashboard",
-  components: {},
+
   data: () => ({
+        items: [
+          {
+            icon: "fas fa-book-open",
+            title: '수업1',
+            active: true,
+            items: [
+              { title: '01. 문자열 출력하기' },
+              { title: '02. 사칙연산 활용하기' },
+              { title: '03. 구구단 식 만들기' }
+            ]
+          }
+        ],
+
+        model: null,
+        classes: [
+           ['h1', 'Heading 1', '6rem', '300', '-0.09375rem', -1],
+           ['h2', 'Heading 2', '3.75rem', '300', '-0.03125rem', 0],
+           ['h3', 'Heading 3', '3rem', '400', 'normal', 1],
+           ['h4', 'Heading 4', '2.125rem', '400', '0.015625rem', 2],
+           ['h5', 'Heading 5', '1.5rem', '400', 'normal', 2],
+           ['h6', 'Heading 6', '1.25rem', '500', '0.009375rem', 3],
+           ['subtitle-1', 'Subtitle 1', '1rem', '400', '0.009375rem', 4],
+           ['subtitle-2', 'Subtitle 2', '0.875rem', '500', '0.00625rem', 4],
+           ['body-1', 'Body 1', '1rem', '400', '0.03125rem', 4],
+           ['body-2', 'Body 2', '0.875rem', '400', '0.015625rem', 4],
+           ['button', 'Button', '0.875rem', '500', '0.078125rem', 4],
+           ['caption', 'Caption', '0.75rem', '400', '0.025rem', 4],
+           ['overline', 'Overline', '0.75rem', '500', '0.1666666667em', 4],
+         ],
+
+    show: false,
     middle_title: "대시보드",
     class_list: [
       { list_title: "lab#00 파이썬 이해하기", complete: 1 }
@@ -86,6 +101,7 @@ export default {
       { list_title: "궁금한게 있어요" }
     ]
   }),
+
   methods: {}
 };
 </script>

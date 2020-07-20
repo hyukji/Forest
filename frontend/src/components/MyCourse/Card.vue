@@ -1,20 +1,20 @@
 <template>
-    <div class="wrap-Mycourse-cards">
-      <v-card class="mx-auto" max-width="250" hover href="/course/courseid">
-        <v-img src="../../assets/python.png" height="150px"></v-img>
+  <div class="wrap-Mycourse-cards">
+    <v-card class="mx-auto" outlined max-width="250" hover href="/course/courseid">
+      <v-img src="../../assets/python.png" height="150px"></v-img>
 
-        <v-card-title>프로그래밍(실습)</v-card-title>
+      <v-card-title>{{this.title}}</v-card-title>
 
-        <v-card-subtitle>prof. 신동훈</v-card-subtitle>
-        <div class="btn-nowlearn">
-          <v-btn class="teal white--text" small @click="open_editor">바로학습</v-btn>
-        </div>
+      <v-card-subtitle>{{this.prof}}</v-card-subtitle>
+      <div class="btn-nowlearn">
+        <v-btn class="teal white--text" small @click="open_editor">바로학습</v-btn>
+      </div>
 
-        <v-divider class="mx-4"></v-divider>
-        <v-card-subtitle>진행률 70%</v-card-subtitle>
-        <v-progress-linear v-model="progess_data" color="teal"></v-progress-linear>
-      </v-card>
-    </div>
+      <v-divider class="mx-4"></v-divider>
+      <v-card-subtitle>{{this.progess_data}}</v-card-subtitle>
+      <v-progress-linear v-model="progess" color="teal"></v-progress-linear>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -24,13 +24,24 @@ export default {
   name: "Card",
   components: {},
   data: () => ({
-    progess_data: 70
+    title: "",
+    prof: "",
+    logoname: "",
+    progess: 0,
+    progess_data: ""
   }),
+  props: ["card_info"],
   methods: {
     open_editor(event) {
-      console.log(event)
-      window.open("/editor/lecture2")
+      window.open("/editor/lecture2");
     }
+  },
+  created() {
+    this.title = this.card_info.title;
+    this.prof = "prof. " + this.card_info.professor;
+    this.progess_data = "진행률 " + this.card_info.progress + "%";
+    this.progess = this.card_info.progress;
+    this.logoname = this.card_info.logo_name;
   }
 };
 </script>

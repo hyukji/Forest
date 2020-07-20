@@ -31,8 +31,7 @@
                 <v-select
                   :items="difficulty"
                   label="difficulty"
-                  item-text="title"
-                  v-model="selected">
+                  item-text="title">
                   <option v-for="option in difficulty" v-bind:value="option.color">
                   </option>
                 </v-select>
@@ -89,10 +88,9 @@
 // @ is an alias to /src
 export default {
   name: "introduction",
-  selected: null,
   components: {},
   data: () => ({
-
+  selected: null,
     middle_title: "강의소개",
     language: [
       {
@@ -168,6 +166,11 @@ export default {
   methods: {
     change_title: function(title) {
       this.title = title;
+    }
+  },
+  watch: {
+    selected(val) {
+      console.log(val)
     }
   }
 };

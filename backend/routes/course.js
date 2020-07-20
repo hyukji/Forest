@@ -7,7 +7,50 @@ router.get("/", function (req, res, next) {})
 
 // Sign Up
 // Post로만 받는다
-router.get("/signUp", function (req, res, next) {})
+router.post("/coursedata", async function (req, res, next) {
+  var code = req.body.code
+  var user_isprof
+
+  await User.findOne({ email: req.user.email }, function (err, db_user) {
+    if (db_user == null) {
+      console.log("낫 존재!")
+      res.json({ result: 0, message: "유저 정보가 없습니다." })
+      return
+    }
+
+    user_isprof = db_user.position
+  })
+  Course.findOne({ code: code }, function (err, db_course) {
+    if (db_course == null) {
+      console.log("낫 존재!")
+      res.json({ result: 0, message: "존재하지 않는 강의입니다." })
+      return
+    }
+
+    var basicData = {
+      name: db_course.name,
+      prof: "prof. ",
+      code: db_course.code,
+      language: db_course.language,
+    }
+    db_course.prof.forEach(function (p) {
+      basicData.prof = basicData.prof + p
+    })
+
+    console.log(user_isprof)
+
+    res.json({
+      result: 1,
+      isprof: user_isprof,
+      basic_data: basicData,
+      dashboard: db_course.dashboard,
+      introduction: db_course.introduction,
+      lecture: db_course.lecture,
+      assignment: db_course.assignment,
+      board: db_course.board,
+    })
+  })
+})
 
 router.post("/newcourse", function (req, res, next) {
   var user_course = {

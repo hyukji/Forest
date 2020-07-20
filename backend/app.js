@@ -32,8 +32,8 @@ app.use(history())
 app.use(express.static("public"))
 
 let url =
-  //"mongodb+srv://seul:1234@cluster0-usnbq.mongodb.net/test?retryWrites=true&w=majority"
-  "mongodb://127.0.0.1:27017/web_vue"
+  "mongodb+srv://seul:1234@cluster0-usnbq.mongodb.net/test?retryWrites=true&w=majority"
+//"mongodb://127.0.0.1:27017/web_vue"
 mongoose
   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((error) => {

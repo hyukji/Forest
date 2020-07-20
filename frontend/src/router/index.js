@@ -70,14 +70,6 @@ const routes = [
     },
   },
   {
-    path: "/mycourse/courseid",
-    name: "AboutCourse",
-    components: {
-      header: User_Header,
-      body: AboutCourse,
-    },
-  },
-  {
     path: "/mycourse/:course_code",
     name: "AboutCourse",
     components: {

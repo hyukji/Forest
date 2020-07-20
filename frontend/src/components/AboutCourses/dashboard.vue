@@ -8,14 +8,20 @@
               <p class="card_title">수업목록</p>
               <ul>
                 <li v-for="el of class_list">
-                  <v-icon
-                    color="teal darken-2"
-                    size="27"
-                    v-if="el.complete == 0"
+                  <v-row class="ml-1 mt-2" align="center" justify="start">
+                    <v-icon
+                      color="teal darken-2"
+                      size="25"
+                      v-if="el.complete == 0"
                     >far fa-check-circle</v-icon>
-                  <v-icon color="teal darken-2" size="24" v-else>fas fa-check-circle</v-icon>
-                  <p class="li-title">{{el.list_title}}</p>
-                  <p class="li-title li-date">{{ printDatePast(el.date) }}</p>
+                    <v-icon color="teal darken-2" size="24" v-else>fas fa-check-circle</v-icon>
+                    <p
+                      font-size="2rem"
+                      class="li-title text-justify font-weight-medium my-0 ml-1"
+                    >{{el.list_title}}</p>
+                    <v-spacer></v-spacer>
+                    <p class="text-justify my-0 mr-3 text--disabled">{{ printDatePast(el.date) }}</p>
+                  </v-row>
                 </li>
               </ul>
             </v-card-text>

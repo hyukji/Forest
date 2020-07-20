@@ -8,12 +8,12 @@ const bcrypt = require("bcrypt")
 module.exports = () => {
   passport.serializeUser((userform, done) => {
     // Strategy 성공 시 호출됨
-    console.log("serializeUser" + userform)
+    //console.log("serializeUser" + userform)
     done(null, userform) // 여기의 user가 deserializeUser의 첫 번째 매개변수로 이동
   })
 
   passport.deserializeUser((userform, done) => {
-    console.log("deserializeUser")
+    //console.log("deserializeUser")
     // 매개변수 user는 serializeUser의 done의 인자 user를 받은 것
     done(null, userform) // 여기의 user가 req.user가 o
   })

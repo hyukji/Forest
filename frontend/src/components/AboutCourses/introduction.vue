@@ -5,13 +5,25 @@
         <p class="card-title">개요</p>
         <v-container>
           <v-row>
-            <v-col class="wrap-total-list" v-for="item in class_info" :key="item.title">
-              <v-list three-line>
-                <v-icon size="40pt" v-text="item.icon"></v-icon>
-                <v-list-item-title class="toal-list-title"  v-text="item.title"></v-list-item-title>
-                <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
-              </v-list>
-            </v-col>
+            <div class="card-half left">
+              <v-col class="d-flex" cols="12" sm="10">
+                <v-select
+                  :items="language"
+                  label="language"
+                  item-text="title">
+                </v-select>
+              </v-col>
+            </div>
+            <div class="card-half right">
+              <v-icon size="40pt">fas fa-chart-bar</v-icon>
+              <v-col class="d-flex" cols="12" sm="10">
+                <v-select
+                  :items="difficulty"
+                  label="difficulty"
+                  item-text="title">
+                </v-select>
+              </v-col>
+            </div>
           </v-row>
         </v-container>
       </v-card>
@@ -57,17 +69,33 @@ export default {
   components: {},
   data: () => ({
     middle_title: "강의소개",
-    class_info: [
+    language: [
       {
         icon: "fab fa-python",
-        title: "파이썬",
-        subtitle: "프로그래밍 언어"
+        title: "python",
       },
       {
-        icon: "fas fa-chart-bar",
-        title: "입문",
-        subtitle: "난이도"
+        icon: "fab fa-java",
+        title: "java",
       },
+    ],
+    difficulty:[
+      {
+        title: "입문",
+        color: "yellow",
+      },
+      {
+        title: "초보",
+        color: "green",
+      },
+      {
+        title: "중급",
+        color: "blue",
+      },
+      {
+        title: "고급",
+        color: "red",
+      }
     ],
     for_who: [
       {
@@ -97,23 +125,8 @@ export default {
     ],
   }),
   methods: {
-    printDatePast(date) {
-      let nowdate = new Date();
-      var obj_date = new Date(date);
-      if (nowdate.getFullYear() != obj_date.getFullYear()) {
-        let num = nowdate.getFullYear() - obj_date.getFullYear();
-        return num + "년 전";
-      }
-      if (nowdate.getMonth() != obj_date.getMonth()) {
-        let num = nowdate.getMonth() - obj_date.getMonth();
-        return num + "달 전";
-      }
-      if (nowdate.getDate() != obj_date.getDate()) {
-        let num = nowdate.getDate() - obj_date.getDate();
-        return num + "일 전";
-      } else {
-        return "오늘";
-      }
+    change_middle_title: function(title) {
+      this.middle_title = title;
     }
   }
 };
@@ -160,6 +173,13 @@ export default {
   padding-left: 2%;
   padding-right: 2%;
 }
+.card-half{
+  display: inline-block;
+  width: 50%;
+  padding-left: 2%;
+  padding-right: 2%;
+  text-align: center;
+}
 .course_title{
   font-size: 1.2rem;
   font-weight: 550;
@@ -167,5 +187,11 @@ export default {
 .body{
   padding-left: 5%;
   color: gray;
+}
+.text-center{
+  padding-bottom: 2%;
+}
+.d-flex{
+  text-algin: center;
 }
 </style>

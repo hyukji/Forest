@@ -82,7 +82,7 @@ export default {
   name: "introduction",
   components: {},
   data: () => ({
-    selected: ,
+    selected: null,
     middle_title: "강의소개",
     language: [
       {

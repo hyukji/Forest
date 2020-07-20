@@ -16,6 +16,7 @@
           </v-list-item-group>
 
           <v-divider/>
+          <v-divider/>
 
             <v-list-item-group v-model="on" active-class multiple>
             <v-list-item v-for="tab in additional" :key="tab.name">

@@ -12,14 +12,14 @@
         no-action
       >
         <template v-slot:activator>
-          <v-list-item-content>
+          <v-list-item-content class="pt-1">
             <v-row>
             <v-col>
-              <v-list-item-title v-text="item.title" class="font-weight-medium" s></v-list-item-title>
+              <v-list-item-title v-text="item.title" class="title_font" s></v-list-item-title>
             </v-col>
             <v-col cols="2" class="score-chip">
-            <v-list-item-action class="assignment-right">
-              <v-chip color="teal lighten-1" text-color="white" v-text="`${Total} / ${PerfectTotal}`"></v-chip>
+            <v-list-item-action>
+              <v-chip color="primary" text-color="white"  class="assignment-right" v-text="`${Total} / ${PerfectTotal}`"></v-chip>
             </v-list-item-action>
             </v-col>
           </v-row>
@@ -37,7 +37,7 @@
               <v-col>
                 <v-list-item-title v-text="subItem.title"></v-list-item-title>
               </v-col>
-              <v-col cols="2">
+              <v-col cols="3">
                 <v-list-item-title v-text="`${subItem.score} / ${subItem.perfect}`"
                 class="text-center"></v-list-item-title>
               </v-col>
@@ -137,8 +137,10 @@ data: function() {
 </script>
 
 <style scoped>
-.font-weight-medium {
-  font-size : 1.3rem;
+.title_font {
+  font-size : 1.2rem;
+  padding-top : 4px;
+  font-weight : 600;
 }
 .text-center{
   font-size: 1rem
@@ -149,6 +151,7 @@ data: function() {
 }
 .assignment-right {
   margin-left: 30;
+  font-size: 1.1rem;
 }
 .brief-right {
   padding-right: 0;

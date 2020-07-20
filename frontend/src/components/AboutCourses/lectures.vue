@@ -12,16 +12,17 @@
         no-action
       >
         <template v-slot:activator>
-          <v-list-item-content>
+          <v-list-item-content class="pt-2">
             <v-row>
-            <v-col cols="1">
-              <v-list-item-title v-text="item.title" class="font-weight-medium" s></v-list-item-title>
+            <v-col cols="2">
+              <v-list-item-title v-text="item.title" class="title_font" s></v-list-item-title>
             </v-col>
-            <v-col>
+            <v-col class="bar">
               <v-progress-linear
                 v-model="skill"
                 color="light-green lighten-3"
                 height="13"
+                rounded
               >
                 <template v-slot="{ value }">
                   <strong>{{ Math.ceil(value) }}%</strong>
@@ -37,7 +38,7 @@
           v-for="subItem in item.items"
           :key="subItem.title"
           @click="">
-          
+
           <v-list-item-content>
             <v-list-item-title v-text="subItem.title"></v-list-item-title>
           </v-list-item-content>
@@ -56,7 +57,7 @@ export default {
   data: () => ({
         items: [
           {
-            icon: "fas fa-book-open",
+            icon: "fas fa-book",
             title: '수업1',
             active: true,
             items: [
@@ -107,6 +108,16 @@ export default {
 </script>
 
 <style scoped>
+.title_font {
+  font-size : 1.2rem;
+  font-weight : 600;
+}
+
+.bar{
+  padding-bottom: 0;
+  padding-top: 18px;
+}
+
 .content{
   border : 1px solid black;
   width : 800px

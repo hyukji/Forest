@@ -12,20 +12,21 @@
                   </v-col>
                   <v-col class="d-flex" cols="12" sm="10">
 
+              <v-icon size="40pt">{{ selected }}</v-icon>
                     <v-select
                       :items="language"
                       item-text="title"
-                      label="Select"
+                      item-value="icon"
+                      label="Language"
                       v-model="selected">
                     </v-select>
-                    <v-icon>{{ selected }}</v-icon>
 
                   </v-col>
                 </v-layout>
               </v-container>
             </div>
             <div class="card-half right">
-              <v-icon size="40pt" color="selected">fas fa-chart-bar</v-icon>
+              <v-icon size="40pt">fas fa-chart-bar</v-icon>
               <v-col class="d-flex" cols="12" sm="10">
                 <v-select
                   :items="difficulty"
@@ -81,7 +82,7 @@ export default {
   name: "introduction",
   components: {},
   data: () => ({
-
+    selected: 'python',
     middle_title: "강의소개",
     language: [
       {
@@ -154,6 +155,11 @@ export default {
   methods: {
     change_title: function(title) {
       this.title = title;
+    }
+  },
+  watch: {
+    selected(val) {
+      console.log(val)
     }
   }
 };

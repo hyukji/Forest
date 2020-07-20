@@ -1,59 +1,159 @@
 <template>
-  <div>
-      <v-card width="100%" max-width="120%" class="content" outlined>
-
-        <v-list-item three-line>
-
+  <v-card
+    max-width="1000"
+    class="ma-10"
+  >
+    <v-list>
+      <v-list-group
+        v-for="item in items"
+        :key="item.title"
+        v-model="item.active"
+        :prepend-icon="item.icon"
+        no-action
+      >
+        <template v-slot:activator>
           <v-list-item-content>
-            <v-list-item-title> 수업 1 . 파이썬의 출력 방법 </v-list-item-title>
-
-            <v-progress-linear v-model="skill" color="blue-grey" height="13" rounded >
-              <template v-slot="{ value }">
-                <strong>{{ Math.ceil(value) }}%</strong>
-              </template>
-            </v-progress-linear>
-
+            <v-row>
+            <v-col>
+              <v-list-item-title v-text="item.title" class="font-weight-medium" s></v-list-item-title>
+            </v-col>
+            <v-col cols="2" class="score-chip">
+            <v-list-item-action class="assignment-right">
+              <v-chip color="teal lighten-1" text-color="white" v-text="`${Total} / ${PerfectTotal}`"></v-chip>
+            </v-list-item-action>
+            </v-col>
+          </v-row>
           </v-list-item-content>
 
-          <div class="brief-text-right">
-            <v-btn class="teal white--text btn-learn" outlined width="90%" height="40">수업하러 가기</v-btn>
-          </div>
+        </template>
 
+        <v-list-item
+          v-for="subItem in item.items"
+          :key="subItem.title"
+          @click="">
 
+          <v-list-item-content>
+            <v-row>
+              <v-col>
+                <v-list-item-title v-text="subItem.title"></v-list-item-title>
+              </v-col>
+              <v-col cols="2">
+                <v-list-item-title v-text="`${subItem.score} / ${subItem.perfect}`"
+                class="text-center"></v-list-item-title>
+              </v-col>
+              <!-- <v-col cols="1" class="brief-center">
+                /
+              </v-col>
+              <v-col cols="1"  class="brief-left">
+                <v-list-item-title v-text="subItem.perfect"></v-list-item-title>
+              </v-col> -->
+
+            </v-row>
+          </v-list-item-content>
         </v-list-item>
+      </v-list-group>
+    </v-list>
+  </v-card>
 
-      </v-card>
-  </div>
 </template>
-
 
 <script>
 // @ is an alias to /src
 export default {
   name: "Dashboard",
-  components: {},
-  data: () => ({
-    middle_title: "대시보드",
-    class_list: [
+
+data: function() {
+    return {
+      items: [
+        {
+          icon: "fas fa-edit",
+          title: '과제1',
+          active: true,
+          items: [
+            { title: '01. 문자열 출력하기', score: 10, perfect:20},
+            { title: '02. 사칙연산 활용하기', score: 20, perfect:20 },
+            { title: '03. 구구단 식 만들기', score: 25, perfect:30 }
+          ]
+        }
+      ],
+
+      model: null,
+      classes: [
+         ['h1', 'Heading 1', '6rem', '300', '-0.09375rem', -1],
+         ['h2', 'Heading 2', '3.75rem', '300', '-0.03125rem', 0],
+         ['h3', 'Heading 3', '3rem', '400', 'normal', 1],
+         ['h4', 'Heading 4', '2.125rem', '400', '0.015625rem', 2],
+         ['h5', 'Heading 5', '1.5rem', '400', 'normal', 2],
+         ['h6', 'Heading 6', '1.25rem', '500', '0.009375rem', 3],
+         ['subtitle-1', 'Subtitle 1', '1rem', '400', '0.009375rem', 4],
+         ['subtitle-2', 'Subtitle 2', '0.875rem', '500', '0.00625rem', 4],
+         ['body-1', 'Body 1', '1rem', '400', '0.03125rem', 4],
+         ['body-2', 'Body 2', '0.875rem', '400', '0.015625rem', 4],
+         ['button', 'Button', '0.875rem', '500', '0.078125rem', 4],
+         ['caption', 'Caption', '0.75rem', '400', '0.025rem', 4],
+         ['overline', 'Overline', '0.75rem', '500', '0.1666666667em', 4],
+       ],
+
+      show: false,
+      middle_title: "대시보드",
+      class_list: [
       { list_title: "lab#00 파이썬 이해하기", complete: 1 }
       //{ list_title: "lab#01 변수", complete: 0 }
-    ],
-    assignments: [
+      ],
+      assignments: [
       { list_title: "Assignment1", complete: 1 },
       { list_title: "Assignment2", complete: 0 },
       { list_title: "Assignment2", complete: 0 }
-    ],
-    notice: [{ list_title: "공지 1" }, { list_title: "공지 2" }],
-    question: [
+      ],
+      notice: [{ list_title: "공지 1" }, { list_title: "공지 2" }],
+      question: [
       { list_title: "질문있습니다" },
       { list_title: "궁금한게 있어요" }
-    ]
-  }),
-  methods: {}
-};
+      ]
+
+    }
+          },
+  methods: {},
+  computed: {
+  Total: function () {
+    var total_score = 0
+  this.items[0].items.forEach((item) => {
+      console.log( item.score );
+      total_score += item.score
+  });
+    return total_score
+  },
+  PerfectTotal: function () {
+    var Perfecttotal_score = 0
+  this.items[0].items.forEach((item) => {
+      console.log( item.perfect );
+      Perfecttotal_score += item.perfect
+  });
+    return Perfecttotal_score
+  },
+}
+}
+
 </script>
 
 <style scoped>
+.font-weight-medium {
+  font-size : 1.3rem;
+}
+.text-center{
+  font-size: 1rem
+}
+.score-chip {
+  padding : 0;
+  text-align: right;
+}
+.assignment-right {
+  margin-left: 30;
+}
+.brief-right {
+  padding-right: 0;
+}
+
 .content{
   border : 1px solid black;
   width : 800px

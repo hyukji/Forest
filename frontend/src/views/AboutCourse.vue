@@ -84,7 +84,8 @@ export default {
     dashboard,
     grade,
     introduction,
-    sidebar_board
+    sidebar_board,
+    assignments
   },
   data: () => ({
     middle_title: "대시보드",

@@ -1,6 +1,6 @@
 <template>
   <v-card
-    max-width="1000"
+    max-width="1200"
     class="ma-10"
   >
     <v-list>
@@ -12,16 +12,17 @@
         no-action
       >
         <template v-slot:activator>
-          <v-list-item-content>
+          <v-list-item-content class="pt-2">
             <v-row>
-            <v-col cols="1">
-              <v-list-item-title v-text="item.title" class="font-weight-medium" s></v-list-item-title>
+            <v-col cols="2">
+              <v-list-item-title v-text="item.title" class="title_font" s></v-list-item-title>
             </v-col>
-            <v-col>
+            <v-col class="bar">
               <v-progress-linear
                 v-model="skill"
                 color="light-green lighten-3"
                 height="13"
+                rounded
               >
                 <template v-slot="{ value }">
                   <strong>{{ Math.ceil(value) }}%</strong>
@@ -36,8 +37,7 @@
         <v-list-item
           v-for="subItem in item.items"
           :key="subItem.title"
-          @click=""
-        >
+          @click="">
           <v-list-item-content>
             <v-list-item-title v-text="subItem.title"></v-list-item-title>
           </v-list-item-content>
@@ -56,9 +56,8 @@ export default {
   data: () => ({
         items: [
           {
-            icon: "fas fa-book-open",
-            title: '수업1',
-            active: true,
+            icon: "fas fa-book",
+            title: '수업 01',
             items: [
               { title: '01. 문자열 출력하기' },
               { title: '02. 사칙연산 활용하기' },
@@ -107,6 +106,17 @@ export default {
 </script>
 
 <style scoped>
+
+.title_font {
+  font-size : 1.2rem;
+  font-weight : 600;
+}
+
+.bar{
+  padding-bottom: 0;
+  padding-top: 18px;
+}
+
 .content{
   border : 1px solid black;
   width : 800px

@@ -16,7 +16,7 @@
                     <v-select
                       :items="language"
                       item-text="title"
-                      item-value="value"
+                      item-value="icon"
                       label="Select"
                       v-model="selected">
                     </v-select>

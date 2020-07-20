@@ -12,7 +12,7 @@
                   </v-col>
                   <v-col class="d-flex" cols="12" sm="10">
 
-              <v-icon size="40pt">{{ selected }}</v-icon>
+              <!-- <v-icon size="40pt">{{ selected }}</v-icon> -->
                     <v-select
                       :items="language"
                       item-text="title"

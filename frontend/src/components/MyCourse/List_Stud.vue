@@ -38,6 +38,7 @@ export default {
   props: ["sendData"],
   data: function() {
     return {
+      position: "",
       isfinish_course: [],
       notfinish_course: []
     };

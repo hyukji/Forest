@@ -1,21 +1,10 @@
 <template>
 <div class="wrap-Mycourse-cards">
-  <v-card class="mx-auto" max-width="250" hover href="/course/courseid">
-    <v-img src="../assets/python.png" height="150px"></v-img>
 
-    <v-card-title>{{ $route.params.lecture }}</v-card-title>
-
-    <v-card-subtitle></v-card-subtitle>
-    <div class="btn-nowlearn">
-      <v-btn class="teal white--text" small>바로학습</v-btn>
-    </div>
-
-    <v-divider class="mx-4"></v-divider>
-    <v-card-subtitle>진행률 70%</v-card-subtitle>
-    <v-progress-linear color="teal"></v-progress-linear>
-  </v-card>
-
+  {{$route.params.lecture }}
+    <side-tab/>
   <drawer/>
+
 
 </div>
 </template>
@@ -27,7 +16,8 @@ import { eventBus } from "../main.js"
 export default {
   name: "editor",
   components: {
-    Drawer: () => import('@/components/Editor/Drawer')
+    Drawer: () => import('@/components/Editor/Drawer'),
+    SideTab: () => import('@/components/Editor/Sidetab')
   },
 };
 </script>

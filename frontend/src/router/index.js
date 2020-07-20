@@ -30,14 +30,12 @@ const routes = [
     path: "*",
     name: "E404",
     components: {
-      header: Main_Header,
       body: E404,
     },
   },
   {
     path: "/",
     name: "Home",
-    //beforeEnter: isAuthenticated(),
     components: {
       header: Main_Header,
       body: Home,
@@ -72,7 +70,15 @@ const routes = [
     },
   },
   {
-    path: "/course/courseid",
+    path: "/mycourse/courseid",
+    name: "AboutCourse",
+    components: {
+      header: User_Header,
+      body: AboutCourse,
+    },
+  },
+  {
+    path: "/mycourse/:course_code",
     name: "AboutCourse",
     components: {
       header: User_Header,
@@ -86,7 +92,7 @@ const routes = [
       header: Editor_Header,
       body: Editor,
     },
-  }
+  },
 ]
 
 const router = new VueRouter({

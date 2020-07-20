@@ -4,7 +4,7 @@
         <v-navigation-drawer dark mini-variant mini-variant-width="56" permanent class="menu">
           <v-list dense nav>
             <v-list-item-group v-model="selected" active-class>
-            <v-list-item v-for="tab in main" :key="tab.name">
+            <v-list-item v-for="tab in main" :key="tab.name" :value="tab.name">
               <v-list-item-action>
                 <v-icon>{{ tab.icon }}</v-icon>
               </v-list-item-action>
@@ -36,10 +36,7 @@
 
         <!-- <v-col class="content"> -->
       <v-navigation-drawer v-model="drawer" :permanent="permanent" dark class="content">
-        <side-tree v-if="selected == 0"/>
-        <side-explain v-if="selected == 1"/>
-        <side-search v-if="selected == 2"/>
-        <side-setting v-if="selected == 3"/>
+        <component :is="selected"/>
       </v-navigation-drawer>
       <!-- </v-col> -->
 
@@ -59,10 +56,10 @@
 export default {
   name: "sidetab",
   components: {
-    SideTree: () => import('@/components/Editor/Side_tree'),
-    SideExplain: () => import('@/components/Editor/Side_explain'),
-    SideSearch: () => import('@/components/Editor/Side_search'),
-    SideSetting: () => import('@/components/Editor/Side_setting')
+    Tree: () => import('@/components/Editor/Side_tree'),
+    Explain: () => import('@/components/Editor/Side_explain'),
+    Search: () => import('@/components/Editor/Side_search'),
+    Setting: () => import('@/components/Editor/Side_setting')
   },
   data () {
     return {
@@ -72,7 +69,7 @@ export default {
       on: [],
       main: [
         { name: 'Tree', icon: 'fas fa-list' },
-        { name: 'Explaination', icon: 'far fa-file-alt' },
+        { name: 'Explain', icon: 'far fa-file-alt' },
         { name: 'Search', icon: 'fas fa-search'},
         { name: 'Setting', icon: 'fas fa-cog'}
       ],

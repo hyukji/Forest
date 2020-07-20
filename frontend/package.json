@@ -9,10 +9,12 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "draggabilly": "^2.3.0",
     "tiptap": "^1.29.1",
     "vue": "^2.6.11",
     "vue-resizable": "^1.2.0",
     "vue-router": "^3.1.5",
+    "vue-tabs-chrome": "^0.5.1",
     "vuetify": "^2.2.11",
     "vuex": "^3.5.1"
   },

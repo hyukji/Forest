@@ -9,17 +9,23 @@ export const authentication = {
     }
   },
   methods: {
-    check_isauth() {
+    check_isauth(bool) {
       this.$http
         .get("/api/home/authentication")
         .then((res) => {
-          //console.log("권한 :" + res.data.email)
-          if (res.data.isauth) {
-            this.user_data.email = res.data.email
-            this.user_data.name = res.data.name
-            this.user_data.position = res.data.position
+          var isauth = res.data.isauth
+          if (bool) {
+            if (isauth) {
+              this.user_data.email = res.data.email
+              this.user_data.name = res.data.name
+              this.user_data.position = res.data.position
+            } else {
+              this.$router.push("/") // signin 페이지로 보내줌
+            }
           } else {
-            this.$router.push("/signin") // signin 페이지로 보내줌
+            if (isauth) {
+              this.$router.push("/mycourse")
+            }
           }
         })
         .catch(function(error) {
@@ -27,9 +33,6 @@ export const authentication = {
           alert("인증 권한 error")
         })
     },
-  },
-  created() {
-    this.check_isauth()
   },
 }
 

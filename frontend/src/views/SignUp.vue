@@ -78,7 +78,6 @@
           block
           v-on:click="signUp"
         >가 입 하 기</v-btn>
-        <v-btn v-on:click="log">ss</v-btn>
         <br />
       </v-col>
     </v-row>

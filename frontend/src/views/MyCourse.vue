@@ -5,7 +5,8 @@
         <side />
       </div>
       <v-col class="pl-10">
-        <list v-model="user_course_info"></list>
+        <list_stud v-if="user_position == 'stud'" v-model="user_course_info"></list_stud>
+        <list_prof v-if="user_position == 'prof'" v-model="user_course_info"></list_prof>
       </v-col>
     </v-row>
   </div>
@@ -17,12 +18,15 @@
 export default {
   name: "Mycourse",
   components: {
-    list: () => import("@/components/MyCourse/List"),
+    list_stud: () => import("@/components/MyCourse/List_Stud"),
+    list_prof: () => import("@/components/MyCourse/List_Prof"),
+
     side: () => import("@/components/MyCourse/Side")
   },
   data: function() {
     return {
-      user_course_info: []
+      user_course_info: [],
+      user_position: ""
     };
   },
   created() {
@@ -30,6 +34,7 @@ export default {
       .get("/api/home/mycourse")
       .then(res => {
         this.user_course_info = res.data.course_info;
+        this.user_position = res.data.position;
       })
       .catch(function(error) {
         alert("error");

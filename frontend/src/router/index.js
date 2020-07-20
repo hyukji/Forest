@@ -30,14 +30,12 @@ const routes = [
     path: "*",
     name: "E404",
     components: {
-      header: Main_Header,
       body: E404,
     },
   },
   {
     path: "/",
     name: "Home",
-    //beforeEnter: isAuthenticated(),
     components: {
       header: Main_Header,
       body: Home,
@@ -86,7 +84,7 @@ const routes = [
       header: Editor_Header,
       body: Editor,
     },
-  }
+  },
 ]
 
 const router = new VueRouter({

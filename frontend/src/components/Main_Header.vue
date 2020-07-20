@@ -4,12 +4,7 @@
       <v-row>
         <div class="appbar-left">
           <router-link to="/">
-            <v-img
-              :src="require('../assets/Forest_logo.jpg')"
-              class="my-3"
-              contain
-              height="60"
-            />
+            <v-img :src="require('../assets/Forest_logo.jpg')" class="my-3" contain height="60" />
           </router-link>
         </div>
         <div class="appbar-right"></div>
@@ -18,33 +13,39 @@
   </v-app-bar>
 </template>
 <script>
-import { eventBus } from "../main.js"
+import { authentication } from "../mixins/authentication";
+
+import { eventBus } from "../main.js";
 export default {
   name: "header",
   data: function() {
-    return {}
+    return {};
   },
+  mixins: [authentication],
   methods: {
     menu_user_func: function(route) {
       this.$router.push({
         path: route,
         params: { user: "username" },
-        query: { group: "member" },
-      })
+        query: { group: "member" }
+      });
       // route==logout이면 백이용해서 로그아웃하고홈으로
     },
     menu_bell_func: function(route) {
-      eventBus.bell_route(route)
+      eventBus.bell_route(route);
       if (location.pathname == "/course/courseid") {
       } else {
         this.$router.push({
           path: "/course/courseid",
-          query: { tab: route },
-        })
+          query: { tab: route }
+        });
       }
-    },
+    }
   },
-}
+  created() {
+    this.check_isauth(false);
+  }
+};
 </script>
 
 <style scoped>

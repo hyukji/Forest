@@ -163,6 +163,9 @@ export default {
         });
       }
     }
+  },
+  created() {
+    this.check_isauth(true);
   }
 };
 </script>

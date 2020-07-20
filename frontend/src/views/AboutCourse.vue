@@ -7,8 +7,8 @@
           <div class="brief-text">
             <v-row align="end">
               <v-col cols="6">
-                <v-card-title class="brief-title mx-5">수업이름ㅇㅇ</v-card-title>
-                <v-card-subtitle class="brief-subtitle mx-6">prof. ddd</v-card-subtitle>
+                <v-card-title class="brief-title mx-5">{{courseData.name}}</v-card-title>
+                <v-card-subtitle class="brief-subtitle mx-6">{{courseData.prof}}</v-card-subtitle>
               </v-col>
               <v-btn class="secondary white--text btn-learn mb-5" x-large width="175" outlined>바로학습</v-btn>
             </v-row>
@@ -150,7 +150,7 @@ export default {
     getCoursedData: function(code) {
       console.log(code);
       this.$http
-        .post("/api/course/coursedata", { code: code })
+        .post("/api/mycourse/coursedata", { code: code })
         .then(res => {
           if (res.data.result) {
             this.user_isprof = res.data.isprof;

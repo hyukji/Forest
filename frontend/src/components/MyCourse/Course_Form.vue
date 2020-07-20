@@ -37,7 +37,7 @@ export default {
   methods: {
     makeCourse() {
       this.$http
-        .post("/api/course/newcourse", {
+        .post("/api/mycourse/newcourse", {
           //axios 사용
           dialog_info: this.dialog_info
         })

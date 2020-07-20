@@ -11,6 +11,7 @@ router.post("/coursedata", async function (req, res, next) {
   var code = req.body.code
   var user_isprof
 
+  console.log(code)
   await User.findOne({ email: req.user.email }, function (err, db_user) {
     if (db_user == null) {
       console.log("낫 존재!")
@@ -20,6 +21,7 @@ router.post("/coursedata", async function (req, res, next) {
 
     user_isprof = db_user.position
   })
+
   Course.findOne({ code: code }, function (err, db_course) {
     if (db_course == null) {
       console.log("낫 존재!")

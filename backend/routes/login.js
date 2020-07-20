@@ -20,6 +20,7 @@ router.post("/signUp", async function (req, res, next) {
   var new_mycourse = [
     {
       title: "교과목예시",
+      code: "SE906",
       professor: "교수예시",
       progress: 30, //percent
       logo_name: "python", //img
@@ -27,9 +28,10 @@ router.post("/signUp", async function (req, res, next) {
       isfinish: false,
     },
     {
-      title: "교과목예시2",
+      title: "수강종료예시",
+      code: "SE907",
       professor: "교수예시2",
-      progress: 90, //percent
+      progress: 100, //percent
       logo_name: "python", //img
       last_learned: "", //link
       isfinish: true,

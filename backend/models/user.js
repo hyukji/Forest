@@ -5,10 +5,12 @@ var Schema = mongoose.Schema
 var notifiSchema = new Schema({
   text: String,
   uploaded_date: Date,
+  iswatched: Boolean,
 })
 
 var mycourseSchema = new Schema({
   title: String,
+  code: String,
   professor: [String],
   progress: Number, //percent
   logo_name: String, //img

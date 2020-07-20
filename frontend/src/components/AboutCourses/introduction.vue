@@ -1,6 +1,6 @@
 <template>
   <div class="wrap-introduction">
-      <div class="introduction-half right">
+    <div class="introduction-half right">
       <v-card class="mx-auto" max-width="70%">
         <p class="card-title">개요</p>
         <v-container>
@@ -55,21 +55,23 @@
         </v-container>
       </v-card>
     </div>
-    <p class="card-title"> 과목 소개 </p>
-    <p class="body"> 준비중입니다 </p>
-    <p class="card-title"> 수업 과정 </p>
+    <p class="card-title">과목 소개</p>
+    <p class="body">준비중입니다</p>
+    <p class="card-title">수업 과정</p>
     <ul>
       <v-list-item v-for="item in curriculum" :key="item.title">
         <v-list-item-avatar>
           <v-icon size="20pt" color="grey">far fa-clipboard</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title class="course_title" v-text="item.list_title"></v-list-item-title>
+          <v-list-item-title
+            class="course_title"
+            v-text="item.list_title"
+          ></v-list-item-title>
           <v-list-item-content v-text="item.content"></v-list-item-content>
         </v-list-item-content>
       </v-list-item>
     </ul>
-
   </div>
 </template>
 
@@ -95,9 +97,9 @@ export default {
       {
         icon: "fab fa-vuejs",
         title: "vue.js",
-      }
+      },
     ],
-    difficulty:[
+    difficulty: [
       {
         title: "입문",
         icon: "far fa-smile-wink",
@@ -127,31 +129,33 @@ export default {
       {
         icon: "fab fa-java",
         title: "java 개발자",
-
-      }
+      },
     ],
     curriculum: [
       {
         list_title: "Course1",
-        content: "course1 내용입니다"
+        content: "course1 내용입니다",
       },
       {
         list_title: "Course2",
-        content: "course2 내용입니다"
+        content: "course2 내용입니다",
       },
       {
         list_title: "Course3",
-        content: "course3 내용입니다"
-      }
+        content: "course3 내용입니다",
+      },
     ],
-    customFilter (item, queryText, itemText) {
-      const hasValue = val => val != null ? val : ''
-        const text = hasValue(item.name)
-        const query = hasValue(queryText)
-        return text.toString()
+    customFilter(item, queryText, itemText) {
+      const hasValue = (val) => (val != null ? val : "")
+      const text = hasValue(item.name)
+      const query = hasValue(queryText)
+      return (
+        text
+          .toString()
           .toLowerCase()
           .indexOf(query.toString().toLowerCase()) > -1
-        }
+      )
+    },
   }),
   methods: {},
 };
@@ -198,25 +202,25 @@ export default {
   padding-left: 2%;
   padding-right: 2%;
 }
-.card-half{
+.card-half {
   display: inline-block;
   width: 50%;
   padding-left: 2%;
   padding-right: 2%;
   text-align: center;
 }
-.course_title{
+.course_title {
   font-size: 1.2rem;
   font-weight: 550;
 }
-.body{
+.body {
   padding-left: 5%;
   color: gray;
 }
-.text-center{
+.text-center {
   padding-bottom: 2%;
 }
-.d-flex{
+.d-flex {
   text-algin: center;
 }
 

@@ -16,7 +16,7 @@ router.get("/mycourse", function (req, res, next) {
   //course_info
   console.log("back mycourse")
   User.findOne({ email: req.user.email }, function (err, db_user) {
-    res.json({ result: 1, course_info: db_user.mycourse })
+    res.json({ position: db_user.position, course_info: db_user.mycourse })
     //console.log(res)
   })
 })

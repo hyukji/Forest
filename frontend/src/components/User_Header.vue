@@ -155,14 +155,17 @@ export default {
     },
     menu_bell_func: function(route) {
       eventBus.bell_route(route);
-      if (location.pathname == "/course/courseid") {
+      if (location.pathname == "/mycourse/courseid") {
       } else {
         this.$router.push({
-          path: "/course/courseid",
+          path: "/mycourse/courseid",
           query: { tab: route }
         });
       }
     }
+  },
+  created() {
+    this.check_isauth(true);
   }
 };
 </script>

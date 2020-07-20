@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap-body">
+  <div v-if="user_isprof" class="wrap-body">
     <v-card class="mx-auto" outlined>
       <v-container width="100%" height="150pt">
         <v-row>

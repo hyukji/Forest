@@ -4,12 +4,7 @@
       <v-row>
         <div class="appbar-left">
           <router-link to="/mycourse">
-            <v-img
-              :src="require('../assets/Forest_logo.jpg')"
-              class="my-3"
-              contain
-              height="60"
-            />
+            <v-img :src="require('../assets/Forest_logo.jpg')" class="my-3" contain height="60" />
           </router-link>
         </div>
         <div class="appbar-right">
@@ -30,15 +25,9 @@
                     :key="index"
                     @click="menu_bell_func(item.route)"
                   >
-                    <v-list-item-subtitle class="menu-bell-main">
-                      {{ item.main }}
-                    </v-list-item-subtitle>
-                    <v-list-item-title class="menu-bell-title">
-                      {{ item.title }}
-                    </v-list-item-title>
-                    <v-list-item-subtitle class="menu-bell-date">
-                      {{ item.date }}
-                    </v-list-item-subtitle>
+                    <v-list-item-subtitle class="menu-bell-main">{{ item.main }}</v-list-item-subtitle>
+                    <v-list-item-title class="menu-bell-title">{{ item.title }}</v-list-item-title>
+                    <v-list-item-subtitle class="menu-bell-date">{{ item.date }}</v-list-item-subtitle>
                     <v-divider></v-divider>
                   </v-list-item-content>
                 </v-list>
@@ -55,12 +44,8 @@
 
                 <v-list>
                   <v-list-item-content two-line>
-                    <v-list-item-title class="menu-user_name">
-                      {{ user_data.name }}
-                    </v-list-item-title>
-                    <v-list-item-subtitle class="menu-user_mail">
-                      {{ user_data.email }}
-                    </v-list-item-subtitle>
+                    <v-list-item-title class="menu-user_name">{{ user_data.name }}</v-list-item-title>
+                    <v-list-item-subtitle class="menu-user_mail">{{ user_data.email }}</v-list-item-subtitle>
                   </v-list-item-content>
 
                   <v-divider></v-divider>
@@ -85,9 +70,9 @@
   </v-app-bar>
 </template>
 <script>
-import { eventBus } from "../main.js"
+import { eventBus } from "../main.js";
 
-import { authentication } from "../mixins/authentication"
+import { authentication } from "../mixins/authentication";
 
 export default {
   name: "header",
@@ -98,34 +83,34 @@ export default {
           main: "게시판/공지사항",
           title: "새로운 공지가 올라왔습니다.",
           date: "2020.3.8",
-          route: "공지사항",
+          route: "공지사항"
         },
         {
           main: "게시판/QnA",
           title: "새로운 질문이 올라왔습니다.",
           date: "2020.3.8",
-          route: "QnA",
+          route: "QnA"
         },
         {
           main: "게시판/자유게시판",
           title: "새로운 댓글이 달렸습니다.",
           date: "2020.3.8",
-          route: "자유게시판",
+          route: "자유게시판"
         },
         {
           main: "수업목록",
           title: "과제가 새로 올라왔습니다.",
           date: "2020.3.8",
-          route: "수업목록",
-        },
+          route: "수업목록"
+        }
       ],
       user_menus: [
         { title: "계정 관리", route: "/account", icon: "fas fa-user-cog" },
         { title: "로그아웃", route: "/logout", icon: "fas fa-sign-out-alt" },
         { title: "FAQ", route: "/managing/FAQ", icon: "fas fa-question" },
-        { title: "QnA", route: "/managing/FAQ", icon: "fas fa-comments" },
-      ],
-    }
+        { title: "QnA", route: "/managing/FAQ", icon: "fas fa-comments" }
+      ]
+    };
   },
   mixins: [authentication],
   methods: {
@@ -135,35 +120,37 @@ export default {
           .get("/api/login/logOut", {
             //axios 사용
           })
-          .then((res) => {
-            this.$router.push("/")
+          .then(res => {
+            console.log("페이지 이동");
+            alert(res.data.message);
+            this.$router.push("/");
           })
           .catch(function(error) {
-            alert("로그아웃 에러")
-          })
+            alert("로그아웃 에러");
+          });
       } else {
         this.$router.push({
           path: route,
           params: { user: "username" },
-          query: { group: "member" },
-        })
+          query: { group: "member" }
+        });
       }
     },
     menu_bell_func: function(route) {
-      eventBus.bell_route(route)
+      eventBus.bell_route(route);
       if (location.pathname == "/mycourse/courseid") {
       } else {
         this.$router.push({
           path: "/mycourse/courseid",
-          query: { tab: route },
-        })
+          query: { tab: route }
+        });
       }
-    },
+    }
   },
   created() {
-    this.check_isauth(true)
-  },
-}
+    this.check_isauth(true);
+  }
+};
 </script>
 
 <style scoped>

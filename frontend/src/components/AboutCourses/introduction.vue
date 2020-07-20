@@ -18,7 +18,7 @@
                       label="Select"
                       v-model="selected">
                     </v-select>
-                    <v-icon>{{ selected }}</v-icon>
+                    <v-icon>{{}}</v-icon>
 
                   </v-col>
                 </v-layout>
@@ -42,15 +42,24 @@
       </v-card>
     </div>
     <div class="introduction-half left">
-      <v-card class="mx-auto" max-width="70%">
+      <v-card class="mx-auto" max-width="100%">
         <p class="card-title">추천 대상</p>
         <v-container>
           <v-row>
+            <v-col cols="12" sm="6" max-width="100%">
+              <v-select
+                v-model="e7"
+                :items="for_who"
+                item-text="title"
+                label="Select"
+                multiple
+                chips
+              ></v-select>
+            </v-col>
             <v-col class="wrap-total-list" v-for="item in for_who" :key="item.title">
               <v-list three-line>
                 <v-icon size="40pt" v-text="item.icon"></v-icon>
                 <v-list-item-title class="toal-list-title"  v-text="item.title"></v-list-item-title>
-                <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
               </v-list>
             </v-col>
           </v-row>
@@ -119,12 +128,15 @@ export default {
       {
         icon: "fas fa-flushed",
         title: "코딩 입문자",
-        subtitle: "코딩 시작"
       },
       {
         icon: "fab fa-python",
         title: "파이썬 개발자",
-        subtitle: "파이썬 기초"
+      },
+      {
+        icon: "fab fa-java",
+        title: "java 개발자",
+
       }
     ],
     curriculum: [

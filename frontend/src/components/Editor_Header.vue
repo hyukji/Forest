@@ -1,75 +1,75 @@
 <template>
   <v-app-bar app color="primary" height="40px">
     <!-- <div class="wrap-appbar"> -->
-      <!-- <v-row> -->
-        <!-- <div class="appbar-left"> -->
-          <v-app-bar-nav-icon @click.stop="click_drawer"></v-app-bar-nav-icon>
-          <v-toolbar-title>
-          <router-link to="/mycourse">
-            <v-img :src="require('../assets/Forest_logo.jpg')" contain height="40"/>
-          </router-link>
-        </v-toolbar-title>
-        <!-- to alian logo to center: <v-spacer/> and mas-width="200" -->
+    <!-- <v-row> -->
+    <!-- <div class="appbar-left"> -->
+    <v-app-bar-nav-icon @click.stop="click_drawer"></v-app-bar-nav-icon>
+    <v-toolbar-title>
+      <router-link to="/mycourse">
+        <v-img :src="require('../assets/Forest_logo.jpg')" contain height="40" />
+      </router-link>
+    </v-toolbar-title>
+    <!-- to alian logo to center: <v-spacer/> and mas-width="200" -->
 
-      <!-- <v-spacer/> -->
-        <!-- <div class="appbar-right"> -->
-          <!-- <v-row no-gutters justify="end" align="center"> -->
-            <v-btn text class="to-mycourse" href="/mycourse">내 강의실</v-btn>
-            <!-- <div class="text-center"> -->
-              <v-menu :offset-y="true" left>
-                <template v-slot:activator="{ on }">
-                  <v-btn icon color="white" dark v-on="on" active-class="false">
-                    <v-icon size="15pt" color="white">fas fa-bell</v-icon>
-                  </v-btn>
-                </template>
-                <v-list class="menus" width="250pt">
-                  <v-list-item-content
-                    two-line
-                    v-for="(item, index) in bell_menus"
-                    :key="index"
-                    @click="menu_bell_func(item.route)"
-                  >
-                    <v-list-item-subtitle class="menu-bell-main">{{item.main}}</v-list-item-subtitle>
-                    <v-list-item-title class="menu-bell-title">{{ item.title }}</v-list-item-title>
-                    <v-list-item-subtitle class="menu-bell-date">{{item.date}}</v-list-item-subtitle>
-                    <v-divider></v-divider>
-                  </v-list-item-content>
-                </v-list>
-              </v-menu>
-            <!-- </div> -->
+    <!-- <v-spacer/> -->
+    <!-- <div class="appbar-right"> -->
+    <!-- <v-row no-gutters justify="end" align="center"> -->
+    <v-btn text class="to-mycourse" href="/mycourse">내 강의실</v-btn>
+    <!-- <div class="text-center"> -->
+    <v-menu :offset-y="true" left>
+      <template v-slot:activator="{ on }">
+        <v-btn icon color="white" dark v-on="on" active-class="false">
+          <v-icon size="15pt" color="white">fas fa-bell</v-icon>
+        </v-btn>
+      </template>
+      <v-list class="menus" width="250pt">
+        <v-list-item-content
+          two-line
+          v-for="(item, index) in bell_menus"
+          :key="index"
+          @click="menu_bell_func(item.route)"
+        >
+          <v-list-item-subtitle class="menu-bell-main">{{item.main}}</v-list-item-subtitle>
+          <v-list-item-title class="menu-bell-title">{{ item.title }}</v-list-item-title>
+          <v-list-item-subtitle class="menu-bell-date">{{item.date}}</v-list-item-subtitle>
+          <v-divider></v-divider>
+        </v-list-item-content>
+      </v-list>
+    </v-menu>
+    <!-- </div> -->
 
-            <!-- <div class="text-center"> -->
-              <v-menu :offset-y="true" left>
-                <template v-slot:activator="{ on }">
-                  <v-btn icon color="white" dark v-on="on" active-class="false">
-                    <v-icon size="15pt" color="white">fas fa-user</v-icon>
-                  </v-btn>
-                </template>
+    <!-- <div class="text-center"> -->
+    <v-menu :offset-y="true" left>
+      <template v-slot:activator="{ on }">
+        <v-btn icon color="white" dark v-on="on" active-class="false">
+          <v-icon size="15pt" color="white">fas fa-user</v-icon>
+        </v-btn>
+      </template>
 
-                <v-list>
-                  <v-list-item-content two-line>
-                    <v-list-item-title class="menu-user_name">{{ user.name }}</v-list-item-title>
-                    <v-list-item-subtitle class="menu-user_mail">{{user.mail}}</v-list-item-subtitle>
-                  </v-list-item-content>
+      <v-list>
+        <v-list-item-content two-line>
+          <v-list-item-title class="menu-user_name">{{ user.name }}</v-list-item-title>
+          <v-list-item-subtitle class="menu-user_mail">{{user.mail}}</v-list-item-subtitle>
+        </v-list-item-content>
 
-                  <v-divider></v-divider>
-                  <v-list-item
-                    class="menu-user-list"
-                    v-for="(item, index) in user_menus"
-                    :key="index"
-                    v-on:click="menu_user_func(item.route)"
-                  >
-                    <v-list-item-icon>
-                      <v-icon v-text="item.icon" size="15pt"></v-icon>
-                    </v-list-item-icon>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            <!-- </div> -->
-          <!-- </v-row> -->
-        <!-- </div> -->
-      <!-- </v-row> -->
+        <v-divider></v-divider>
+        <v-list-item
+          class="menu-user-list"
+          v-for="(item, index) in user_menus"
+          :key="index"
+          v-on:click="menu_user_func(item.route)"
+        >
+          <v-list-item-icon>
+            <v-icon v-text="item.icon" size="15pt"></v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+    <!-- </div> -->
+    <!-- </v-row> -->
+    <!-- </div> -->
+    <!-- </v-row> -->
     <!-- </div> -->
   </v-app-bar>
 </template>
@@ -128,23 +128,23 @@ export default {
     },
     menu_bell_func: function(route) {
       //eventBus.bell_route(route);
-      if (location.pathname == "/course/courseid") {
+      if (location.pathname == "/mycourse/courseid") {
       } else {
         this.$router.push({
-          path: "/course/courseid",
+          path: "/mycourse/courseid",
           query: { tab: route }
         });
       }
     },
-    click_drawer (event) {
-      this.drawer = !this.drawer
-      eventBus.$emit("clickDrawer", this.drawer)
+    click_drawer(event) {
+      this.drawer = !this.drawer;
+      eventBus.$emit("clickDrawer", this.drawer);
     }
   },
   created() {
-    eventBus.$on("selectLecture", (drawer) => {
-      this.drawer = drawer
-    })
+    eventBus.$on("selectLecture", drawer => {
+      this.drawer = drawer;
+    });
   }
 };
 </script>

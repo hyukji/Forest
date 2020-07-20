@@ -1,28 +1,21 @@
 <template>
   <div class="wrap-introduction">
-      <div class="introduction-half right">
+    <div class="introduction-half right">
       <v-card class="mx-auto" max-width="70%">
         <p class="card-title">개요</p>
         <v-container>
           <v-row>
             <div class="card-half left">
-              <v-container fluid>
-                <v-layout row wrap>
-                  <v-col class="d-flex" cols="12" sm="10">
-                  </v-col>
-                  <v-col class="d-flex" cols="12" sm="10">
+              <v-icon size="40pt">{{ language2.selected_lang }}</v-icon>
 
-                    <v-select
-                      :items="language"
-                      item-text="title"
-                      label="Select"
-                      v-model="selected">
-                    </v-select>
-                    <v-icon>{{ selected }}</v-icon>
-
-                  </v-col>
-                </v-layout>
-              </v-container>
+              <v-col class="d-flex" cols="12" sm="10">
+                <v-select
+                  :items="language"
+                  item-text="title"
+                  label="Select"
+                  v-model="selected_lang"
+                ></v-select>
+              </v-col>
             </div>
             <div class="card-half right">
               <v-icon size="40pt" color="selected">fas fa-chart-bar</v-icon>
@@ -31,9 +24,9 @@
                   :items="difficulty"
                   label="difficulty"
                   item-text="title"
-                  v-model="selected">
-                  <option v-for="option in difficulty" v-bind:value="option.color">
-                  </option>
+                  v-model="selected"
+                >
+                  <option v-for="option in difficulty" v-bind:value="option.color"></option>
                 </v-select>
               </v-col>
             </div>
@@ -49,7 +42,7 @@
             <v-col class="wrap-total-list" v-for="item in for_who" :key="item.title">
               <v-list three-line>
                 <v-icon size="40pt" v-text="item.icon"></v-icon>
-                <v-list-item-title class="toal-list-title"  v-text="item.title"></v-list-item-title>
+                <v-list-item-title class="toal-list-title" v-text="item.title"></v-list-item-title>
                 <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
               </v-list>
             </v-col>
@@ -57,9 +50,9 @@
         </v-container>
       </v-card>
     </div>
-    <p class="card-title"> 과목 소개 </p>
-    <p class="body"> 준비중입니다 </p>
-    <p class="card-title"> 수업 과정 </p>
+    <p class="card-title">과목 소개</p>
+    <p class="body">준비중입니다</p>
+    <p class="card-title">수업 과정</p>
     <ul>
       <v-list-item v-for="item in curriculum" :key="item.title">
         <v-list-item-avatar>
@@ -71,7 +64,6 @@
         </v-list-item-content>
       </v-list-item>
     </ul>
-
   </div>
 </template>
 
@@ -81,38 +73,42 @@ export default {
   name: "introduction",
   components: {},
   data: () => ({
-
+    selected_lang: "",
     middle_title: "강의소개",
+    language2: {
+      python: "fab fa-python"
+    },
+
     language: [
       {
         icon: "fab fa-python",
-        title: "python",
+        title: "python"
       },
       {
         icon: "fab fa-java",
-        title: "java",
+        title: "java"
       },
       {
         icon: "fab fa-vuejs",
-        title: "vue.js",
+        title: "vue.js"
       }
     ],
-    difficulty:[
+    difficulty: [
       {
         title: "입문",
-        color: "yellow",
+        color: "yellow"
       },
       {
         title: "초보",
-        color: "green",
+        color: "green"
       },
       {
         title: "중급",
-        color: "blue",
+        color: "blue"
       },
       {
         title: "고급",
-        color: "red",
+        color: "red"
       }
     ],
     for_who: [
@@ -141,14 +137,17 @@ export default {
         content: "course3 내용입니다"
       }
     ],
-    customFilter (item, queryText, itemText) {
-      const hasValue = val => val != null ? val : ''
-        const text = hasValue(item.name)
-        const query = hasValue(queryText)
-        return text.toString()
+    customFilter(item, queryText, itemText) {
+      const hasValue = val => (val != null ? val : "");
+      const text = hasValue(item.name);
+      const query = hasValue(queryText);
+      return (
+        text
+          .toString()
           .toLowerCase()
           .indexOf(query.toString().toLowerCase()) > -1
-        }
+      );
+    }
   }),
 
   methods: {
@@ -200,25 +199,25 @@ export default {
   padding-left: 2%;
   padding-right: 2%;
 }
-.card-half{
+.card-half {
   display: inline-block;
   width: 50%;
   padding-left: 2%;
   padding-right: 2%;
   text-align: center;
 }
-.course_title{
+.course_title {
   font-size: 1.2rem;
   font-weight: 550;
 }
-.body{
+.body {
   padding-left: 5%;
   color: gray;
 }
-.text-center{
+.text-center {
   padding-bottom: 2%;
 }
-.d-flex{
+.d-flex {
   text-algin: center;
 }
 </style>

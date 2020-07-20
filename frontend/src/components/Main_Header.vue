@@ -22,26 +22,6 @@ export default {
     return {};
   },
   mixins: [authentication],
-  methods: {
-    menu_user_func: function(route) {
-      this.$router.push({
-        path: route,
-        params: { user: "username" },
-        query: { group: "member" }
-      });
-      // route==logout이면 백이용해서 로그아웃하고홈으로
-    },
-    menu_bell_func: function(route) {
-      eventBus.bell_route(route);
-      if (location.pathname == "/course/courseid") {
-      } else {
-        this.$router.push({
-          path: "/course/courseid",
-          query: { tab: route }
-        });
-      }
-    }
-  },
   created() {
     this.check_isauth(false);
   }

@@ -12,12 +12,12 @@
                   </v-col>
                   <v-col class="d-flex" cols="12" sm="10">
 
-              <!-- <v-icon size="40pt">{{ selected }}</v-icon> -->
+              <v-icon size="40pt">{{ selected }}</v-icon>
                     <v-select
                       :items="language"
                       item-text="title"
-                      item-value="icon"
-                      label="Language"
+                      item-value="value"
+                      label="Select"
                       v-model="selected">
                     </v-select>
 
@@ -26,7 +26,7 @@
               </v-container>
             </div>
             <div class="card-half right">
-              <v-icon size="40pt">fas fa-chart-bar</v-icon>
+              <v-icon size="40pt" color="selected">fas fa-chart-bar</v-icon>
               <v-col class="d-flex" cols="12" sm="10">
                 <v-select
                   :items="difficulty"
@@ -43,15 +43,24 @@
       </v-card>
     </div>
     <div class="introduction-half left">
-      <v-card class="mx-auto" max-width="70%">
+      <v-card class="mx-auto" max-width="100%">
         <p class="card-title">추천 대상</p>
         <v-container>
           <v-row>
+            <!--<v-col cols="12" sm="6">
+              <v-select
+                v-model="e7"
+                :items="for_who"
+                item-text="title"
+                label="Select"
+                multiple
+                chips
+              ></v-select>
+            </v-col>-->
             <v-col class="wrap-total-list" v-for="item in for_who" :key="item.title">
               <v-list three-line>
                 <v-icon size="40pt" v-text="item.icon"></v-icon>
                 <v-list-item-title class="toal-list-title"  v-text="item.title"></v-list-item-title>
-                <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
               </v-list>
             </v-col>
           </v-row>
@@ -80,9 +89,10 @@
 // @ is an alias to /src
 export default {
   name: "introduction",
+  selected: null,
   components: {},
   data: () => ({
-    selected: null,
+
     middle_title: "강의소개",
     language: [
       {
@@ -120,12 +130,15 @@ export default {
       {
         icon: "fas fa-flushed",
         title: "코딩 입문자",
-        subtitle: "코딩 시작"
       },
       {
         icon: "fab fa-python",
         title: "파이썬 개발자",
-        subtitle: "파이썬 기초"
+      },
+      {
+        icon: "fab fa-java",
+        title: "java 개발자",
+
       }
     ],
     curriculum: [
@@ -155,11 +168,6 @@ export default {
   methods: {
     change_title: function(title) {
       this.title = title;
-    }
-  },
-  watch: {
-    selected(val) {
-      console.log(val)
     }
   }
 };

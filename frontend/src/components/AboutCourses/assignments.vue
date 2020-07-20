@@ -1,9 +1,9 @@
 <template>
   <v-card
-    max-width="1000"
+    max-width="1200"
     class="ma-10"
   >
-    <v-list>
+    <v-list >
       <v-list-group
         v-for="item in items"
         :key="item.title"
@@ -67,8 +67,7 @@ data: function() {
       items: [
         {
           icon: "fas fa-edit",
-          title: '과제1',
-          active: true,
+          title: '과제 01',
           items: [
             { title: '01. 문자열 출력하기', score: 10, perfect:20},
             { title: '02. 사칙연산 활용하기', score: 20, perfect:20 },

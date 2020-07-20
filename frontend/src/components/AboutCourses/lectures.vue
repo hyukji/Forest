@@ -1,6 +1,6 @@
 <template>
   <v-card
-    max-width="1000"
+    max-width="1200"
     class="ma-10"
   >
     <v-list>
@@ -38,7 +38,6 @@
           v-for="subItem in item.items"
           :key="subItem.title"
           @click="">
-
           <v-list-item-content>
             <v-list-item-title v-text="subItem.title"></v-list-item-title>
           </v-list-item-content>
@@ -58,8 +57,7 @@ export default {
         items: [
           {
             icon: "fas fa-book",
-            title: '수업1',
-            active: true,
+            title: '수업 01',
             items: [
               { title: '01. 문자열 출력하기' },
               { title: '02. 사칙연산 활용하기' },
@@ -108,6 +106,7 @@ export default {
 </script>
 
 <style scoped>
+
 .title_font {
   font-size : 1.2rem;
   font-weight : 600;

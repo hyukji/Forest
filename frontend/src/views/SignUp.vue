@@ -195,6 +195,8 @@ export default {
     },
     mail: function(event) {
       alert("mail sent!");
+      this.$http
+      .post("/api/mail/sendmail",{ email: this.user.email, }).then(res => {})
     },
     certification: function(event) {
       alert("인증되었습니다.");

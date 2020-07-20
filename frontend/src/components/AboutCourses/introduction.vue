@@ -6,34 +6,28 @@
         <v-container>
           <v-row>
             <div class="card-half left">
-              <v-container fluid>
-                <v-layout row wrap>
-                  <v-col class="d-flex" cols="12" sm="10">
-                  </v-col>
-                  <v-col class="d-flex" cols="12" sm="10">
-
-              <v-icon size="40pt">{{ selected }}</v-icon>
-                    <v-select
-                      :items="language"
-                      item-text="title"
-                      item-value="icon"
-                      label="Select"
-                      v-model="selected">
-                    </v-select>
-
-                  </v-col>
-                </v-layout>
-              </v-container>
+              <v-layout row wrap>
+                <v-col class="wrap-total-list" cols="12" sm="10">
+                  <v-icon size="40pt">{{ selected }}</v-icon>
+                  <v-select
+                    :items="language"
+                    item-text="title"
+                    item-value="icon"
+                    label="Language"
+                    v-model="selected">
+                  </v-select>
+                </v-col>
+              </v-layout>
             </div>
             <div class="card-half right">
-              <v-icon size="40pt" color="selected">fas fa-chart-bar</v-icon>
+              <v-icon size="40pt">{{selected2}}</v-icon>
               <v-col class="d-flex" cols="12" sm="10">
                 <v-select
                   :items="difficulty"
                   label="difficulty"
-                  item-text="title">
-                  <option v-for="option in difficulty" v-bind:value="option.color">
-                  </option>
+                  item-text="title"
+                  item-value="icon"
+                  v-model="selected2">
                 </v-select>
               </v-col>
             </div>
@@ -46,21 +40,16 @@
         <p class="card-title">추천 대상</p>
         <v-container>
           <v-row>
-            <!--<v-col cols="12" sm="6">
+            <v-col cols="12" sm="12">
               <v-select
-                v-model="e7"
                 :items="for_who"
                 item-text="title"
                 label="Select"
                 multiple
                 chips
-              ></v-select>
-            </v-col>-->
-            <v-col class="wrap-total-list" v-for="item in for_who" :key="item.title">
-              <v-list three-line>
-                <v-icon size="40pt" v-text="item.icon"></v-icon>
-                <v-list-item-title class="toal-list-title"  v-text="item.title"></v-list-item-title>
-              </v-list>
+                v-model="selectwho">
+              </v-select>
+              <v-icon size="40pt">{{selectwho}}</v-icon>
             </v-col>
           </v-row>
         </v-container>
@@ -72,7 +61,7 @@
     <ul>
       <v-list-item v-for="item in curriculum" :key="item.title">
         <v-list-item-avatar>
-          <v-icon size="20pt" color="gray">far fa-clipboard</v-icon>
+          <v-icon size="20pt" color="grey">far fa-clipboard</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
           <v-list-item-title class="course_title" v-text="item.list_title"></v-list-item-title>
@@ -90,7 +79,9 @@ export default {
   name: "introduction",
   components: {},
   data: () => ({
-  selected: null,
+    selected: null,
+    selected2: null,
+    selectwho: null,
     middle_title: "강의소개",
     language: [
       {
@@ -109,19 +100,19 @@ export default {
     difficulty:[
       {
         title: "입문",
-        color: "yellow",
+        icon: "far fa-smile-wink",
       },
       {
         title: "초보",
-        color: "green",
+        icon: "far fa-smile-beam",
       },
       {
         title: "중급",
-        color: "blue",
+        icon: "far fa-flushed",
       },
       {
         title: "고급",
-        color: "red",
+        icon: "far fa-sad-tear",
       }
     ],
     for_who: [
@@ -162,17 +153,7 @@ export default {
           .indexOf(query.toString().toLowerCase()) > -1
         }
   }),
-
-  methods: {
-    change_title: function(title) {
-      this.title = title;
-    }
-  },
-  watch: {
-    selected(val) {
-      console.log(val)
-    }
-  }
+  methods: {},
 };
 </script>
 
@@ -238,4 +219,5 @@ export default {
 .d-flex{
   text-algin: center;
 }
+
 </style>

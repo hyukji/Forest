@@ -6,16 +6,22 @@
         <v-container>
           <v-row>
             <div class="card-half left">
-              <v-icon size="40pt">{{ language2.selected_lang }}</v-icon>
-
-              <v-col class="d-flex" cols="12" sm="10">
-                <v-select
-                  :items="language"
-                  item-text="title"
-                  label="Select"
-                  v-model="selected_lang"
-                ></v-select>
-              </v-col>
+              <v-container fluid>
+                <v-layout row wrap>
+                  <v-col class="d-flex" cols="12" sm="10"> </v-col>
+                  <v-col class="d-flex" cols="12" sm="10">
+                    <v-icon size="40pt">{{ selected }}</v-icon>
+                    <v-select
+                      :items="language"
+                      item-text="title"
+                      item-value="icon"
+                      label="Select"
+                      v-model="selected"
+                    >
+                    </v-select>
+                  </v-col>
+                </v-layout>
+              </v-container>
             </div>
             <div class="card-half right">
               <v-icon size="40pt" color="selected">fas fa-chart-bar</v-icon>
@@ -24,9 +30,13 @@
                   :items="difficulty"
                   label="difficulty"
                   item-text="title"
-                  v-model="selected"
                 >
-                  <option v-for="option in difficulty" v-bind:value="option.color"></option>
+                  <option
+                    v-for="option in difficulty"
+                    v-bind:value="option.color"
+                    :key="option"
+                  >
+                  </option>
                 </v-select>
               </v-col>
             </div>
@@ -35,15 +45,31 @@
       </v-card>
     </div>
     <div class="introduction-half left">
-      <v-card class="mx-auto" max-width="70%">
+      <v-card class="mx-auto" max-width="100%">
         <p class="card-title">추천 대상</p>
         <v-container>
           <v-row>
-            <v-col class="wrap-total-list" v-for="item in for_who" :key="item.title">
+            <!--<v-col cols="12" sm="6">
+              <v-select
+                v-model="e7"
+                :items="for_who"
+                item-text="title"
+                label="Select"
+                multiple
+                chips
+              ></v-select>
+            </v-col>-->
+            <v-col
+              class="wrap-total-list"
+              v-for="item in for_who"
+              :key="item.title"
+            >
               <v-list three-line>
                 <v-icon size="40pt" v-text="item.icon"></v-icon>
-                <v-list-item-title class="toal-list-title" v-text="item.title"></v-list-item-title>
-                <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                <v-list-item-title
+                  class="toal-list-title"
+                  v-text="item.title"
+                ></v-list-item-title>
               </v-list>
             </v-col>
           </v-row>
@@ -59,7 +85,10 @@
           <v-icon size="20pt" color="gray">far fa-clipboard</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title class="course_title" v-text="item.list_title"></v-list-item-title>
+          <v-list-item-title
+            class="course_title"
+            v-text="item.list_title"
+          ></v-list-item-title>
           <v-list-item-content v-text="item.content"></v-list-item-content>
         </v-list-item-content>
       </v-list-item>
@@ -73,89 +102,92 @@ export default {
   name: "introduction",
   components: {},
   data: () => ({
-    selected_lang: "",
+    selected: null,
     middle_title: "강의소개",
-    language2: {
-      python: "fab fa-python"
-    },
-
     language: [
       {
         icon: "fab fa-python",
-        title: "python"
+        title: "python",
       },
       {
         icon: "fab fa-java",
-        title: "java"
+        title: "java",
       },
       {
         icon: "fab fa-vuejs",
-        title: "vue.js"
-      }
+        title: "vue.js",
+      },
     ],
     difficulty: [
       {
         title: "입문",
-        color: "yellow"
+        color: "yellow",
       },
       {
         title: "초보",
-        color: "green"
+        color: "green",
       },
       {
         title: "중급",
-        color: "blue"
+        color: "blue",
       },
       {
         title: "고급",
-        color: "red"
-      }
+        color: "red",
+      },
     ],
     for_who: [
       {
         icon: "fas fa-flushed",
         title: "코딩 입문자",
-        subtitle: "코딩 시작"
       },
       {
         icon: "fab fa-python",
         title: "파이썬 개발자",
-        subtitle: "파이썬 기초"
-      }
+      },
+      {
+        icon: "fab fa-java",
+        title: "java 개발자",
+      },
     ],
     curriculum: [
       {
         list_title: "Course1",
-        content: "course1 내용입니다"
+        content: "course1 내용입니다",
       },
       {
         list_title: "Course2",
-        content: "course2 내용입니다"
+        content: "course2 내용입니다",
       },
       {
         list_title: "Course3",
-        content: "course3 내용입니다"
-      }
+        content: "course3 내용입니다",
+      },
     ],
     customFilter(item, queryText, itemText) {
-      const hasValue = val => (val != null ? val : "");
-      const text = hasValue(item.name);
-      const query = hasValue(queryText);
+      const hasValue = (val) => (val != null ? val : "")
+      const text = hasValue(item.name)
+      const query = hasValue(queryText)
       return (
         text
           .toString()
           .toLowerCase()
           .indexOf(query.toString().toLowerCase()) > -1
-      );
-    }
+      )
+    },
   }),
 
   methods: {
     change_title: function(title) {
-      this.title = title;
-    }
-  }
-};
+      this.title = title
+    },
+  },
+  watch: {
+    selected(val) {
+      console.log(val)
+    },
+  },
+}
 </script>
 
 <style scoped>

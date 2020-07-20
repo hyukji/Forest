@@ -6,21 +6,34 @@
         <v-container>
           <v-row>
             <div class="card-half left">
-              <v-col class="d-flex" cols="12" sm="10">
-                <v-select
-                  :items="language"
-                  label="language"
-                  item-text="title">
-                </v-select>
-              </v-col>
+              <v-container fluid>
+                <v-layout row wrap>
+                  <v-col class="d-flex" cols="12" sm="10">
+                  </v-col>
+                  <v-col class="d-flex" cols="12" sm="10">
+
+                    <v-select
+                      :items="language"
+                      item-text="title"
+                      label="Select"
+                      v-model="selected">
+                    </v-select>
+                    <v-icon>{{ selected }}</v-icon>
+
+                  </v-col>
+                </v-layout>
+              </v-container>
             </div>
             <div class="card-half right">
-              <v-icon size="40pt">fas fa-chart-bar</v-icon>
+              <v-icon size="40pt" color="selected">fas fa-chart-bar</v-icon>
               <v-col class="d-flex" cols="12" sm="10">
                 <v-select
                   :items="difficulty"
                   label="difficulty"
-                  item-text="title">
+                  item-text="title"
+                  v-model="selected">
+                  <option v-for="option in difficulty" v-bind:value="option.color">
+                  </option>
                 </v-select>
               </v-col>
             </div>
@@ -68,6 +81,7 @@ export default {
   name: "introduction",
   components: {},
   data: () => ({
+
     middle_title: "강의소개",
     language: [
       {
@@ -78,6 +92,10 @@ export default {
         icon: "fab fa-java",
         title: "java",
       },
+      {
+        icon: "fab fa-vuejs",
+        title: "vue.js",
+      }
     ],
     difficulty:[
       {
@@ -123,10 +141,19 @@ export default {
         content: "course3 내용입니다"
       }
     ],
+    customFilter (item, queryText, itemText) {
+      const hasValue = val => val != null ? val : ''
+        const text = hasValue(item.name)
+        const query = hasValue(queryText)
+        return text.toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1
+        }
   }),
+
   methods: {
-    change_middle_title: function(title) {
-      this.middle_title = title;
+    change_title: function(title) {
+      this.title = title;
     }
   }
 };

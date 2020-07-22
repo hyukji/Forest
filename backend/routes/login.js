@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../models/user")
+const SessionLog = require("../models/session_log")
+
 var passport = require("passport")
 
 const bcrypt = require("bcrypt") //Node.js 에서 제공하는 암호화 모듈
@@ -53,6 +55,15 @@ router.post("/signUp", async function (req, res, next) {
           return
         }
       })
+
+      const nw_session_log = new SessionLog()
+
+      nw_session_log.name = req.body.user.name
+      nw_session_log.student_id = req.body.user.student_id
+      nw_session_log.email = req.body.user.email + "@dgist.ac.kr"
+
+      nw_session_log.save()
+
       res.json({ result: 1, message: "Forest에 오신 걸 환영합니다!" })
     } else {
       res.json({ result: 0, message: "이미 존재하는 Email입니다." })

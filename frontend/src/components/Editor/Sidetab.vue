@@ -1,9 +1,9 @@
 <template>
-  <v-card class="wrap" flat>
-      <v-row class="fill-height" no-gutters>
+  <!-- <v-card class="wrap" flat> -->
+      <!-- <v-row class="fill-height" no-gutters> -->
         <v-navigation-drawer dark mini-variant mini-variant-width="56" permanent class="menu">
           <v-list dense nav>
-            <v-list-item-group v-model="selected" active-class>
+            <v-list-item-group v-model="drawer.selected" active-class>
             <v-list-item v-for="tab in main" :key="tab.name" :value="tab.name">
               <v-list-item-action>
                 <v-icon>{{ tab.icon }}</v-icon>
@@ -18,8 +18,8 @@
           <v-divider/>
           <v-divider/>
 
-            <v-list-item-group v-model="on" active-class multiple>
-            <v-list-item v-for="tab in additional" :key="tab.name">
+            <v-list-item-group v-model="drawer.on" active-class multiple>
+            <v-list-item v-for="tab in additional" :key="tab.name" :value="tab.name">
               <v-list-item-action>
                 <v-icon>{{ tab.icon }}</v-icon>
               </v-list-item-action>
@@ -31,23 +31,21 @@
           </v-list-item-group>
           </v-list>
 
+          <v-btn @click="click" />
 
         </v-navigation-drawer>
 
         <!-- <v-col class="content"> -->
-      <v-navigation-drawer v-model="drawer" :permanent="permanent" dark class="content">
-        <component :is="selected"/>
-      </v-navigation-drawer>
       <!-- </v-col> -->
 
-      </v-row>
+      <!-- </v-row> -->
 
     <!-- <v-navigation-drawer
           permanent
           width="100%"
         >
         </v-navigation-drawer> -->
-  </v-card>
+  <!-- </v-card> -->
 </template>
 
 <script>
@@ -56,17 +54,19 @@
 export default {
   name: "sidetab",
   components: {
-    Tree: () => import('@/components/Editor/Side_tree'),
-    Explain: () => import('@/components/Editor/Side_explain'),
-    Search: () => import('@/components/Editor/Side_search'),
-    Setting: () => import('@/components/Editor/Side_setting')
+    // tree: () => import('@/components/editor/side_tree'),
+    // explain: () => import('@/components/editor/side_explain'),
+    // search: () => import('@/components/editor/side_search'),
+    // setting: () => import('@/components/editor/side_setting')
+  },
+  props: {
+    drawer: {
+      type: Object, //object props reference parent's data
+      required: true,
+    },
   },
   data () {
     return {
-      selected: null,
-      drawer: false,
-      permanent: false,
-      on: [],
       main: [
         { name: 'Tree', icon: 'fas fa-list' },
         { name: 'Explain', icon: 'far fa-file-alt' },
@@ -81,32 +81,35 @@ export default {
     }
   },
   watch : {
-    selected: function(val) {
-      console.log(this.selected, val, this.drawer)
-      if (val === undefined) {
-        this.drawer = false
-        this.permanent = false
-        console.log('if', this.drawer)
-      } else {
-        this.drawer = true
-        this.permanent = true
-        console.log('else', this.drawer)
+    drawer: {
+      deep: true,
+      handler(val) {
+        console.log('watch')
+        if (this.drawer.selected != null) {
+          this.drawer.open = true
+        } else {
+          this.drawer.open = false
+        }
       }
+    }
+  },
+  methods: {
+    click() {
+      console.log(this.drawer)
     }
   }
 };
 </script>
 
 <style scoped>
+
 .wrap {
-  position: absolute;
+  /* width: 56px;
   height: 100%;
-}
-.menu {
-  z-index: 2;
+  padding: 0px;
+  margin: 0px; */
 }
 .content {
-  z-index: 1;
-  width: 100%;
+
 }
 </style>

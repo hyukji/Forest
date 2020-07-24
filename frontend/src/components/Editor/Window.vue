@@ -7,9 +7,10 @@
   <!-- <vue-resizable
     :max-height="800" :min-width="100" fitParent>
         <div class="resizable-content"> -->
-        <pane v-for="i in 3" :key="i">
-  <component :is="selected" ref="tab" v-model="tab" :tabs="tabs"/>
-    <!-- </vue-resizable> --></pane>
+        <!-- <pane v-for="i in 3" :key="i"> -->
+        34
+  <!-- <component :is="selected" ref="tab" v-model="tab" :tabs="tabs"/> -->
+    <!-- </vue-resizable> -->
 </div>
 </template>
 
@@ -68,6 +69,7 @@ export default {
 
   },
   created() {
+    console.log("created")
     this.selected = VueTabsChrome.VueTabsChrome //typeerror?
   }
 
@@ -76,13 +78,13 @@ export default {
 
 <style scoped>
 .wrap {
-  /* width: 100%; */
+  width: 100%;
   height: 100%;
   border: 1px solid #dddddd
 }
-    .resizable-content {
+    /* .resizable-content {
         width: 100%;
         height: 100%;
         background-color: #565656;
-    }
+    } */
 </style>

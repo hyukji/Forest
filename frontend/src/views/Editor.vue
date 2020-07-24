@@ -14,7 +14,8 @@
       <side-content :selected="drawer.selected"/>
     </pane>
     <pane>
-      <div>2</div>
+      <window/>
+
     </pane>
     <pane>
       <div>3</div>

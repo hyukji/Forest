@@ -1,6 +1,4 @@
 <template>
-  <!-- <v-card class="wrap" flat> -->
-      <!-- <v-row class="fill-height" no-gutters> -->
         <v-navigation-drawer dark mini-variant mini-variant-width="56" permanent class="menu">
           <v-list dense nav>
             <v-list-item-group v-model="drawer.selected" active-class>
@@ -35,17 +33,6 @@
 
         </v-navigation-drawer>
 
-        <!-- <v-col class="content"> -->
-      <!-- </v-col> -->
-
-      <!-- </v-row> -->
-
-    <!-- <v-navigation-drawer
-          permanent
-          width="100%"
-        >
-        </v-navigation-drawer> -->
-  <!-- </v-card> -->
 </template>
 
 <script>

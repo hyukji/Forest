@@ -43,7 +43,7 @@
 
     <component v-bind:is="selectedComponent"></component>
 
-    <!-- 
+    <!--
     <dashboard v-if="middle_title == '대시보드'"></dashboard>
     <grade v-else-if="middle_title == '학습현황'"></grade>
     <introduction v-else-if="middle_title == '강의소개'"></introduction>
@@ -79,7 +79,7 @@ export default {
     sidebar_board: () =>
       import("@/components/AboutCourses/board/sidebar_board"),
     assignments: () => import("@/components/AboutCourses/assignments"),
-    stud_care: () => import("../components/AboutCourses/Stud_Care"),
+    stud_care: () => import("../components/AboutCourses/Student_Care/student"),
     course_care: () => import("../components/AboutCourses/Course_Care")
   },
   data: function() {

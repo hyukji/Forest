@@ -31,8 +31,8 @@ export default {
     this.editor = ace.edit("editor", {
     	mode: "ace/mode/python",
     	theme: "ace/theme/chrome",
-    	maxLines: 50,
-    	minLines: 10,
+    	maxLines: 200,
+    	minLines: 40,
     	fontSize: 18
     });
   }

@@ -30,6 +30,7 @@ var courseSchema = new Schema({
   prof: [String],
   code: String,
   language: String,
+  recommend: [String],
   dashboard: [dashSchema],
   introduction: [introSchema],
   lecture: [lectureSchema],

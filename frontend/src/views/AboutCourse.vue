@@ -74,7 +74,7 @@ export default {
     introduction: () => import("@/components/AboutCourses/introduction"),
     board: () => import("@/components/AboutCourses/board/board"),
     assignments: () => import("@/components/AboutCourses/assignments"),
-    stud_care: () => import("../components/AboutCourses/Stud_Care"),
+    stud_care: () => import("../components/AboutCourses/Student_Care/student"),
     course_care: () => import("../components/AboutCourses/Course_Care")
   },
   data: function() {

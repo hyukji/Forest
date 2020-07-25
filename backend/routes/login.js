@@ -96,14 +96,43 @@ router.get("/logOut", async function (req, res) {
   if (!req.isAuthenticated()) {
     return
   }
+
+  SessionLog.findOne(
+    {
+      name: req.user.name,
+      email: req.user.email,
+    },
+    (finderror11, sessionlog) => {
+      if (finderror11) {
+        console.log("find error11")
+      }
+
+      var moment = require("moment")
+      require("moment-timezone")
+      moment.tz.setDefault("Asia/Seoul")
+      var logout_time = moment().format("YYYY-MM-DD HH:mm:ss")
+
+      var sizeofaccess = sessionlog.access_data.length - 1
+
+      sessionlog.access_data[sizeofaccess].logout_time = logout_time
+
+      sessionlog.save(function (err) {
+        if (err) {
+          console.error("sessionlog 저장에러")
+          return done(null, false)
+        }
+      })
+    }
+  )
+
   req.logout()
-  console.log("로그아웃 1")
+
   req.session.destroy(function (err) {
     if (err) {
       console.log("로그아웃 에러 1")
       return next(err)
     }
-    console.log("로그아웃 2")
+
     res.json({ result: 1, message: "로그아웃 되었습니다!" })
     return
     // The response should indicate that the user is no longer authenticated.

@@ -1,5 +1,5 @@
 <template>
-<span >
+<div class="wrap">
   <v-row class="wrap">
   <side-tab :drawer="drawer"/>
   <!-- <side-content/> -->
@@ -14,15 +14,19 @@
       <side-content :selected="drawer.selected"/>
     </pane>
     <pane>
-      <window/>
+  <component :is="selected" ref="tab" v-model="tab" :tabs="tabs"/>
+<window-code/>
 
     </pane>
     <pane>
-      <div>3</div>
+  <v-btn @click="click" />
+
+  <component :is="selected" ref="tab" v-model="tab" :tabs="tabs"/>
+  <window-terminal/>
     </pane>
   </splitpanes>
   </v-row>
-</span>
+</div>
 </template>
 
 <script>
@@ -30,14 +34,16 @@
 import { eventBus } from "../main.js"
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
+import VueTabsChrome from 'vue-tabs-chrome'
 
 export default {
   name: "editor",
   components: {
     Drawer: () => import('@/components/Editor/Drawer'),
-    SideTab: () => import('@/components/Editor/Sidetab'),
-    SideContent: () => import('@/components/Editor/Sidecontent'),
-    Window: () => import('@/components/Editor/Window'),
+    SideTab: () => import('@/components/Editor/SideTab'),
+    SideContent: () => import('@/components/Editor/SideContent'),
+    WindowCode: () => import('@/components/Editor/WindowCode'),
+    WindowTerminal: () => import('@/components/Editor/WindowTerminal'),
     Splitpanes,
     Pane
   },
@@ -48,7 +54,7 @@ export default {
         selected: null,
         on: []
       },
-      hide: false,
+      selected: null,
       tab: 'google',
       tabs: [{
           label: 'google',
@@ -63,7 +69,7 @@ export default {
         },
         {
           label: 'New Tab',
-          key: 'costom key',
+          key: 'costom_key',
           favico: (h, {
             tab,
             index
@@ -76,10 +82,26 @@ export default {
 
   },
   methods: {
-    addTab() {
-      console.log("addtab")
+    click() {
+      let item = 'tab' + Date.now()
+      let newTabs = [
+        {
+          label: 'New Tab',
+          key: item,
+          closable: true
+        }
+      ]
+      console.log(...newTabs)
+      console.log(newTabs)
+      this.$refs.tab.addTab(...newTabs)
+      this.tab = item
     },
 
+  },
+
+  created() {
+    console.log("created")
+    this.selected = VueTabsChrome.VueTabsChrome //typeerror?
   }
 
 };

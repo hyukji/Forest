@@ -1,8 +1,7 @@
 <template>
 <div class="wrap">
 
-  <div id="editor">print("Hi I'm Ace Editor")
-    #comment</div>
+  <div id="editor">{{ code }}</div>
 
 
 </div>
@@ -11,11 +10,13 @@
 <script>
 import 'ace-builds'
 import 'ace-builds/webpack-resolver'
+import { eventBus } from "../../main.js"
 
 export default {
   components: { },
   data() {
     return {
+      code: "print(\"Hi I'm Ace Editor\") #comment"
     }
   },
   methods: {
@@ -24,7 +25,9 @@ export default {
     // },
   },
   created() {
-
+    eventBus.$on('giveMeCode', () => {
+      eventBus.$emit('sendCode', this.code)
+    })
   },
   mounted() {
 

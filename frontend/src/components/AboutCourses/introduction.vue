@@ -44,9 +44,11 @@
               <v-select
                 :items="for_who"
                 item-text="title"
+                item-value="icon"
                 label="Select"
                 multiple
                 chips
+                deletable-chips
                 v-model="selectwho">
               </v-select>
               <v-icon size="40pt">{{selectwho}}</v-icon>
@@ -83,7 +85,7 @@ export default {
   data: () => ({
     selected: null,
     selected2: null,
-    selectwho: null,
+    selectwho: [],
     middle_title: "강의소개",
     language: [
       {

@@ -43,14 +43,13 @@
 
     <component v-bind:is="selectedComponent"></component>
 
-    <!-- 
+    <!--
     <dashboard v-if="middle_title == '대시보드'"></dashboard>
     <grade v-else-if="middle_title == '학습현황'"></grade>
     <introduction v-else-if="middle_title == '강의소개'"></introduction>
     <lectures v-else-if="middle_title == '수업목록'"></lectures>
-    <assignments v-else-if="middle_title == '과제목록'"></assignments>
-
-    <div v-else class="wrap-board">
+    <assignments v-else-if="middle_title == '과제목록'"></assignments>-->
+    <!-- <div v-else class="wrap-board">
       <sidebar_board
         :sidebar_title="middle_title"
         @ChangeComponent="change_middle_title"
@@ -58,7 +57,7 @@
       <notice v-if="middle_title == '공지사항'"></notice>
       <freeboard v-if="middle_title == '자유게시판'"></freeboard>
       <qnaboard v-if="middle_title == 'QnA'"></qnaboard>
-    </div>-->
+    </div> -->
   </div>
 </template>
 
@@ -70,16 +69,12 @@ export default {
   name: "Mycourse",
   components: {
     lectures: () => import("@/components/AboutCourses/lectures"),
-    freeboard: () => import("@/components/AboutCourses/board/freeboard"),
-    qnaboard: () => import("@/components/AboutCourses/board/qnaboard"),
-    notice: () => import("@/components/AboutCourses/board/notice"),
     dashboard: () => import("@/components/AboutCourses/dashboard"),
     grade: () => import("@/components/AboutCourses/grade"),
     introduction: () => import("@/components/AboutCourses/introduction"),
-    sidebar_board: () =>
-      import("@/components/AboutCourses/board/sidebar_board"),
+    board: () => import("@/components/AboutCourses/board/board"),
     assignments: () => import("@/components/AboutCourses/assignments"),
-    stud_care: () => import("../components/AboutCourses/Stud_Care"),
+    stud_care: () => import("../components/AboutCourses/Student_Care/student"),
     course_care: () => import("../components/AboutCourses/Course_Care")
   },
   data: function() {
@@ -105,7 +100,7 @@ export default {
         { component_name: "introduction", middle_title: "강의소개" },
         { component_name: "lectures", middle_title: "수업목록" },
         { component_name: "assignments", middle_title: "과제목록" },
-        { component_name: "notice", middle_title: "게시판" },
+        { component_name: "board", middle_title: "게시판" },
         { component_name: "grade", middle_title: "학습현황", limit: "prof" },
         {
           component_name: "stud_care",

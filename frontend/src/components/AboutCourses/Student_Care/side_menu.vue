@@ -7,7 +7,7 @@
             v-for="item in items"
             :key="item.title"
             link
-            v-on:click="changeComponent(item)"
+            v-on:click="changeComponent(item.title)"
             active-class="false"
           >
             <p class="side-list-title">{{item.title}}</p>
@@ -32,14 +32,12 @@ export default {
   props: ["sidebar_title"],
   data: () => ({
     middle_title: "",
-    items: [{ title: "공지사항" ,
-            component_name: "notice"},
-            { title: "QnA" , component_name: "qnaboard"}]
+    items: [{ title: "학생별" }, { title: "수업 및 과제별" }, { title: "통계" }]
   }),
   methods: {
-    changeComponent: function(item) {
-      this.middle_title = item.title;
-      this.$emit("ChangeComponent", item.component_name);
+    changeComponent: function(item_title) {
+      this.middle_title = item_title;
+      this.$emit("ChangeComponent", this.middle_title);
     }
   },
   created() {

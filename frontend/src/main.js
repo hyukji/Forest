@@ -1,16 +1,17 @@
 import Vue from "vue"
 import App from "./App.vue"
+
 import router from "./router"
 import vuetify from "./plugins/vuetify"
-import axios from "axios"
-
-// import VueTabsChrome from 'vue-tabs-chrome/packages'
-// Vue.use(VueTabsChrome)
-
 import { store } from "./store/store"
 
+import axios from "axios"
 Vue.prototype.$http = axios
-//연습
+
+import io from "socket.io-client"
+const socket = io("http://localhost:3030")
+Vue.prototype.$socket = socket
+
 Vue.config.productionTip = false
 
 export const eventBus = new Vue({

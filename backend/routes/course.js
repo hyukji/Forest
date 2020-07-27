@@ -5,13 +5,42 @@ const User = require("../models/user")
 
 router.get("/", function (req, res, next) {})
 
-// Sign Up
-// Post로만 받는다
-router.post("/coursedata", async function (req, res, next) {
-  var code = req.body.code
+router.get("/:course_code/lecture", function (req, res, next) {
+  var code = req.params.course_code
+
+  Course.findOne({ code: code }, function (err, db_course) {
+    if (db_course == null) {
+      res.json({ result: 0, message: "존재하지 않는 강의입니다." })
+      return
+    }
+
+    res.json({
+      result: 1,
+      lecturedata: db_course.lecture,
+    })
+  })
+})
+
+router.get("/:course_code/assign", function (req, res, next) {
+  var code = req.params.course_code
+
+  Course.findOne({ code: code }, function (err, db_course) {
+    if (db_course == null) {
+      res.json({ result: 0, message: "존재하지 않는 강의입니다." })
+      return
+    }
+
+    res.json({
+      result: 1,
+      assigndata: db_course.assignment,
+    })
+  })
+})
+
+router.get("/:course_code/coursedata", async function (req, res, next) {
+  var code = req.params.course_code
   var user_isprof
 
-  console.log(code)
   await User.findOne({ email: req.user.email }, function (err, db_user) {
     if (db_user == null) {
       console.log("낫 존재!")
@@ -29,27 +58,22 @@ router.post("/coursedata", async function (req, res, next) {
       return
     }
 
-    var basicData = {
-      name: db_course.name,
-      prof: "prof. ",
-      code: db_course.code,
-      language: db_course.language,
-    }
+    var allprof = "prof. "
     db_course.prof.forEach(function (p) {
-      basicData.prof = basicData.prof + p
+      allprof = allprof + p
     })
 
-    console.log(user_isprof)
+    db_course.prof = allprof
+
+    if (user_isprof == "stud") {
+      delete db_course.stud_care
+      delete db_course.course_care
+    }
 
     res.json({
       result: 1,
       isprof: user_isprof,
-      basic_data: basicData,
-      dashboard: db_course.dashboard,
-      introduction: db_course.introduction,
-      lecture: db_course.lecture,
-      assignment: db_course.assignment,
-      board: db_course.board,
+      db_course: db_course,
     })
   })
 })

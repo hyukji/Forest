@@ -5,6 +5,7 @@ var dashSchema = new Schema({
   text: [String],
   Updated_date: { type: Date, default: Date.now },
 })
+
 var introSchema = new Schema({
   text: [String],
   Updated_date: { type: Date, default: Date.now },
@@ -12,22 +13,49 @@ var introSchema = new Schema({
   difficulty: String,
   intro: String,
 })
+
+var sublecture = new Schema({
+  subtitle: String,
+  Updated_date: { type: Date, default: Date.now },
+  iscomplete: Boolean,
+})
+
 var lectureSchema = new Schema({
-  text: [String],
-  uploaded_date: Date,
-  iswatched: Boolean,
+  title: String,
+  subitems: [sublecture],
+  created_date: { type: Date, default: Date.now },
 })
+
+var subassign = new Schema({
+  subtitle: String,
+  score: Number,
+  perfect: Number,
+  Updated_date: { type: Date, default: Date.now },
+})
+
 var assignSchema = new Schema({
-  text: String,
+  title: String,
+  subitems: [subassign],
   uploaded_date: Date,
-  iswatched: Boolean,
 })
+
 var boardSchema = new Schema({
   text: String,
   uploaded_date: Date,
   iswatched: Boolean,
 })
 
+var studCareSchema = new Schema({
+  text: String,
+  uploaded_date: Date,
+  iswatched: Boolean,
+})
+
+var courseCareSchema = new Schema({
+  text: String,
+  uploaded_date: Date,
+  iswatched: Boolean,
+})
 var courseSchema = new Schema({
   name: String,
   prof: [String],
@@ -38,6 +66,10 @@ var courseSchema = new Schema({
   lecture: [lectureSchema],
   assignment: [assignSchema],
   board: [boardSchema],
+
+  stud_care: [studCareSchema],
+  course_care: [courseCareSchema],
+
   create_date: { type: Date, default: Date.now },
   Updated_date: { type: Date, default: Date.now },
 })

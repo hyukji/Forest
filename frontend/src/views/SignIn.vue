@@ -8,8 +8,9 @@
         <v-text-field v-model="user.id" label="아이디"></v-text-field>
         <v-text-field
           v-model="user.password"
-          :type="password"
+          input type="password"
           label="비밀번호"
+          v-on:keyup.enter="signIn"
         ></v-text-field>
         <v-btn
           color="teal white--text"

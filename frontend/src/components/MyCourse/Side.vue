@@ -1,30 +1,13 @@
 <template>
-  <div class="wrap">
-    <v-card dark class="pa-1 ma-3">
-      <v-toolbar flat dark>
-        <v-btn fab text small color="grey darken-2" @click="prev">
-          <v-icon small>mdi-chevron-left</v-icon>
-        </v-btn>
-        <v-spacer />
-        <v-toolbar-title v-if="$refs.calendar">{{ $refs.calendar.start }}</v-toolbar-title>
-        <v-spacer />
-        <v-btn fab text small color="grey darken-2" @click="next">
-          <v-icon small>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-toolbar>
-      <v-sheet>
-        <v-calendar
-          dark
-          ref="calendar"
-          v-model="value"
-          type="month"
-          :events="events"
-          :event-overlap-threshold="30"
-          :event-color="getEventColor"
-          @change="getEvents"
-        ></v-calendar>
-      </v-sheet>
-    </v-card>
+  <div>
+    <v-layout class="calendar">
+      <v-date-picker
+      no-title
+      v-model="picker"
+      color="primary"
+      width="400"
+      class="mt-3"></v-date-picker>
+    </v-layout>
 
     <v-card dark class="pa-1 ma-3" title>
       <v-list :two-line="true" color="dark_gray" dark dense>

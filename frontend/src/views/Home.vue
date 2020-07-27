@@ -9,7 +9,7 @@
         <v-card class="sign_in" outlined>
           <v-card-text>
             <v-text-field v-model="user.email" label="아이디"></v-text-field>
-            <v-text-field v-model="user.password" :type="'password'" label="비밀번호"></v-text-field>
+            <v-text-field v-model="user.password" :type="'password'" label="비밀번호" v-on:keyup.enter="signIn"></v-text-field>
             <v-btn
               color="primary white--text"
               height="40pt"

@@ -8,6 +8,9 @@ var dashSchema = new Schema({
 var introSchema = new Schema({
   text: [String],
   Updated_date: { type: Date, default: Date.now },
+  recommend: [String],
+  difficulty: String,
+  intro: String,
 })
 var lectureSchema = new Schema({
   text: [String],
@@ -30,7 +33,6 @@ var courseSchema = new Schema({
   prof: [String],
   code: String,
   language: String,
-  recommend: [String],
   dashboard: [dashSchema],
   introduction: [introSchema],
   lecture: [lectureSchema],

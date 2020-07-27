@@ -8,7 +8,7 @@
             <v-row align="end">
               <v-col cols="6">
                 <v-card-title class="brief-title mx-5">{{courseData.name}}</v-card-title>
-                <v-card-subtitle class="brief-subtitle mx-6">{{courseData.prof}}</v-card-subtitle>
+                <v-card-subtitle class="brief-subtitle mx-6">{{courseData.prof[0]}}</v-card-subtitle>
               </v-col>
               <v-btn class="secondary white--text btn-learn mb-5" x-large width="175" outlined>바로학습</v-btn>
             </v-row>
@@ -41,7 +41,7 @@
 
     <p class="body-title">{{ selectedTitle }}</p>
 
-    <component v-bind:is="selectedComponent"></component>
+    <component v-bind:is="selectedComponent" :isprof="user_isprof"></component>
 
     <!--
     <dashboard v-if="middle_title == '대시보드'"></dashboard>
@@ -57,7 +57,7 @@
       <notice v-if="middle_title == '공지사항'"></notice>
       <freeboard v-if="middle_title == '자유게시판'"></freeboard>
       <qnaboard v-if="middle_title == 'QnA'"></qnaboard>
-    </div> -->
+    </div>-->
   </div>
 </template>
 
@@ -75,23 +75,20 @@ export default {
     board: () => import("@/components/AboutCourses/board/board"),
     assignments: () => import("@/components/AboutCourses/assignments"),
     stud_care: () => import("../components/AboutCourses/Student_Care/student"),
-    course_care: () => import("../components/AboutCourses/Course_Care")
+    course_care: () => import("../components/AboutCourses/Course_Care"),
   },
-  data: function() {
+  data: function () {
     return {
+      progess_data: 70,
+
       courseData: {
         name: null,
         prof: null,
         code: null,
-        language: null
+        language: null,
       },
 
-      dashboard: [null],
-      introduction: [null],
-      lecture: [null],
-      assignment: [null],
-      board: [null],
-
+      user_isprof: null,
       selectedComponent: "dashboard",
       selectedTitle: "대시보드",
 
@@ -105,16 +102,14 @@ export default {
         {
           component_name: "stud_care",
           middle_title: "학생관리",
-          limit: "stud"
+          limit: "stud",
         },
         {
           component_name: "course_care",
           middle_title: "강의관리",
-          limit: "stud"
-        }
+          limit: "stud",
+        },
       ],
-      progess_data: 70,
-      user_isprof: null
     };
   },
   computed: {
@@ -122,18 +117,18 @@ export default {
       var selected_tap = [];
       var isprof = this.user_isprof;
       console.log(isprof);
-      this.tap_data.forEach(items => {
+      this.tap_data.forEach((items) => {
         if (items.limit != isprof) {
           selected_tap.push(items);
         }
       });
       return selected_tap;
-    }
+    },
   },
   methods: {
-    change_middle_title: function(title) {
+    change_middle_title: function (title) {
       var selected_com = "";
-      this.tap_data.forEach(function(value) {
+      this.tap_data.forEach(function (value) {
         if (value.middle_title == title) {
           selected_com = value.component_name;
         }
@@ -142,30 +137,27 @@ export default {
       this.selectedComponent = selected_com;
       this.selectedTitle = title;
     },
-    getCoursedData: function(code) {
-      console.log(code);
+    getCoursedData: function () {
       this.$http
-        .post("/api/mycourse/coursedata", { code: code })
-        .then(res => {
+        .get("/api/mycourse/" + this.courseData.code + "/coursedata")
+        .then((res) => {
           if (res.data.result) {
-            this.user_isprof = res.data.isprof;
-            this.courseData = res.data.basic_data;
-            this.dashboard = res.data.dashboard;
-            this.introduction = res.data.introduction;
-            this.lecture = res.data.lecture;
-            this.assignment = res.data.assignment;
-            this.board = res.data.board;
+            this.courseData.name = res.data.db_course.name;
+            this.courseData.code = res.data.db_course.code;
+            this.courseData.language = res.data.db_course.language;
+            this.courseData.prof = res.data.db_course.prof;
 
-            console.log(this.user_isprof);
+            this.user_isprof = res.data.isprof;
+            this.$store.commit("setCourseData", res.data.db_course);
           } else {
             alert(res.data.message);
             this.$router.push("/mycourse");
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           alert("error to getdata");
         });
-    }
+    },
   },
   created() {
     this.courseData.code = this.$route.params.course_code;
@@ -173,12 +165,12 @@ export default {
     if (this.$route.query.tab != null) {
       this.middle_title = this.$route.query.tab;
     }
-    eventBus.$on("bell_route", route => {
+    eventBus.$on("bell_route", (route) => {
       this.middle_title = route;
     });
     this.$route.query.tab = "";
-    this.getCoursedData(this.courseData.code);
-  }
+    this.getCoursedData();
+  },
 };
 </script>
 <style scoped>

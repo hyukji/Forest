@@ -40,15 +40,20 @@
       </v-list-item-group>
       </v-list>
     </v-menu>
+
+    <v-btn
+      color="primary"
+      class="ma-2"
+      @click="getCode">Run</v-btn>
   </v-row>
-
-
 
 
 </div>
 </template>
 
 <script>
+import { eventBus } from "../../main.js"
+
 export default {
   components: { },
   data() {
@@ -59,11 +64,26 @@ export default {
     }
   },
   methods: {
-
+    getCode() {
+      eventBus.$emit('giveMeCode')
+    },
+    run(code) {
+      console.log(code)
+      this.$socket.emit('code', {
+        code: code
+      })
+    }
   },
   created() {
-
+    eventBus.$on('sendCode', (code) => {
+      this.run(code)
+    })
+    this.$socket.on('result', (result) => {
+      console.log(result.success, result.message)
+    })
   },
+  computed: {
+  }
 
 }
 </script>

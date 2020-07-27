@@ -3,17 +3,17 @@ import App from "./App.vue"
 
 import router from "./router"
 import vuetify from "./plugins/vuetify"
-import axios from "axios"
-
-// import VueTabsChrome from 'vue-tabs-chrome/packages'
-// Vue.use(VueTabsChrome)
-
 import { store } from "./store/store"
 
+import axios from "axios"
 Vue.prototype.$http = axios
+
+import io from "socket.io-client"
+const socket = io("http://localhost:3030")
+Vue.prototype.$socket = socket
+
 Vue.config.productionTip = false
 
-//연습
 export const eventBus = new Vue({
   methods: {
     bell_route(route) {

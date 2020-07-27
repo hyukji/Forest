@@ -31,7 +31,6 @@
 
 <script>
 // @ is an alias to /src
-import { eventBus } from "../main.js"
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
 import VueTabsChrome from 'vue-tabs-chrome'

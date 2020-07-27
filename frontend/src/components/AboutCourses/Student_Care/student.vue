@@ -21,15 +21,15 @@
       return {
         headers: [
           {
-            text: '이 름',
+            text: '이 름 ',
             align: 'left',
             value: 'name'
           },
-          { text: '학 번', value: 'student_id' },
-          { text: 'I D', value: 'web_id' },
-          { text: '최근 접속 시각', value: 'recent_access' },
-          { text: '수업 진행률', value: 'progress' },
-          { text: '과제 평균 점수', value: 'assignment_average_grade' }
+          { text: '학 번 ', value: 'student_id' },
+          { text: 'I D ', value: 'web_id' },
+          { text: '최근 접속 시각 ', value: 'recent_access' },
+          { text: '수업 진행률 ', value: 'progress' },
+          { text: '과제 평균 점수 ', value: 'assignment_average_grade' }
 
         ],
         information: [

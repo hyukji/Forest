@@ -6,10 +6,10 @@
       v-model="picker"
       color="primary"
       full-width
-      class="mt-3"
       :events= "dateFunctionEvents"
       @click:date="dialog = true"
-      dark>
+      dark
+      class="pa-1">
       <v-dialog
       v-model="dialog"
       max-width="290"

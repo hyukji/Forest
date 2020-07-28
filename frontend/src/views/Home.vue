@@ -8,8 +8,16 @@
       <div class="right_div">
         <v-card class="sign_in" outlined>
           <v-card-text>
-            <v-text-field v-model="user.email" label="아이디"></v-text-field>
-            <v-text-field v-model="user.password" :type="'password'" label="비밀번호"></v-text-field>
+            <v-text-field
+            v-model="user.email"
+            label="아이디">
+          </v-text-field>
+            <v-text-field
+            v-model="user.password"
+            input type='password' 
+            label="비밀번호"
+            v-on:keyup.enter="signIn">
+          </v-text-field>
             <v-btn
               color="primary white--text"
               height="40pt"
@@ -68,7 +76,6 @@ export default {
           }
           if (res.data.result == 1) {
             alert(res.data.message);
-
             this.$router.push("/mycourse"); // Login 페이지로 보내줌
           }
         })

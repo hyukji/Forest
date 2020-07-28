@@ -17,7 +17,6 @@ var loginRouter = require("./routes/login")
 var postingRouter = require("./routes/posting")
 var mycourseRouter = require("./routes/course")
 var mailRouter = require("./routes/mail")
-
 var passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy
 var User = require("../backend/models/user")

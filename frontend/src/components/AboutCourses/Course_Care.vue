@@ -8,13 +8,13 @@
             <div class="card-half left">
               <v-layout row wrap>
                 <v-col class="wrap-total-list" cols="12" sm="10">
-                  <v-icon size="40pt">{{ course.lang }}</v-icon>
+                  <v-icon size="40pt">{{ course.language }}</v-icon>
                   <v-select
                     :items="language"
                     item-text="title"
                     item-value="icon"
                     label="Language"
-                    v-model="course.lang">
+                    v-model="course.language">
                   </v-select>
                 </v-col>
               </v-layout>
@@ -57,9 +57,18 @@
         </v-container>
       </v-card>
     </div>
-    <p class="card-title">과목 소개</p>
-    <p class="body">준비중입니다</p>
-    <p class="card-title">수업 과정</p>
+    <p class="paragraph-title">과목 소개</p>
+    <v-col cols="12" sm="12">
+      <v-textarea
+        class="mx-2"
+        v-model="course.intro"
+        label="소개를 입력해주세요"
+        counter
+        auto-grow
+        single-line
+      ></v-textarea>
+    </v-col>
+    <p class="paragraph-title">수업 과정</p>
     <ul>
       <v-list-item v-for="item in curriculum" :key="item.title">
         <v-list-item-avatar>
@@ -76,7 +85,7 @@
     </ul>
     <div class="save">
       <v-btn class="teal white--text"
-      v-on:click="save"
+      v-on:click="savecourse"
       x-large>
       저장</v-btn>
     </div>
@@ -92,12 +101,12 @@ export default {
   data: () => ({
     selected: null,
     selected2: null,
-    selectwho: [],
+    selectwho: null,
     middle_title: "강의소개",
     course: {
-      lang: "",
+      language: "",
       difficulty: "",
-      recommend: [],
+      recommend: "",
       intro: "",
     },
     language: [
@@ -173,7 +182,7 @@ export default {
     },
   }),
   methods: {
-    save: function(event) {
+    savecourse: function(event) {
       alert("저장되었습니다");
     },
   },
@@ -201,9 +210,20 @@ export default {
   font-size: 1.2rem;
   font-weight: 600;
   padding-top: 3%;
-  padding-left: 6%;
   padding-bottom: 3%;
   border-bottom: 1px solid #d3d1d1;
+  text-align: center;
+  margin: 20px auto;
+}
+.paragraph-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  border-bottom: 1px solid #d3d1d1;
+  max-width: 90%;
+  text-align: center;
+  margin: 20px auto;
 }
 .total-card {
   padding-top: 10%;

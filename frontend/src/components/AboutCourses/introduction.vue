@@ -8,28 +8,20 @@
             <div class="card-half left">
               <v-layout row wrap>
                 <v-col class="wrap-total-list" cols="12" sm="10">
-                  <v-icon size="40pt">{{ selected }}</v-icon>
-                  <v-select
-                    :items="language"
-                    item-text="title"
-                    item-value="icon"
-                    label="Language"
-                    v-model="selected">
-                  </v-select>
+                  <p>Language</p>
+                  <v-icon size="40pt">{{ course.language.icon }}</v-icon>
+                  <p>{{ course.language.title }}</p>
                 </v-col>
               </v-layout>
             </div>
             <div class="card-half right">
-              <v-icon size="40pt">{{selected2}}</v-icon>
-              <v-col class="d-flex" cols="12" sm="10">
-                <v-select
-                  :items="difficulty"
-                  label="difficulty"
-                  item-text="title"
-                  item-value="icon"
-                  v-model="selected2">
-                </v-select>
-              </v-col>
+              <v-layout row wrap>
+                <v-col class="wrap-total-list" cols="12" sm="10">
+                  <p>Difficulty</p>
+                  <v-icon size="40pt">{{ course.difficulty.icon }}</v-icon>
+                  <p> {{ course.difficulty.title }}</p>
+                </v-col>
+              </v-layout>
             </div>
           </v-row>
         </v-container>
@@ -40,18 +32,11 @@
         <p class="card-title">추천 대상</p>
         <v-container>
           <v-row>
-            <v-col cols="12" sm="12">
-              <v-select
-                :items="for_who"
-                item-text="title"
-                item-value="icon"
-                label="Select"
-                multiple
-                chips
-                deletable-chips
-                v-model="selectwho">
-              </v-select>
-              <v-icon size="40pt">{{selectwho}}</v-icon>
+            <v-col class="wrap-total-list" v-for="item in course.recommend" :key="item.title">
+              <v-list three-line>
+                <v-icon size="40pt" v-text="item.icon"></v-icon>
+                <v-list-item-title class="toal-list-title" v-text="item.title"></v-list-item-title>
+              </v-list>
             </v-col>
           </v-row>
         </v-container>
@@ -86,53 +71,46 @@ export default {
     selected: null,
     selected2: null,
     selectwho: [],
-    middle_title: "강의소개",
-    language: [
-      {
+    course: {
+      language: {
         icon: "fab fa-python",
         title: "python",
       },
-      {
-        icon: "fab fa-java",
-        title: "java",
-      },
-      {
-        icon: "fab fa-vuejs",
-        title: "vue.js",
-      },
-    ],
-    difficulty: [
-      {
-        title: "입문",
+      difficulty: {
         icon: "far fa-smile-wink",
+        title: "입문",
       },
-      {
-        title: "초보",
-        icon: "far fa-smile-beam",
-      },
-      {
-        title: "중급",
-        icon: "far fa-flushed",
-      },
-      {
-        title: "고급",
-        icon: "far fa-sad-tear",
-      }
-    ],
-    for_who: [
-      {
-        icon: "fas fa-flushed",
-        title: "코딩 입문자",
-      },
-      {
-        icon: "fab fa-python",
-        title: "파이썬 개발자",
-      },
-      {
-        icon: "fab fa-java",
-        title: "java 개발자",
-      },
-    ],
+      recommend: [
+        {
+          icon: "fas fa-flushed",
+          title: "코딩 입문자",
+        },
+        {
+          icon: "fab fa-python",
+          title: "파이썬 개발자",
+        },
+        {
+          icon: "fab fa-java",
+          title: "java 개발자",
+        },
+      ],
+      intro: "파이썬 기본 강좌입니다",
+      curriculum: [
+        {
+          list_title: "Course1",
+          content: "course1 내용입니다",
+        },
+        {
+          list_title: "Course2",
+          content: "course2 내용입니다",
+        },
+        {
+          list_title: "Course3",
+          content: "course3 내용입니다",
+        },
+      ],
+    },
+    middle_title: "강의소개",
     curriculum: [
       {
         list_title: "Course1",
@@ -188,9 +166,6 @@ export default {
   padding-bottom: 3%;
   border-bottom: 1px solid #d3d1d1;
 }
-.total-card {
-  padding-top: 10%;
-}
 .body-title {
   font-size: 1.5rem;
   font-weight: 600;
@@ -225,5 +200,4 @@ export default {
 .d-flex {
   text-algin: center;
 }
-
 </style>

@@ -1,32 +1,39 @@
 <template>
   <div class="wrap">
-    <v-card dark class="pa-1 ma-3">
-      <v-toolbar flat dark>
-        <v-btn fab text small color="grey darken-2" @click="prev">
-          <v-icon small>mdi-chevron-left</v-icon>
-        </v-btn>
-        <v-spacer />
-        <v-toolbar-title v-if="$refs.calendar">{{ $refs.calendar.start }}</v-toolbar-title>
-        <v-spacer />
-        <v-btn fab text small color="grey darken-2" @click="next">
-          <v-icon small>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-toolbar>
-      <v-sheet>
-        <v-calendar
-          dark
-          ref="calendar"
-          v-model="value"
-          type="month"
-          :events="events"
-          :event-overlap-threshold="30"
-          :event-color="getEventColor"
-          @change="getEvents"
-        ></v-calendar>
-      </v-sheet>
-    </v-card>
-
-    <v-card dark class="pa-1 ma-3" title>
+    <v-layout>
+      <v-date-picker
+      no-title
+      v-model="picker"
+      color="primary"
+      full-width
+      :events= "dateFunctionEvents"
+      @click:date="dialog = true"
+      dark
+      class="pa-1">
+      <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">숙제하세용</v-card-title>
+        <v-card-text>
+          숙제는 1p부터 끝까지
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false">
+            okay
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    </v-date-picker>
+    </v-layout>
+    <!--hover 참조하기-->
+    <v-card dark class="pa-1" title>
       <v-list :two-line="true" color="dark_gray" dark dense>
         <v-subheader class="subheader">
           새 알림
@@ -46,37 +53,21 @@
         </v-list-item-group>
       </v-list>
     </v-card>
+
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-
 export default {
   name: "Mycourse",
   components: {},
   data: () => ({
     value: "",
-    events: [],
-    colors: [
-      "blue",
-      "indigo",
-      "deep-purple",
-      "cyan",
-      "green",
-      "orange",
-      "grey darken-1"
-    ],
-    names: [
-      "Meeting",
-      "Holiday",
-      "PTO",
-      "Travel",
-      "Event",
-      "Birthday",
-      "Conference",
-      "Party"
-    ],
+    events: null,
+    picker:"",
+    done: false,
+    dialog: false,
     item: 3,
     items: [
       {
@@ -96,61 +87,31 @@ export default {
       }
     ]
   }),
-  mounted() {
-    this.$refs.calendar.checkChange();
+  mounted () {
+    this.events = [...Array(6)].map(() => {
+      const day = Math.floor(Math.random() * 30)
+      const d = new Date()
+      d.setDate(day)
+      return d.toISOString().substr(0, 10)
+    })
+  },
+  computed: {
+    functionEvents () {
+      return this.dateFunctionEvents
+    },
   },
   methods: {
-    getEvents({ start, end }) {
-      const events = [];
-      const min = new Date(`${start.date}T00:00:00`);
-      const max = new Date(`${end.date}T23:59:59`);
-      const days = (max.getTime() - min.getTime()) / 86400000;
-      const eventCount = this.rnd(days, days + 20);
-
-      for (let i = 0; i < 5; i++) {
-        const allDay = this.rnd(0, 3) === 0;
-        const firstTimestamp = this.rnd(min.getTime(), max.getTime());
-        const first = new Date(firstTimestamp - (firstTimestamp % 900000));
-        const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000;
-        const second = new Date(first.getTime() + secondTimestamp);
-
-        first =
-          String(first.getFullYear()) +
-          "-" +
-          String(first.getMonth() + 1) +
-          "-" +
-          String(first.getDate());
-        second =
-          String(second.getFullYear()) +
-          "-" +
-          String(second.getMonth() + 1) +
-          "-" +
-          String(second.getDate());
-        events.push({
-          name: this.names[this.rnd(0, this.names.length - 1)],
-          start: first,
-          end: second,
-          color: this.colors[this.rnd(0, this.colors.length - 1)],
-          timed: !allDay
-        });
-      }
-
-      this.events = events;
+    dateFunctionEvents (date) {
+      const [,, day] = date.split('-')
+      if ([12, 19, 28].includes(parseInt(day, 10))) return 'yellow'
+      if ([1, 17, 22].includes(parseInt(day, 10))) return 'red'
+      return false
     },
-    getEventColor(event) {
-      return event.color;
+    clickdate (date) {
+      this.$set(this.done, 0, true)
+      alert(`You have just clicked the following date: ${date}`)
     },
-    rnd(a, b) {
-      return Math.floor((b - a + 1) * Math.random()) + a;
-    },
-    prev() {
-      console.log(this.$refs);
-      this.$refs.calendar.prev();
-    },
-    next() {
-      this.$refs.calendar.next();
-    }
-  }
+  },
 };
 </script>
 
@@ -167,5 +128,8 @@ export default {
   font-size: 90%;
   color: #ffffff;
   margin-left: 2%;
+}
+.pa-1{
+  margin-left: 3%;
 }
 </style>

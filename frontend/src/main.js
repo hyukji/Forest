@@ -1,5 +1,6 @@
 import Vue from "vue"
 import App from "./App.vue"
+
 import router from "./router"
 import vuetify from "./plugins/vuetify"
 import { store } from "./store/store"
@@ -7,11 +8,10 @@ import { store } from "./store/store"
 import axios from "axios"
 Vue.prototype.$http = axios
 
-import io from 'socket.io-client'
-const socket = io('http://localhost:3030')
+import io from "socket.io-client"
+const socket = io("http://localhost:3030")
 Vue.prototype.$socket = socket
 
-//연습
 Vue.config.productionTip = false
 
 export const eventBus = new Vue({

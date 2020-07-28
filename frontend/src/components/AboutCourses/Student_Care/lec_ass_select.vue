@@ -1,13 +1,14 @@
 <template>
-  <div class="sidebar">
-    <v-card class="mx-auto" max-width="300" color="#f9fcfc" tile outlined>
+  <div class="sideselect">
+    <v-card class="mx-auto" max-width="100" color="#f9fcfc" tile outlined>
       <div class="wrap-side-list">
         <v-list flat class="side-list-content" color="#f9fcfc">
+          <v-list
           <v-list-item
             v-for="item in items"
             :key="item.title"
             link
-            v-on:click="changeComponent(item.title)"
+            v-on:click="changeComponent(item)"
             active-class="false"
           >
             <p class="side-list-title">{{item.title}}</p>
@@ -29,15 +30,17 @@
 
 <script>
 export default {
-  props: ["sidebar_title"],
+  props: ["sideselect_title"],
   data: () => ({
     middle_title: "",
-    items: [{ title: "학생별" }, { title: "수업 및 과제별" }, { title: "통계" }]
+    items: [{ title: "수업 1" , component_name: "lec1"},
+            { title: "수업 2" , component_name: "lec2"},
+            { title: "과제 1" , component_name: "ass1"}]
   }),
   methods: {
-    changeComponent: function(item_title) {
-      this.middle_title = item_title;
-      this.$emit("ChangeComponent", this.middle_title);
+    changeComponent: function(item) {
+      this.middle_title = item.title;
+      this.$emit("ChangeComponent", item.component_name);
     }
   },
   created() {

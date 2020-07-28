@@ -40,31 +40,30 @@ export default {
   name: "Mycourse",
   components: {
     Card: () => import("@/components/MyCourse/Card"),
-    Course_form: () => import("@/components/MyCourse/Course_Form")
+    Course_form: () => import("@/components/MyCourse/Course_Form"),
   },
   model: {
-    prop: "sendData"
+    prop: "sendData",
   },
   props: ["sendData"],
-  data: function() {
+  data: function () {
     return { dialog: false, isfinish_course: [], notfinish_course: [] };
   },
   computed: {},
   methods: {
-    makeCourse() {},
     course_classify() {
-      this.sendData.forEach(element => {
+      this.sendData.forEach((element) => {
         if (element.isfinish) {
           this.isfinish_course.push(element);
         } else {
           this.notfinish_course.push(element);
         }
       });
-    }
+    },
   },
   created() {
     this.course_classify();
-  }
+  },
 };
 </script>
 

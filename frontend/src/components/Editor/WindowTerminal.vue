@@ -46,8 +46,9 @@
       class="ma-2"
       @click="getCode">Run</v-btn>
   </v-row>
-
-
+  <div v-for="i in results">
+  {{ i }}</div>
+  <input v-if="waiting" v-model="input" @keyup.enter="submit"/>
 </div>
 </template>
 
@@ -60,30 +61,52 @@ export default {
     return {
       selected: { lecture: "lecture1", problem: "problem2"},
       lectures: ["lecture1", "lecture2", "lecture3"],
-      problems: ["problem1", "problem2"]
+      problems: ["problem1", "problem2"],
+      results: [],
+      input: "",
+      waiting: false
     }
   },
   methods: {
     getCode() {
       eventBus.$emit('giveMeCode')
     },
-    run(code) {
-      console.log(code)
-      this.$socket.emit('code', {
-        code: code
+    // run(code) {
+    //   //console.log(code)
+    //   this.$socket.emit('code', {
+    //     code: code
+    //   })
+    // },
+    submit(event) {
+      console.log(event)
+      this.waiting = false
+      this.results.push(this.input)
+      this.$socket.emit('input', {
+        input: this.input
       })
+      this.input=""
+      console.log(this.results)
     }
+  },
+  computed: {
   },
   created() {
     eventBus.$on('sendCode', (code) => {
-      this.run(code)
+      this.$socket.emit('code', {
+        code: code
+      })
     })
     this.$socket.on('result', (result) => {
-      console.log(result.success, result.message)
+      //data format 다시 바꾸기
+      console.log(result.message)
+      this.results.push(result.message)
+      //results를 리스트 말고 스트링으로 바꿔야 함
+      this.result = result.message
+    }),
+    this.$socket.on('input', () => {
+      this.waiting = true
     })
   },
-  computed: {
-  }
 
 }
 </script>

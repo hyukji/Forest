@@ -1,6 +1,7 @@
 <template>
-<div class="wrap">
-  <v-row class="wrap">
+<!-- <div class="wrap"> -->
+  <v-row no-gutters class="wrap">
+
   <side-tab :drawer="drawer"/>
   <!-- <side-content/> -->
   <!-- <vue-tabs-chrome theme="dark" ref="tab" v-model="tab" :tabs="tabs" :value="tabs.label"/> -->
@@ -8,25 +9,28 @@
   <!-- <button @click="addTab">New Tab</button> -->
   <!-- </div> -->
 
-  <splitpanes id="pane" class="default-theme">
+  <splitpanes id="splitpane" class="default-theme" @resize="paneResize">
 
-    <pane v-if="drawer.open">
-      <side-content :selected="drawer.selected"/>
+    <pane v-if="drawer.open" min-size="10" max-size="25">
+      <side-content :selected="drawer.selected" />
     </pane>
-    <pane>
-  <component :is="selected" ref="tab" v-model="tab" :tabs="tabs"/>
+
+    <pane min-size="20" class="pane">
+  <component :is="tabsChrome" class="tab" id="tab1" ref="tab1" v-model="selectedTab[0]" :tabs="tabs[0]"
+  @remove="removeSpecial"/>
 <window-code/>
+</pane>
 
-    </pane>
-    <pane>
-  <v-btn @click="click" />
-
-  <component :is="selected" ref="tab" v-model="tab" :tabs="tabs"/>
+    <pane min-size="20" class="pane">
+  <v-btn @click="addTab('hi')"/>
+  <component :is="tabsChrome" class="tab" id="tab2" ref="tab2" v-model="selectedTab[1]" :tabs="tabs[1]"/>
   <window-terminal/>
     </pane>
+
   </splitpanes>
+
   </v-row>
-</div>
+<!-- </div> -->
 </template>
 
 <script>
@@ -34,6 +38,7 @@
 import { Splitpanes, Pane } from 'splitpanes'
 import 'splitpanes/dist/splitpanes.css'
 import VueTabsChrome from 'vue-tabs-chrome'
+import Pdf from 'pdfvuer'
 
 export default {
   name: "editor",
@@ -53,9 +58,15 @@ export default {
         selected: null,
         on: []
       },
-      selected: null,
-      tab: 'google',
-      tabs: [{
+      specialTab: {
+        live: false,
+        sandbox: false
+      },
+      tabsChrome: null,
+      leftPaneSize: 50, //percent
+      selectedTab: ['google', 'facebook', null, null],
+      tabs: [
+        [{
           label: 'google',
           key: 'google',
           closable: false,
@@ -65,42 +76,88 @@ export default {
           label: 'facebook',
           key: 'facebook',
           favico: require('../assets/logo.png')
+        }],
+        [{
+          label: 'google',
+          key: 'google',
+          closable: false,
+          favico: require('../assets/logo.png')
         },
         {
-          label: 'New Tab',
-          key: 'costom_key',
-          favico: (h, {
-            tab,
-            index
-          }) => {
-            return h('span', tab.label)
-          }
-        }
+          label: 'facebook',
+          key: 'facebook',
+          favico: require('../assets/logo.png')
+        }]
       ]
     }
-
   },
   methods: {
-    click() {
-      let item = 'tab' + Date.now()
+    addTab(label) {
       let newTabs = [
         {
-          label: 'New Tab',
-          key: item,
+          label: label,
+          key: label,
           closable: true
         }
       ]
       console.log(...newTabs)
       console.log(newTabs)
-      this.$refs.tab.addTab(...newTabs)
-      this.tab = item
+      console.log(this.drawer.on)
+      this.$refs.tab1.addTab(...newTabs)
+      //this.tab = item 생성 탭 자동 선,
     },
-
+    removeSpecial(tab, index) {
+      console.log("tabkey", tab.key)
+      if (tab.key == "Live") {
+        this.drawer.on.splice(this.drawer.on.indexOf("Live"), 1)
+        this.specialTab.live = false
+      } else if (tab.key == "Sandbox") {
+        this.drawer.on.splice(this.drawer.on.indexOf("Sandbox"), 1)
+        this.specialTab.sandbox = false
+      }
+    },
+    paneResize() {
+      this.$refs.tab1.doLayout()
+      this.$refs.tab2.doLayout()
+      //this.$refs.tab3.doLayout()
+      //this.$refs.tab4.doLayout()
+    },
   },
-
   created() {
     console.log("created")
-    this.selected = VueTabsChrome.VueTabsChrome //typeerror?
+    //document.documentElement.style.overflow='hidden'
+    this.tabsChrome = VueTabsChrome.VueTabsChrome //typeerror?
+  },
+  watch: {
+    drawer: {
+      deep: true,
+      handler() {
+
+        if (this.drawer.selected != null) {
+          this.drawer.open = true
+        } else {
+          this.drawer.open = false
+        }
+
+        var vue = this
+        if (this.drawer.on.includes("Live") && !this.specialTab.live) {
+          this.addTab("Live")
+          this.specialTab.live = true
+        } else if (!this.drawer.on.includes("Live") && this.specialTab.live){
+          console.log("else")
+          this.$refs.tab1.removeTab("Live")
+          this.specialTab.live = false
+        }
+
+        if (this.drawer.on.includes("Sandbox") && !this.specialTab.sandbox) {
+          this.addTab("Sandbox")
+          this.specialTab.sandbox = true
+        } else if (!this.drawer.on.includes("Sandbox") && this.specialTab.sandbox) {
+          this.$refs.tab1.removeTab("Sandbox")
+          this.specialTab.sandbox = false
+        }
+      }
+    }
   }
 
 };
@@ -114,47 +171,25 @@ export default {
   padding: 0;
 }
 .side {
-  /* float: left; */
-margin: 0px;
-  /* height: 100%; */
-  /* width: 100%; */
+
 }
 
-/* .splitpanes__pane {
-  box-shadow: 0 0 3px rgba(0, 0, 0, .2) inset;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  width: 100%;
-} */
-#pane {
+#splitpane {
   position: absolute;
-left: 56px;
-width: 100%;
-height: 100%;
-}
-
-.code {
-  /* height: 100%; */
-  /* position: absolute;
   left: 56px;
-  width: 100%;
-  height: 100%; */
-  /* side tab size is 56px */
+  padding-right: 56px;
+  height: 100%;
 }
 
-.left_window {
-  float: left;
-  /* position: relative; */
-  width: 50%;
-  height: 100%;
-  /* side tab size is 60px */
+.pane {
+  display: flex;
+  flex-direction: column;
 }
 
-.right_window {
-  float: left;
-  width: 50%;
-  height: 100%;
-  /* right: 0px; */
+.tab {
+  display: block;
+
 }
+
+
 </style>

@@ -12,7 +12,7 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
-    
+
           <v-divider/>
           <v-divider/>
 
@@ -50,7 +50,7 @@ export default {
     drawer: {
       type: Object, //object props reference parent's data
       required: true,
-    },
+    }
   },
   data () {
     return {
@@ -63,22 +63,15 @@ export default {
       additional: [
         { name: 'Live', icon: 'fas fa-laptop-code'},
         { name: 'Sandbox', icon: 'fas fa-code'}
-
-      ]
+      ],
     }
   },
   watch : {
     drawer: {
       deep: true,
-      handler(val) {
-        console.log('watch')
-        if (this.drawer.selected != null) {
-          this.drawer.open = true
-        } else {
-          this.drawer.open = false
-        }
-      }
-    }
+      handler(val) {}
+
+    },
   },
   methods: {
     click() {

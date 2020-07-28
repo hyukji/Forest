@@ -78,7 +78,7 @@ const routes = [
     },
   },
   {
-    path: "/editor/:lecture",
+    path: "/editor",
     name: "Editor",
     components: {
       header: Editor_Header,

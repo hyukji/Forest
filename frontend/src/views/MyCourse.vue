@@ -9,6 +9,7 @@
         <list_prof v-if="user_position == 'prof'" v-model="user_course_info"></list_prof>
       </v-col>
     </v-row>
+    
   </div>
 </template>
 

@@ -2,13 +2,16 @@
   <v-container fluid background-color="teal lighten-5" class="wrap-content">
     <v-row class="text-center">
       <v-col class cols="12">
-        <a href="/" class="text_logo">UGRPWEB</a>
+        <router-link to="/">
+          <v-img :src="require('../assets/Forest_logo.jpg')" class="image1" contain height="300" />
+        </router-link>
+        <p class="text_header">로그인</p>
       </v-col>
       <v-col>
-        <v-text-field v-model="user.id" label="아이디"></v-text-field>
+        <v-text-field v-model="user.email" label="아이디"></v-text-field>
         <v-text-field
           v-model="user.password"
-          input type="password"
+          input type='password'
           label="비밀번호"
           v-on:keyup.enter="signIn"
         ></v-text-field>
@@ -20,8 +23,7 @@
           large
           block
           v-on:click="signIn"
-          >로그인</v-btn
-        >
+          >로그인</v-btn>
         <br />
         <ul>
           <li>
@@ -44,7 +46,7 @@ export default {
   data: function() {
     return {
       user: {
-        id: "",
+        email: "",
         password: "",
       },
     }
@@ -54,21 +56,22 @@ export default {
       this.$http
         .post("/api/login/signIn", {
           //axios 사용
-          user: this.user,
+          email: this.user.email,
+          password: this.user.password
         })
-        .then((res) => {
-          if (res.data.result === 0) {
-            alert("Error, please, try again")
+        .then(res => {
+          if (res.data.result == 0) {
+            alert(res.data.message);
           }
-          if (res.data.result === 1) {
-            alert("Success")
-            this.$router.push("/mycourse") // Login 페이지로 보내줌
+          if (res.data.result == 1) {
+            alert(res.data.message);
+            this.$router.push("/mycourse"); // Login 페이지로 보내줌
           }
         })
         .catch(function(error) {
-          alert("error")
-        })
-    },
+          alert("error");
+        });
+    }
   },
 }
 </script>
@@ -94,5 +97,9 @@ a {
 .text_logo {
   color: black;
   font-size: 37pt;
+}
+.text_header{
+  color: #66BB6A;
+  font-size: 2em;
 }
 </style>

@@ -59,12 +59,17 @@ export default {
   components: { },
   data() {
     return {
-      selected: { lecture: "lecture1", problem: "problem2"},
+      selected: { lecture: "lecture1", problem: "problem1"},
       lectures: ["lecture1", "lecture2", "lecture3"],
       problems: ["problem1", "problem2"],
       results: [],
       input: "",
       waiting: false
+    }
+  },
+  props: {
+    data: {
+      type: Array
     }
   },
   methods: {
@@ -107,6 +112,10 @@ export default {
       this.waiting = true
     })
   },
+  mounted() {
+    this.selected.lecture = this.data[0]
+    this.selected.problem = this.data[1]
+  }
 
 }
 </script>

@@ -78,7 +78,7 @@ const authenticateUser = (req, res, next) => {
     next()
   } else {
     //console.log("로그인 유저 정보" + req.user)
-    res.json({ result: 0, message: "이미 로그인이 되어있씁니다." })
+    res.json({ result: 0, message: "이미 로그인이 되어있습니다." })
     return
   }
 }

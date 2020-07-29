@@ -1,7 +1,8 @@
 <template>
 <div class="wrap">
 
-  <div id="editor">{{ code }}</div>
+  <div id="editor">print("hi")
+  </div>
 
 
 </div>
@@ -16,26 +17,32 @@ export default {
   components: { },
   data() {
     return {
-      code: "print(\"Hi I'm Ace Editor\") #comment"
+      editor: null
     }
   },
   methods: {
+    code() {
+      console.log("code excuted")
+      return this.editor.getValue()
+    }
     // removeTab () {
     //   this.$refs.tab.removeTab(this.tab)
     // },
   },
   created() {
     eventBus.$on('giveMeCode', () => {
-      eventBus.$emit('sendCode', this.code)
+      console.log(this.code, "this.code")
+      eventBus.$emit('sendCode', this.code())
     })
+  },
+  computed: {
   },
   mounted() {
 
     this.editor = ace.edit("editor", {
     	mode: "ace/mode/python",
     	theme: "ace/theme/chrome",
-    	maxLines: 200,
-    	minLines: 40,
+    	minLines: 1,
     	fontSize: 18
     });
   }
@@ -50,9 +57,9 @@ export default {
   border: 1px solid #dddddd
 }
 
-/* #editor {
+#editor {
     width: 100%;
     height: 100%;
-} */
+}
 
 </style>

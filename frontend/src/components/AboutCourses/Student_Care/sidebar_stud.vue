@@ -1,51 +1,103 @@
 <template>
   <div class="sidebar">
-    <v-card class="mx-auto" max-width="300" color="#f9fcfc" tile outlined>
-      <div class="wrap-side-list">
-        <v-list flat class="side-list-content" color="#f9fcfc">
-          <v-list
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            link
-            v-on:click="changeComponent(item)"
-            active-class="false"
-          >
-            <p class="side-list-title">{{item.title}}</p>
-          </v-list-item>
-        </v-list>
-      </div>
-    </v-card>
+  <v-card class="mx-auto" max-width="210">
+    <v-list>
+      <v-list-item
+      link
+      v-on:click="change_middle_title(item)"
+      >
+        <v-list-item-title>학생별</v-list-item-title>
+      </v-list-item>
 
-    <!-- <v-list>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="side_title">게시판</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    <v-divider></v-divider>-->
-  </div>
+      <v-list-group>
+        <template v-slot:activator>
+          <v-list-item-title>수업 및 과제별</v-list-item-title>
+        </template>
+
+        <v-list-group
+          no-action
+          sub-group
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>수업</v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <v-list-item
+            v-for="(admin, i) in admins"
+            :key="i"
+            link
+          >
+            <v-list-item-title v-text="admin[0]"></v-list-item-title>
+          </v-list-item>
+        </v-list-group>
+
+        <v-list-group
+          sub-group
+          no-action
+        >
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>과제</v-list-item-title>
+            </v-list-item-content>
+          </template>
+          <v-list-item
+            v-for="(crud, i) in cruds"
+            :key="i"
+            @click=""
+          >
+            <v-list-item-title v-text="crud[0]"></v-list-item-title>
+          </v-list-item>
+        </v-list-group>
+      </v-list-group>
+
+      <v-list-item link>
+        <v-list-item-title>통계</v-list-item-title>
+      </v-list-item>
+
+    </v-list>
+  </v-card>
+</div>
 </template>
 
 <script>
-export default {
-  props: ["sidebar_title"],
-  data: () => ({
-    middle_title: "",
-    items: [{ title: "학생별" , component_name: "student"},
-            { title: "수업 및 과제별" , component_name: "lec_ass"},
-            { title: "통계" , component_name: "statistics"}]
-  }),
-  methods: {
-    changeComponent: function(item) {
-      this.middle_title = item.title;
-      this.$emit("ChangeComponent", item.component_name);
+  export default {
+    props: ["sidebar_title"],
+    data: () => ({
+      middle_title: "",
+      items: [{ title: "학생별" , component_name: "student"},
+              { title: "수업 및 과제별" , component_name: "lec_ass"},
+              { title: "통계" , component_name: "statistics"}
+            ],
+      admins: [
+        ['수업1', 'people_outline'],
+        ['수업2', 'settings'],
+      ],
+      cruds: [
+        ['과제1', 'add'],
+        ['과제2', 'insert_drive_file']
+      ]
+    }),
+    methods: {
+      changeComponent: function(item) {
+        var selected_com ="");
+      }
+    },
+    change_middle_title: function(title) {
+      var selected_com = "";
+      this.tap_data.forEach(function(value) {
+        if (value.middle_title == title) {
+          selected_com = value.component_name;
+        }
+      });
+
+      this.selectedComponent = selected_com;
+      this.selectedTitle = title;
+    },
+    created() {
+      this.middle_title = this.sidebar_title;
     }
-  },
-  created() {
-    this.middle_title = this.sidebar_title;
-  }
 };
 </script>
 

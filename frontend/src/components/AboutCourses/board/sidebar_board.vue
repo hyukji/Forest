@@ -32,8 +32,7 @@ export default {
   props: ["sidebar_title"],
   data: () => ({
     middle_title: "",
-    items: [{ title: "공지사항" ,
-            component_name: "notice"},
+    items: [{ title: "공지사항" , component_name: "notice"},
             { title: "QnA" , component_name: "qnaboard"}]
   }),
   methods: {

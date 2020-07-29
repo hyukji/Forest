@@ -1,7 +1,7 @@
 <template>
 <div class="wrap">
 
-  <div id="editor">print("hi")
+  <div id="editor" ref="editor">default
   </div>
 
 
@@ -20,8 +20,13 @@ export default {
       editor: null
     }
   },
+  props: {
+    data : {
+      type: String
+    }
+  },
   methods: {
-    code() {
+    getCode() {
       console.log("code excuted")
       return this.editor.getValue()
     }
@@ -31,20 +36,32 @@ export default {
   },
   created() {
     eventBus.$on('giveMeCode', () => {
-      console.log(this.code, "this.code")
-      eventBus.$emit('sendCode', this.code())
+      console.log(this.getCode, "this.getCode")
+      eventBus.$emit('sendCode', this.getCode())
     })
-  },
-  computed: {
+    console.log('editor created')
   },
   mounted() {
-
-    this.editor = ace.edit("editor", {
+    console.log('mounted')
+    this.editor = ace.edit(this.$refs.editor, {
     	mode: "ace/mode/python",
     	theme: "ace/theme/chrome",
     	minLines: 1,
-    	fontSize: 18
-    });
+    	fontSize: 15
+    })
+    this.editor.setValue(this.data)
+    this.editor.navigateLineEnd()
+    // $('.editor').each(function (index) {
+    //   this.editor = ace.edit(this)
+    //   editor.getSession().setMonde('ace/mode/python')
+    //   // {
+    //   //   mode: "ace/mode/python",
+    //   //   theme: "ace/theme/chrome",
+    //   //   minLines: 1,
+    //   //   fontSize: 18
+    //   // }
+    // })
+
   }
 
 }
@@ -58,6 +75,7 @@ export default {
 }
 
 #editor {
+    position: relative;
     width: 100%;
     height: 100%;
 }

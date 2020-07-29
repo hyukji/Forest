@@ -7,7 +7,6 @@
             <v-icon>{{ tab.icon }}</v-icon>
           </v-list-item-action>
 
-<<<<<<< HEAD:frontend/src/components/Editor/Sidetab.vue
           <v-list-item-content>
             <v-list-item-title>{{ tab.name }}</v-list-item-title>
           </v-list-item-content>
@@ -16,16 +15,6 @@
 
       <v-divider />
       <v-divider />
-=======
-              <v-list-item-content>
-                <v-list-item-title>{{ tab.name }}</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-
-          <v-divider/>
-          <v-divider/>
->>>>>>> 39a7c75ca0186e417ec7cb1133ce4170024a37ce:frontend/src/components/Editor/SideTab.vue
 
       <v-list-item-group v-model="drawer.on" active-class multiple>
         <v-list-item v-for="tab in additional" :key="tab.name" :value="tab.name">
@@ -70,34 +59,15 @@ export default {
         { name: "Setting", icon: "fas fa-cog" },
       ],
       additional: [
-<<<<<<< HEAD
         { name: 'Live', icon: 'fas fa-laptop-code'},
         { name: 'Sandbox', icon: 'fas fa-code'}
       ],
     }
-=======
-        { name: "Live", icon: "fas fa-laptop-code" },
-        { name: "Sandbox", icon: "fas fa-code" },
-      ],
-    };
->>>>>>> 03732de31a47bc72043876a73a09a3675e33d7ab
   },
   watch: {
     drawer: {
       deep: true,
-<<<<<<< HEAD
       handler(val) {}
-
-=======
-      handler(val) {
-        console.log("watch");
-        if (this.drawer.selected != null) {
-          this.drawer.open = true;
-        } else {
-          this.drawer.open = false;
-        }
-      },
->>>>>>> 03732de31a47bc72043876a73a09a3675e33d7ab
     },
   },
   methods: {

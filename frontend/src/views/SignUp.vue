@@ -21,6 +21,7 @@
               v-model="user.email"
               label="이메일"
               suffix="@dgist.ac.kr"
+              :counter="9"
               outlined
             ></v-text-field>
           </v-col>
@@ -57,6 +58,7 @@
           v-model="user.password"
           label="비밀번호"
           hint="At least 8 characters"
+          :counter="8"
           @click:append="show_pw = !show_pw"
           outlined
         ></v-text-field>
@@ -67,6 +69,7 @@
           v-model="user.password_check"
           label="비밀번호 확인"
           @click:append="show_pw_check = !show_pw_check"
+          :counter="8"
           outlined
         ></v-text-field>
         <v-btn
@@ -96,7 +99,7 @@
 
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {
       user: {
         name: "",
@@ -104,14 +107,14 @@ export default {
         email: "",
         password: "",
         password_check: "",
-        organization: "DGIST"
+        organization: "DGIST",
       },
       formHasErrors: 0,
       show_pw: true,
       show_pw_check: true,
       rules: {
-        required: value => !!value || "Required." // ||을 기준으로 왼쪽은 기준, 오른쪽은 씌여지는 문구
-      }
+        required: (value) => !!value || "Required.", // ||을 기준으로 왼쪽은 기준, 오른쪽은 씌여지는 문구
+      },
     };
   },
 
@@ -119,14 +122,14 @@ export default {
     form() {
       return {
         //name_require: value => !!this.user.name || "Required.",
-        min_pw: v => this.user.password.length >= 8 || "Min 8 characters",
-        min_student_id: v =>
+        min_pw: (v) => this.user.password.length >= 8 || "Min 8 characters",
+        min_student_id: (v) =>
           this.user.student_id.length == 9 || "학번을 정확히 입력해주세요",
-        pwMatch: val =>
+        pwMatch: (val) =>
           !!(this.user.password === this.user.password_check) ||
-          "password you entered don't match"
+          "password you entered don't match",
       };
-    }
+    },
   },
 
   methods: {
@@ -155,7 +158,7 @@ export default {
 
     check_inform_require() {
       var check_error = 0;
-      Object.values(this.user).forEach(content => {
+      Object.values(this.user).forEach((content) => {
         if (!content) {
           check_error = 1;
           console.log("d");
@@ -167,7 +170,7 @@ export default {
       return;
     },
 
-    signUp: function(event) {
+    signUp: function (event) {
       this.check_inform_require();
       this.check_form();
       if (this.formHasErrors) {
@@ -176,9 +179,9 @@ export default {
       this.$http
         .post("/api/login/signUp", {
           //axios 사용
-          user: this.user
+          user: this.user,
         })
-        .then(response => {
+        .then((response) => {
           if (response.data.result) {
             alert(response.data.message);
 
@@ -188,20 +191,20 @@ export default {
             alert(response.data.message);
           }
         })
-        .catch(function(error) {
+        .catch(function (error) {
           alert("error");
         });
     },
-    mail: function(event) {
+    mail: function (event) {
       alert("mail sent!");
       this.$http
         .post("/api/mail/sendmail", { email: this.user.email })
-        .then(res => {});
+        .then((res) => {});
     },
-    certification: function(event) {
+    certification: function (event) {
       alert("인증되었습니다.");
-    }
-  }
+    },
+  },
 };
 </script>
 

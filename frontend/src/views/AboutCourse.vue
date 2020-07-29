@@ -201,10 +201,10 @@ export default {
 }
 .body-title {
   width: auto;
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   font-weight: 600;
-  padding-left: 3%;
-  padding-top: 3%;
+  padding-left: 4%;
+  padding-top: 4%;
 }
 .brief-text {
   width: 65%;

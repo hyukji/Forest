@@ -28,14 +28,16 @@ var lectureSchema = new Schema({
 
 var subassign = new Schema({
   subtitle: String,
-  score: Number,
-  perfect: Number,
+  score: { type: Number, default: 0 },
+  perfect: { type: Number, default: 0 },
   Updated_date: { type: Date, default: Date.now },
 })
 
 var assignSchema = new Schema({
   title: String,
   subitems: [subassign],
+  totalscore: { type: Number, default: 0 },
+  totalperfect: { type: Number, default: 0 },
   uploaded_date: Date,
 })
 

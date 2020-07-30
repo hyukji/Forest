@@ -58,16 +58,15 @@
       </v-card>
     </div>
     <p class="paragraph-title">과목 소개</p>
-    <v-col cols="12" sm="12">
-      <v-textarea
-        class="mx-2"
-        v-model="course.intro"
-        label="소개를 입력해주세요"
-        counter
-        auto-grow
-        single-line
-      ></v-textarea>
-    </v-col>
+    <v-app>
+      <Editor
+        mode="preview"
+        ref="editor"
+        hint="markdown 형식으로 작성하세요"
+        :outline="false"
+        :render-config="renderConfig"
+        v-model="text"/>
+    </v-app>
     <p class="paragraph-title">수업 과정</p>
     <ul>
       <v-list-item v-for="item in curriculum" :key="item.title">
@@ -94,14 +93,23 @@
 </template>
 
 <script>
+import { Editor } from "vuetify-markdown-editor";
+import { VApp } from 'vuetify/lib';
 // @ is an alias to /src
 export default {
   name: "introduction",
-  components: {},
+  components: {Editor, VApp},
   data: () => ({
     selected: null,
     selected2: null,
     selectwho: null,
+    text: "",
+    renderConfig: {
+      // Mermaid config
+      mermaid: {
+        theme: "dark"
+      }
+    },
     middle_title: "강의소개",
     course: {
       language: "",

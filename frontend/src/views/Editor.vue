@@ -11,19 +11,19 @@
     </pane>
 
     <pane min-size="20" class="pane">
-      <component :is="tabsChrome" class="tab" id="tab1" ref="tab1" v-model="selectedTab.keys[0]" :tabs="tabs[0]"
-      @click="tabClick" @swap="tabSwap" @remove="removeSpecial" />
+      <component :is="tabsChrome" class="tab" id="tab1" ref="tab1" v-model="selectedTab.tab1.key" :tabs="tabs[0]"
+      @click="clickTab" @swap="swapTab" @remove="removeTab" />
       <keep-alive>
-      <component :is="selectedTab.types[0].type" :data="selectedTab.types[0].data"/>
+      <component :is="selectedTab.tab1.type" :data="selectedTab.tab1.data"/>
     </keep-alive>
     </pane>
 
     <pane min-size="20" class="pane">
       <v-btn @click="click" />
-      <component :is="tabsChrome" class="tab" id="tab2" ref="tab2" v-model="selectedTab.keys[1]" :tabs="tabs[1]"
-      @click="tabClick" @swap="tabSwap" @remove="removeSpecial"/>
+      <component :is="tabsChrome" class="tab" id="tab2" ref="tab2" v-model="selectedTab.tab2.key" :tabs="tabs[1]"
+      @click="clickTab" @swap="swapTab" @remove="removeTab"/>
       <keep-alive>
-      <component :is="selectedTab.types[1].type" :data="selectedTab.types[1].data"/>
+      <component :is="selectedTab.tab2.type" :data="selectedTab.tab2.data"/>
     </keep-alive>
     </pane>
 
@@ -64,13 +64,23 @@ export default {
       },
       tabsChrome: null,
       selectedTab: {
-        keys: ['google', 'facebook2', null, null],
-        types: [
-          {type:"WindowCode",
-          data: "print('google')"},
-          {type:"WindowTerminal",
-          data: ["lecture3", "problem2"]}, {type:null}, {type:null}],
-
+        tab1: {
+          key: 'google',
+          type: 'WindowCode',
+          data: "print('google')"
+        },
+        tab2: {
+          key: 'facebook2',
+          type: "WindowTerminal",
+          data: ["lecture3", "problem2"]
+        },
+        // keys: ['google', 'facebook2', null, null],
+        // types: [
+        //   {type:"WindowCode",
+        //   data: "print('google')"},
+        //   {type:"WindowTerminal",
+        //   data: ["lecture3", "problem2"]}, {type:null}, {type:null}],
+        tab3: {}
       },
       //selectedTabType: [{type:"WindowCode"}, {type:"WindowTerminal"}, {type:null}, {type:null}],
       // selectedTab: [
@@ -90,6 +100,7 @@ export default {
           key: 'google',
           type: 'WindowCode',
           data: "print('google')",
+          pos: 1,
           favico: require('../assets/logo.png')
         },
         {
@@ -97,6 +108,7 @@ export default {
           key: 'facebook',
           type: 'WindowTerminal',
           data: ["lecture3", "problem1"],
+          pos: 1,
           favico: require('../assets/logo.png')
         }],
         [{
@@ -104,6 +116,7 @@ export default {
           key: 'google2',
           type: 'WindowCode',
           data: "print('google2')",
+          pos: 2,
           favico: require('../assets/logo.png')
         },
         {
@@ -111,6 +124,7 @@ export default {
           key: 'facebook2',
           type: 'WindowTerminal',
           data: ["lecture3", "problem2"],
+          pos: 2,
           favico: require('../assets/logo.png')
         }]
       ],
@@ -129,24 +143,27 @@ export default {
           label: label,
           key: label,
           type: type,
-          closable: true
+          data: null,
+          pos: 1,
         }
       ]
       console.log(...newTabs)
       console.log(newTabs)
       this.$refs.tab1.addTab(...newTabs)
-      this.selectedTab[0] = newTabs[0].key
-      this.tabClick(null, newTabs[0], null)
+      this.selectedTab['tab1'].key = newTabs[0].key
+      this.clickTab(null, newTabs[0], null)
       //this.tab = item 생성 탭 자동 선,
     },
-    removeSpecial(tab, index) {
-      console.log("tabkey", tab.key)
+    removeTab(tab, index) {
+      console.log("removeSpecial", tab.key)
       if (tab.key == "Live") {
         this.drawer.on.splice(this.drawer.on.indexOf("Live"), 1)
         this.specialTab.live = false
       } else if (tab.key == "Sandbox") {
         this.drawer.on.splice(this.drawer.on.indexOf("Sandbox"), 1)
         this.specialTab.sandbox = false
+      } else {
+
       }
     },
     paneResize() {
@@ -155,15 +172,13 @@ export default {
       //this.$refs.tab3.doLayout()
       //this.$refs.tab4.doLayout()
     },
-    tabClick(event, tab, i) {
-      var index = this.selectedTab.keys.indexOf(tab.key)
-      console.log('tab', tab, index, this.selectedTab.types[index])
-      this.selectedTab.types[index].type = tab.type
-      console.log('tab', tab, index, this.selectedTab.types[index])
-      this.selectedTab.types[index].data = tab.data
+    clickTab(event, tab, i) {
+      var index = tab.pos
+      this.selectedTab['tab'+`${index}`].type = tab.type
+      this.selectedTab['tab'+`${index}`].data = tab.data
     },
-    tabSwap(tab, targetTab) {
-      this.tabClick(null, tab, null)
+    swapTab(tab, targetTab) {
+      this.clickTab(null, tab, null)
     },
     // getTabType(key) {
     //   console.log("key", key)
@@ -176,7 +191,8 @@ export default {
     //   })
     // },
     click() {
-      console.log(this.selectedTab.types[0])
+      console.log(this.$refs.tab1.tabKey)
+
     }
   },
   computed: {
@@ -192,6 +208,8 @@ export default {
       deep: true,
       handler() {
 
+        console.log('watch darwer', this.drawer.on)
+
         if (this.drawer.selected != null) {
           this.drawer.open = true
         } else {
@@ -203,7 +221,7 @@ export default {
           this.addTab("Live", "WindowCode")
           this.specialTab.live = true
         } else if (!this.drawer.on.includes("Live") && this.specialTab.live){
-          console.log("else")
+          console.log("else,,,", this.drawer.on)
           this.$refs.tab1.removeTab("Live")
           this.specialTab.live = false
         }
@@ -212,6 +230,7 @@ export default {
           this.addTab("Sandbox", "WindowCode")
           this.specialTab.sandbox = true
         } else if (!this.drawer.on.includes("Sandbox") && this.specialTab.sandbox) {
+          console.log("else,,,@@", this.drawer.on)
           this.$refs.tab1.removeTab("Sandbox")
           this.specialTab.sandbox = false
         }

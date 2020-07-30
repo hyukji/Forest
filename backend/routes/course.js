@@ -2,10 +2,11 @@ const express = require("express")
 const router = express.Router()
 const Course = require("../models/course")
 const User = require("../models/user")
+const { db } = require("../models/course")
 
 router.get("/", function (req, res, next) {})
 
-router.get("/:course_code/lecture", function (req, res, next) {
+router.post("/:course_code/assign", function (req, res, next) {
   var code = req.params.course_code
 
   Course.findOne({ code: code }, function (err, db_course) {
@@ -14,9 +15,97 @@ router.get("/:course_code/lecture", function (req, res, next) {
       return
     }
 
-    res.json({
-      result: 1,
-      lecturedata: db_course.lecture,
+    db_course.assignment.push(req.body.newAssign)
+
+    db_course.save(function (err) {
+      if (err) {
+        console.error(err)
+        res.json({ result: 0, message: "Failed to save newlecture" })
+        return
+      }
+
+      res.json({
+        result: 1,
+        message: "수업 생성",
+      })
+    })
+  })
+})
+
+router.post("/:course_code/lecture", function (req, res, next) {
+  var code = req.params.course_code
+  console.log("find in new lecture", code)
+  Course.findOne({ code: code }, function (err, db_course) {
+    if (db_course == null) {
+      res.json({ result: 0, message: "존재하지 않는 강의입니다." })
+      return
+    }
+
+    db_course.lecture.push(req.body.newLecture)
+
+    db_course.save(function (err) {
+      if (err) {
+        console.error(err)
+        res.json({ result: 0, message: "Failed to save newlecture" })
+        return
+      }
+
+      res.json({
+        result: 1,
+        message: "수업 생성",
+      })
+    })
+  })
+})
+
+router.put("/:course_code/assign", function (req, res, next) {
+  var code = req.params.course_code
+
+  Course.findOne({ code: code }, function (err, db_course) {
+    if (db_course == null) {
+      res.json({ result: 0, message: "존재하지 않는 강의입니다." })
+      return
+    }
+
+    db_course.assignment = req.body.newAssign
+
+    db_course.save(function (err) {
+      if (err) {
+        console.error(err)
+        res.json({ result: 0, message: "Failed to save newAssign" })
+        return
+      }
+
+      res.json({
+        result: 1,
+        message: "과제 Edit 성공",
+      })
+    })
+  })
+})
+
+router.put("/:course_code/lecture", function (req, res, next) {
+  var code = req.params.course_code
+
+  Course.findOne({ code: code }, function (err, db_course) {
+    if (db_course == null) {
+      res.json({ result: 0, message: "존재하지 않는 강의입니다." })
+      return
+    }
+
+    db_course.lecture = req.body.newLecture
+
+    db_course.save(function (err) {
+      if (err) {
+        console.error(err)
+        res.json({ result: 0, message: "Failed to save newlecture" })
+        return
+      }
+
+      res.json({
+        result: 1,
+        message: "수업 Edit 성공",
+      })
     })
   })
 })

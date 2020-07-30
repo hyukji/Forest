@@ -1,44 +1,62 @@
 <template>
-  <div>
-    <v-card max-width="1200" class="ma-10">
-      <v-list v-if="items[0]">
-        <v-list-group
-          v-for="item in items"
-          :key="item.title"
-          v-model="item.active"
-          prepend-icon="fas fa-book"
-          no-action
-        >
-          <template v-slot:activator>
-            <v-list-item-content class="pt-2">
-              <v-row>
-                <v-col cols="2">
-                  <v-list-item-title v-text="item.title" class="title_font" s></v-list-item-title>
-                </v-col>
-                <v-col class="bar">
-                  <v-progress-linear
-                    v-model="skill"
-                    color="light-green lighten-3"
-                    height="13"
-                    rounded
-                  >
-                    <template v-slot="{ value }">
-                      <strong>{{ Math.ceil(value) }}%</strong>
-                    </template>
-                  </v-progress-linear>
-                </v-col>
-              </v-row>
-            </v-list-item-content>
-          </template>
+  <div class="lecturebody">
+    <v-row v-if="user_isprof == 'prof'" justify="end" class="mb-3">
+      <!--           
+      <v-btn class="my-3" v-bind="attrs" v-on="on" outlined color="secondary">강좌 개설하기</v-btn>-->
 
-          <v-list-item v-for="subItem in item.subitems" :key="subItem.subtitle" @click>
-            <v-list-item-content>
-              <v-list-item-title v-text="subItem.subtitle"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-group>
-      </v-list>
-    </v-card>
+      <v-dialog
+        v-if="!EditBool"
+        v-model="NewLectureSend.dialog"
+        persistent
+        max-width="600px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="ma-3"
+            v-bind="attrs"
+            v-on="on"
+            outlined
+            color="secondary"
+            width="100"
+            >생 성</v-btn
+          >
+        </template>
+        <inoutform v-model="NewLectureSend"></inoutform>
+      </v-dialog>
+      <v-btn
+        v-if="!EditBool"
+        class="ma-3"
+        outlined
+        color="secondary"
+        width="100"
+        @click="EditOn"
+        >수 정</v-btn
+      >
+      <v-btn
+        v-if="EditBool"
+        class="ma-3"
+        outlined
+        color="secondary"
+        width="100"
+        @click="Editcancle"
+        >취 소</v-btn
+      >
+      <v-btn
+        v-if="EditBool"
+        class="ma-3"
+        outlined
+        color="secondary"
+        width="100"
+        @click="EditLecture"
+        >저 장</v-btn
+      >
+    </v-row>
+    <LectureCard
+      v-model="showitem"
+      :lectureCardSend="LectureCardSend"
+      :EditBool="EditBool"
+      :user_isprof="user_isprof"
+    ></LectureCard>
   </div>
 </template>
 
@@ -46,85 +64,74 @@
 // @ is an alias to /src
 export default {
   name: "Dashboard",
+  components: {
+    inoutform: () => import("../AboutCourses/Input_Form"),
+    LectureCard: () => import("../AboutCourses/lectureCard"),
+  },
   props: ["isprof"],
-  data: function () {
+  data: function() {
     return {
       user_isprof: this.isprof,
-      items: [null],
 
-      show: false,
-      middle_title: "대시보드",
-    };
+      showitem: [],
+      items: [],
+
+      NewLectureSend: {
+        dialog: false,
+        typeofdata: "Lecture",
+      },
+      LectureCardSend: {
+        isprof: this.isprof,
+        pick_color: "secondary",
+      },
+      EditBool: null,
+    }
   },
+  watch: {
+    EditBool() {
+      this.showitem = this.EditBool ? this.items : this.$store.state.lecture
 
-  methods: {},
+      this.items = JSON.parse(JSON.stringify(this.$store.state.lecture))
+    },
+  },
+  methods: {
+    EditOn() {
+      this.EditBool = true
+      this.LectureCardSend.pick_color = this.EditBool ? "none" : "secondary"
+    },
+    Editcancle() {
+      this.$store.state.lecture = JSON.parse(JSON.stringify(this.items))
+      this.EditBool = false
+    },
+    EditLecture() {
+      this.$store.state.lecture = JSON.parse(JSON.stringify(this.showitem))
+
+      this.$http
+        .put("/api/mycourse/" + this.$route.params.course_code + "/lecture", {
+          newLecture: this.showitem,
+        })
+        .then((res) => {
+          // alert(res.data.message);
+        })
+        .catch(function(error) {
+          alert("error")
+        })
+
+      this.EditBool = false
+    },
+  },
   created() {
-    var course_code = this.$route.params.course_code;
-    this.items = this.$store.state.lecture;
+    var course_code = this.$route.params.course_code
+    this.items = JSON.parse(JSON.stringify(this.$store.state.lecture))
+
+    this.EditBool = false
   },
-};
+}
 </script>
 
 <style scoped>
-.title_font {
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.bar {
-  padding-bottom: 0;
-  padding-top: 18px;
-}
-
-.content {
-  border: 1px solid black;
-  width: 800px;
-}
-
-.wrap-dashboard {
-  padding-top: 1%;
-}
-.body-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  padding-left: 3%;
-  padding-top: 3%;
-  padding-bottom: 2%;
-}
-.right {
-  float: right;
-}
-
-.dashboard-cards-half {
-  display: inline-block;
-  width: 50%;
-  padding-left: 2%;
-  padding-right: 2%;
-}
-.dashboard-cards {
-  display: block;
-  width: 100%;
-}
-.wrap-card {
-  padding-bottom: 3%;
-}
-.card_title {
-  color: #2c2e37;
-
-  padding-top: 2.3%;
-  padding-left: 3%;
-  font-size: 1.25rem;
-  font-weight: 550;
-}
-ul {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-}
-li {
-  font-size: 1.2rem;
-  color: #2c2e37;
-  padding: 1%;
-  margin: 0;
+.lecturebody {
+  margin: 0 auto;
+  max-width: 93%;
 }
 </style>

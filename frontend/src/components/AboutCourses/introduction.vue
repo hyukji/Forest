@@ -1,47 +1,41 @@
 <template>
-  <div class="wrap-introduction">
-    <div class="introduction-half right">
-      <v-card class="mx-auto" max-width="70%">
-        <p class="card-title">개요</p>
-        <v-container>
-          <v-row>
-            <div class="card-half left">
-              <v-layout row wrap>
-                <v-col class="wrap-total-list" cols="12" sm="10">
-                  <p>Language</p>
-                  <v-icon size="40pt">{{ course.language.icon }}</v-icon>
-                  <p>{{ course.language.title }}</p>
-                </v-col>
-              </v-layout>
-            </div>
-            <div class="card-half right">
-              <v-layout row wrap>
-                <v-col class="wrap-total-list" cols="12" sm="10">
-                  <p>Difficulty</p>
-                  <v-icon size="40pt">{{ course.difficulty.icon }}</v-icon>
-                  <p> {{ course.difficulty.title }}</p>
-                </v-col>
-              </v-layout>
-            </div>
-          </v-row>
-        </v-container>
-      </v-card>
-    </div>
-    <div class="introduction-half left">
-      <v-card class="mx-auto" max-width="100%">
-        <p class="card-title">추천 대상</p>
-        <v-container>
-          <v-row>
-            <v-col class="wrap-total-list" v-for="item in course.recommend" :key="item.title">
-              <v-list three-line>
+  <div>
+    <v-row>
+      <v-col>
+        <v-card>
+          <p class="card-title">개요</p>
+          <v-container>
+            <v-row>
+              <v-col class="wrap-total-list">
+                <p>Language</p>
+                <v-icon size="40pt">{{ course.language.icon }}</v-icon>
+                <p>{{ course.language.title }}</p>
+              </v-col>
+              <v-col class="wrap-total-list">
+                <p>Difficulty</p>
+                <v-icon size="40pt">{{ course.difficulty.icon }}</v-icon>
+                <p>{{ course.difficulty.title }}</p>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+      </v-col>
+      <v-col>
+        <v-card>
+          <p class="card-title">추천 대상</p>
+          <v-container>
+            <v-row>
+              <v-col class="wrap-total-list" v-for="item in course.recommend" :key="item.title">
                 <v-icon size="40pt" v-text="item.icon"></v-icon>
                 <v-list-item-title class="toal-list-title" v-text="item.title"></v-list-item-title>
-              </v-list>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card>
-    </div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-spacer></v-spacer>
     <p class="card-title">과목 소개</p>
     <p class="body">준비중입니다</p>
     <p class="card-title">수업 과정</p>
@@ -51,10 +45,7 @@
           <v-icon size="20pt" color="grey">far fa-clipboard</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title
-            class="course_title"
-            v-text="item.list_title"
-          ></v-list-item-title>
+          <v-list-item-title class="course_title" v-text="item.list_title"></v-list-item-title>
           <v-list-item-content v-text="item.content"></v-list-item-content>
         </v-list-item-content>
       </v-list-item>
@@ -126,15 +117,13 @@ export default {
       },
     ],
     customFilter(item, queryText, itemText) {
-      const hasValue = (val) => (val != null ? val : "")
-      const text = hasValue(item.name)
-      const query = hasValue(queryText)
+      const hasValue = (val) => (val != null ? val : "");
+      const text = hasValue(item.name);
+      const query = hasValue(queryText);
       return (
-        text
-          .toString()
-          .toLowerCase()
-          .indexOf(query.toString().toLowerCase()) > -1
-      )
+        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
+        -1
+      );
     },
   }),
   methods: {},
@@ -180,11 +169,7 @@ export default {
   padding-right: 2%;
 }
 .card-half {
-  display: inline-block;
   width: 50%;
-  padding-left: 2%;
-  padding-right: 2%;
-  text-align: center;
 }
 .course_title {
   font-size: 1.2rem;

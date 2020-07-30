@@ -27,6 +27,16 @@ export const store = new Vuex.Store({
       state.course_care = db.course_care
     },
 
+    addLectureData(state, newlecture) {
+      state.lecture.push(newlecture)
+      console.log("storage add")
+    },
+
+    addAssignData(state, newAssign) {
+      state.assignments.push(newAssign)
+      console.log("storage add")
+    },
+
     /*
     auth_request(state) {
       state.status = "loading"

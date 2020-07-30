@@ -1,183 +1,136 @@
 <template>
-  <v-card max-width="1200" class="ma-10">
-    <v-list v-if="items[0]">
-      <v-list-group
-        v-for="item in items"
-        :key="item.title"
-        v-model="item.active"
-        prepend-icon="fas fa-edit"
-        no-action
-      >
-        <template v-slot:activator>
-          <v-list-item-content class="pt-1">
-            <v-row>
-              <v-col>
-                <v-list-item-title v-text="item.title" class="title_font" s></v-list-item-title>
-              </v-col>
-              <v-col cols="2" class="score-chip">
-                <v-list-item-action>
-                  <v-chip
-                    color="primary"
-                    text-color="white"
-                    class="assignment-right"
-                    v-text="`${Total} / ${PerfectTotal}`"
-                  ></v-chip>
-                </v-list-item-action>
-              </v-col>
-            </v-row>
-          </v-list-item-content>
-        </template>
+  <div class="assignbody">
+    <v-row v-if="user_isprof == 'prof'" justify="end" class="mb-3">
+      <!--           
+      <v-btn class="my-3" v-bind="attrs" v-on="on" outlined color="secondary">강좌 개설하기</v-btn>-->
 
-        <v-list-item v-for="subItem in item.subitems" :key="subItem.title" @click>
-          <v-list-item-content>
-            <v-row>
-              <v-col>
-                <v-list-item-title v-text="subItem.subtitle"></v-list-item-title>
-              </v-col>
-              <v-col cols="3">
-                <v-list-item-title
-                  v-text="`${subItem.score} / ${subItem.perfect}`"
-                  class="text-center"
-                ></v-list-item-title>
-              </v-col>
-              <!-- <v-col cols="1" class="brief-center">
-                /
-              </v-col>
-              <v-col cols="1"  class="brief-left">
-                <v-list-item-title v-text="subItem.perfect"></v-list-item-title>
-              </v-col>-->
-            </v-row>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-group>
-    </v-list>
-  </v-card>
+      <v-dialog
+        v-if="!EditBool"
+        v-model="NewAssignSend.dialog"
+        persistent
+        max-width="600px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            class="ma-3"
+            v-bind="attrs"
+            v-on="on"
+            outlined
+            color="secondary"
+            width="100"
+            >생 성</v-btn
+          >
+        </template>
+        <inoutform v-model="NewAssignSend"></inoutform>
+      </v-dialog>
+      <v-btn
+        v-if="!EditBool"
+        class="ma-3"
+        outlined
+        color="secondary"
+        width="100"
+        @click="EditOn"
+        >수 정</v-btn
+      >
+      <v-btn
+        v-if="EditBool"
+        class="ma-3"
+        outlined
+        color="secondary"
+        width="100"
+        @click="Editcancle"
+        >취 소</v-btn
+      >
+      <v-btn
+        v-if="EditBool"
+        class="ma-3"
+        outlined
+        color="secondary"
+        width="100"
+        @click="EditAssign"
+        >저 장</v-btn
+      >
+    </v-row>
+    <AssignCard
+      v-model="showitem"
+      :assignCardSend="AssignCardSend"
+      :EditBool="EditBool"
+      :user_isprof="user_isprof"
+    ></AssignCard>
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 export default {
   name: "Dashboard",
-
-  data: function () {
-    return {
-      items: [null],
-
-      model: null,
-
-      middle_title: "대시보드",
-      class_list: [
-        { list_title: "lab#00 파이썬 이해하기", complete: 1 },
-        //{ list_title: "lab#01 변수", complete: 0 }
-      ],
-      assignments: [
-        { list_title: "Assignment1", complete: 1 },
-        { list_title: "Assignment2", complete: 0 },
-        { list_title: "Assignment2", complete: 0 },
-      ],
-      notice: [{ list_title: "공지 1" }, { list_title: "공지 2" }],
-      question: [
-        { list_title: "질문있습니다" },
-        { list_title: "궁금한게 있어요" },
-      ],
-    };
+  components: {
+    inoutform: () => import("../AboutCourses/Input_Form"),
+    AssignCard: () => import("../AboutCourses/assignCard"),
   },
-  methods: {},
-  computed: {
-    Total: function () {
-      var total_score = 0;
-      this.items[0].subitems.forEach((item) => {
-        //console.log(item.score);
-        total_score += item.score;
-      });
-      return total_score;
+  props: ["isprof"],
+  data: function() {
+    return {
+      user_isprof: this.isprof,
+
+      showitem: [],
+      items: [],
+
+      NewAssignSend: {
+        dialog: false,
+        typeofdata: "Assignment",
+      },
+      AssignCardSend: {
+        isprof: this.isprof,
+        pick_color: "secondary",
+      },
+      EditBool: null,
+    }
+  },
+  watch: {
+    EditBool() {
+      this.showitem = this.EditBool ? this.items : this.$store.state.assignments
+
+      this.items = JSON.parse(JSON.stringify(this.$store.state.assignments))
     },
-    PerfectTotal: function () {
-      var Perfecttotal_score = 0;
-      this.items[0].subitems.forEach((item) => {
-        //console.log(item.perfect);
-        Perfecttotal_score += item.perfect;
-      });
-      return Perfecttotal_score;
+  },
+  methods: {
+    EditOn() {
+      this.EditBool = true
+      this.AssignCardSend.pick_color = this.EditBool ? "none" : "secondary"
+    },
+    Editcancle() {
+      this.$store.state.assignments = JSON.parse(JSON.stringify(this.items))
+      this.EditBool = false
+    },
+    EditAssign() {
+      this.$store.state.assignments = JSON.parse(JSON.stringify(this.showitem))
+      this.$http
+        .put("/api/mycourse/" + this.$route.params.course_code + "/assign", {
+          newAssign: this.showitem,
+        })
+        .then((res) => {
+          // alert(res.data.message);
+        })
+        .catch(function(error) {
+          alert("error")
+        })
+
+      this.EditBool = false
     },
   },
   created() {
-    this.items = this.$store.state.assignments;
-    console.log(this.items);
+    var course_code = this.$route.params.course_code
+    this.items = JSON.parse(JSON.stringify(this.$store.state.assignments))
+
+    this.EditBool = false
   },
-};
+}
 </script>
 
 <style scoped>
-.title_font {
-  font-size: 1.2rem;
-  padding-top: 4px;
-  font-weight: 600;
-}
-.text-center {
-  font-size: 1rem;
-}
-.score-chip {
-  padding: 0;
-  text-align: right;
-}
-.assignment-right {
-  margin-left: 30;
-  font-size: 1.1rem;
-}
-.brief-right {
-  padding-right: 0;
-}
-
-.content {
-  border: 1px solid black;
-  width: 800px;
-}
-
-.wrap-dashboard {
-  padding-top: 1%;
-}
-.body-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  padding-left: 3%;
-  padding-top: 3%;
-  padding-bottom: 2%;
-}
-.right {
-  float: right;
-}
-
-.dashboard-cards-half {
-  display: inline-block;
-  width: 50%;
-  padding-left: 2%;
-  padding-right: 2%;
-}
-.dashboard-cards {
-  display: block;
-  width: 100%;
-}
-.wrap-card {
-  padding-bottom: 3%;
-}
-.card_title {
-  color: #2c2e37;
-
-  padding-top: 2.3%;
-  padding-left: 3%;
-  font-size: 1.25rem;
-  font-weight: 550;
-}
-ul {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-}
-li {
-  font-size: 1.2rem;
-  color: #2c2e37;
-  padding: 1%;
-  margin: 0;
+.assignbody {
+  margin: 0 auto;
+  max-width: 93%;
 }
 </style>

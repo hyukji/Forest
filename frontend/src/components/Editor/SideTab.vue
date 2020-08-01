@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     click() {
-      console.log(this.drawer);
+      console.log(this.drawer.on);
     },
   },
 };

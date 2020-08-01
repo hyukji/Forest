@@ -3,7 +3,6 @@
     <v-card class="mx-auto" max-width="100" color="#f9fcfc" tile outlined>
       <div class="wrap-side-list">
         <v-list flat class="side-list-content" color="#f9fcfc">
-          <v-list
           <v-list-item
             v-for="item in items"
             :key="item.title"
@@ -33,19 +32,21 @@ export default {
   props: ["sideselect_title"],
   data: () => ({
     middle_title: "",
-    items: [{ title: "수업 1" , component_name: "lec1"},
-            { title: "수업 2" , component_name: "lec2"},
-            { title: "과제 1" , component_name: "ass1"}]
+    items: [
+      { title: "수업 1", component_name: "lec1" },
+      { title: "수업 2", component_name: "lec2" },
+      { title: "과제 1", component_name: "ass1" },
+    ],
   }),
   methods: {
-    changeComponent: function(item) {
+    changeComponent: function (item) {
       this.middle_title = item.title;
       this.$emit("ChangeComponent", item.component_name);
-    }
+    },
   },
   created() {
     this.middle_title = this.sidebar_title;
-  }
+  },
 };
 </script>
 

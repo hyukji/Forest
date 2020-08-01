@@ -7,25 +7,21 @@
           <div class="brief-text">
             <v-row align="end">
               <v-col cols="6">
-                <v-card-title class="brief-title mx-5">{{
+                <v-card-title class="brief-title mx-5">
+                  {{
                   courseData.name
-                }}</v-card-title>
-                <v-card-subtitle class="brief-subtitle mx-6">{{
+                  }}
+                </v-card-title>
+                <v-card-subtitle class="brief-subtitle mx-6">
+                  {{
                   courseData.prof[0]
-                }}</v-card-subtitle>
+                  }}
+                </v-card-subtitle>
               </v-col>
-              <v-btn
-                class="secondary white--text btn-learn mb-5"
-                x-large
-                width="175"
-                outlined
-                >바로학습</v-btn
-              >
+              <v-btn class="secondary white--text btn-learn mb-5" x-large width="175" outlined>바로학습</v-btn>
             </v-row>
             <v-col cols="11">
-              <v-card-subtitle class="brief-process-line-title pt-2"
-                >진행률 70%</v-card-subtitle
-              >
+              <v-card-subtitle class="brief-process-line-title pt-2">진행률 70%</v-card-subtitle>
               <v-progress-linear
                 class="mx-3"
                 v-model="progess_data"
@@ -47,8 +43,7 @@
           class="menu-title"
           text
           v-on:click="change_middle_title(title.middle_title)"
-          >{{ title.middle_title }}</v-btn
-        >
+        >{{ title.middle_title }}</v-btn>
       </v-row>
     </div>
 
@@ -75,7 +70,7 @@
 </template>
 
 <script>
-import { eventBus } from "../main.js"
+import { eventBus } from "../main.js";
 
 // @ is an alias to /src
 export default {
@@ -91,7 +86,7 @@ export default {
       import("../components/AboutCourses/Student_Care/student"),
     course_care: () => import("../components/AboutCourses/Course_Care"),
   },
-  data: function() {
+  data: function () {
     return {
       progess_data: 70,
 
@@ -124,68 +119,68 @@ export default {
           limit: "stud",
         },
       ],
-    }
+    };
   },
   computed: {
     select_tap_array() {
-      var selected_tap = []
-      var isprof = this.user_isprof
-      console.log(isprof)
+      var selected_tap = [];
+      var isprof = this.user_isprof;
+      console.log(isprof);
       this.tap_data.forEach((items) => {
         if (items.limit != isprof) {
-          selected_tap.push(items)
+          selected_tap.push(items);
         }
-      })
-      return selected_tap
+      });
+      return selected_tap;
     },
   },
   methods: {
-    change_middle_title: function(title) {
-      var selected_com = ""
-      this.tap_data.forEach(function(value) {
+    change_middle_title: function (title) {
+      var selected_com = "";
+      this.tap_data.forEach(function (value) {
         if (value.middle_title == title) {
-          selected_com = value.component_name
+          selected_com = value.component_name;
         }
-      })
+      });
 
-      this.selectedComponent = selected_com
-      this.selectedTitle = title
+      this.selectedComponent = selected_com;
+      this.selectedTitle = title;
     },
-    getCoursedData: function() {
+    getCoursedData: function () {
       this.$http
         .get("/api/mycourse/" + this.courseData.code + "/coursedata")
         .then((res) => {
           if (res.data.result) {
-            this.courseData.name = res.data.db_course.name
-            this.courseData.code = res.data.db_course.code
-            this.courseData.language = res.data.db_course.language
-            this.courseData.prof = res.data.db_course.prof
+            this.courseData.name = res.data.db_course.name;
+            this.courseData.code = res.data.db_course.code;
+            this.courseData.language = res.data.db_course.language;
+            this.courseData.prof = res.data.db_course.prof;
 
-            this.user_isprof = res.data.isprof
-            this.$store.commit("setCourseData", res.data.db_course)
+            this.user_isprof = res.data.isprof;
+            this.$store.commit("setCourseData", res.data.db_course);
           } else {
-            alert(res.data.message)
-            this.$router.push("/mycourse")
+            alert(res.data.message);
+            this.$router.push("/mycourse");
           }
         })
-        .catch(function(error) {
-          alert("error to getdata")
-        })
+        .catch(function (error) {
+          alert("error to getdata");
+        });
     },
   },
   created() {
-    this.courseData.code = this.$route.params.course_code
+    this.courseData.code = this.$route.params.course_code;
 
     if (this.$route.query.tab != null) {
-      this.middle_title = this.$route.query.tab
+      this.middle_title = this.$route.query.tab;
     }
     eventBus.$on("bell_route", (route) => {
-      this.middle_title = route
-    })
-    this.$route.query.tab = ""
-    this.getCoursedData()
+      this.middle_title = route;
+    });
+    this.$route.query.tab = "";
+    this.getCoursedData();
   },
-}
+};
 </script>
 <style scoped>
 .wrap-body {

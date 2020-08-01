@@ -34,7 +34,7 @@ export default {
   props: ["card_info"],
   methods: {
     open_editor(event) {
-      window.open("/editor/lecture2");
+      window.open("/editor");
     },
     to_aboutCourse(event) {
       this.$router.push("/mycourse/" + this.code);

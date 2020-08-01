@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="mb-5 " v-for="(item, num) in sendData" :key="num">
+    <v-card class="mb-5" v-for="(item, num) in sendData" :key="num">
       <v-list :flat="settings.flat" class="py-0">
         <v-list-group
           :value="settings.value"
@@ -9,27 +9,16 @@
           :color="lectureCardSend.pick_color"
         >
           <template v-slot:activator>
-            <v-list-item-content
-              class="pl-5 py-6"
-              justify="center"
-              align="start"
-            >
+            <v-list-item-content class="pl-5 py-6" justify="center" align="start">
               <v-row align="center">
                 <v-icon>fas fa-book</v-icon>
                 <v-col class="ml-5" cols="3">
-                  <v-text-field
-                    v-if="EditBool"
-                    v-model="item.title"
-                    class="title_font"
-                  ></v-text-field>
-                  <v-list-item-title
-                    v-else
-                    v-text="item.title"
-                    class="title_font"
-                  ></v-list-item-title>
+                  <v-text-field v-if="EditBool" v-model="item.title" class="title_font"></v-text-field>
+                  <v-list-item-title v-else v-text="item.title" class="title_font"></v-list-item-title>
                 </v-col>
 
                 <v-col
+                  cols="7"
                   v-if="user_isprof == 'stud'"
                   class="bar mx-13 pa-0"
                   justify="center"
@@ -50,17 +39,12 @@
                   class="mx-5"
                   v-if="EditBool"
                   v-on:click="delLecture('title', num)"
-                  >fas fa-trash-alt
-                </v-icon>
+                >fas fa-trash-alt</v-icon>
               </v-row>
             </v-list-item-content>
           </template>
 
-          <v-list-item
-            class="pb-3"
-            v-for="(subItem, i) in item.subitems"
-            :key="i"
-          >
+          <v-list-item class="pb-3" v-for="(subItem, i) in item.subitems" :key="i">
             <v-list-item-content>
               <v-row align="center">
                 <v-col cols="10" class="py-0">
@@ -69,24 +53,14 @@
                     v-model="subItem.subtitle"
                     class="title_font pl-16 py-2"
                   ></v-text-field>
-                  <v-list-item-title
-                    v-else
-                    v-text="subItem.subtitle"
-                    class="title_font pl-16 py-2"
-                  ></v-list-item-title>
+                  <v-list-item-title v-else v-text="subItem.subtitle" class="title_font pl-16 py-2"></v-list-item-title>
                 </v-col>
-                <v-icon
-                  v-if="EditBool"
-                  class="ml-7"
-                  v-on:click="addSubLecture(num, i)"
-                  >fas fa-plus</v-icon
-                >
+                <v-icon v-if="EditBool" class="ml-7" v-on:click="addSubLecture(num, i)">fas fa-plus</v-icon>
                 <v-icon
                   v-if="EditBool"
                   class="mx-3"
                   v-on:click="delLecture('subtitle', num, i)"
-                  >fas fa-trash-alt</v-icon
-                >
+                >fas fa-trash-alt</v-icon>
               </v-row>
             </v-list-item-content>
           </v-list-item>
@@ -103,7 +77,7 @@ export default {
     prop: "sendData",
   },
   props: ["sendData", "lectureCardSend", "EditBool", "user_isprof"],
-  data: function() {
+  data: function () {
     return {
       listDisable: false,
       settings: {
@@ -111,37 +85,37 @@ export default {
         flat: true,
         ripple: true,
       },
-    }
+    };
   },
   computed: {},
   watch: {
     EditBool() {
-      this.settings.flat = "false"
-      this.settings.ripple = false
+      this.settings.flat = "false";
+      this.settings.ripple = false;
 
-      this.listDisable = this.EditBool ? true : false
+      this.listDisable = this.EditBool ? true : false;
 
-      this.settings.value = this.EditBool ? true : null
+      this.settings.value = this.EditBool ? true : null;
     },
   },
   methods: {
     delLecture(type, numLecture, numSubLecture) {
       if (type == "title") {
-        this.sendData.splice(numLecture, 1)
+        this.sendData.splice(numLecture, 1);
       } else {
-        this.sendData[numLecture].subitems.splice(numSubLecture, 1)
+        this.sendData[numLecture].subitems.splice(numSubLecture, 1);
       }
     },
     addSubLecture(numLecture, numSubLecture) {
       this.sendData[numLecture].subitems.splice(numSubLecture + 1, 0, {
         subtitle: "새 항목",
-      })
+      });
 
       //this.sendData.subitems.splice(content);
     },
   },
   created() {},
-}
+};
 </script>
 
 <style scoped>

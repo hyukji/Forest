@@ -220,7 +220,7 @@ export default {
   padding-top: 3%;
   padding-bottom: 3%;
   border-bottom: 1px solid #d3d1d1;
-  text-align: center;
+  padding-left: 3%;
   margin: 20px auto;
 }
 .paragraph-title {
@@ -230,7 +230,7 @@ export default {
   padding-bottom: 3%;
   border-bottom: 1px solid #d3d1d1;
   max-width: 90%;
-  text-align: center;
+  padding-left: 3%;
   margin: 20px auto;
 }
 .total-card {

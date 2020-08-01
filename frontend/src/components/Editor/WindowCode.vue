@@ -62,6 +62,13 @@ export default {
     //   // }
     // })
 
+  },
+  watch: {
+    data(val) {
+    this.editor.setValue(val)
+    this.editor.navigateLineEnd()
+
+    }
   }
 
 }

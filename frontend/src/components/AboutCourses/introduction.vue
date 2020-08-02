@@ -56,8 +56,19 @@
     <v-spacer></v-spacer>
     <p class="card-title">과목 소개</p>
     <Editor
+      v-if="EditBool"
       class="wrap-app "
       mode="preview"
+      ref="editor"
+      hint="markdown 형식으로 작성하세요"
+      :outline="false"
+      :render-config="renderConfig"
+      v-model="text"
+      />
+    <Editor
+      v-if="!EditBool"
+      class="wrap-app "
+      mode="viewer"
       ref="editor"
       hint="markdown 형식으로 작성하세요"
       :outline="false"

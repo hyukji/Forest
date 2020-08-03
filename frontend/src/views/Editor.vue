@@ -2,17 +2,18 @@
 <!-- <div class="wrap"> -->
 <v-row no-gutters class="wrap">
 
-  <side-tab :drawer="drawer" />
+  <side-tab :drawer="drawer" @changeTab="changeTab"/>
 
   <splitpanes id="splitpane" class="default-theme" @resize="paneResize">
 
     <pane v-if="drawer.open" min-size="10" max-size="25">
-      <side-content :selected="drawer.selected" />
+      <side-content :selected="drawer.selected"/>
     </pane>
 
     <pane min-size="20" class="pane">
-      <component :is="tabsChrome" class="tab" id="tab1" ref="tab1" v-model="selectedTab.tab1.key" :tabs="tabs[0]"
-      @click="clickTab" @swap="swapTab" @remove="removeTab" />
+      <component :is="tabsChrome" class="tab" id="tab1" ref="tab1"
+      v-model="selectedTab.keys[0]" :tabs="tabs[0]"
+      @remove="removeTab" @click="clickk"/>
       <keep-alive>
       <component :is="selectedTab.tab1.type" :data="selectedTab.tab1.data"/>
     </keep-alive>
@@ -20,8 +21,9 @@
 
     <pane min-size="20" class="pane">
       <v-btn @click="click" />
-      <component :is="tabsChrome" class="tab" id="tab2" ref="tab2" v-model="selectedTab.tab2.key" :tabs="tabs[1]"
-      @click="clickTab" @swap="swapTab" @remove="removeTab"/>
+      <component :is="tabsChrome" class="tab" id="tab2" ref="tab2"
+      v-model="selectedTab.keys[1]" :tabs="tabs[1]"
+      @remove="removeTab" />
       <keep-alive>
       <component :is="selectedTab.tab2.type" :data="selectedTab.tab2.data"/>
     </keep-alive>
@@ -58,42 +60,19 @@ export default {
         selected: null,
         on: []
       },
-      specialTab: {
-        live: false,
-        sandbox: false
-      },
       tabsChrome: null,
       selectedTab: {
+        keys: ['google', 'facebook2', null, null],
         tab1: {
-          key: 'google',
           type: 'WindowCode',
           data: "print('google')"
         },
         tab2: {
-          key: 'facebook2',
           type: "WindowTerminal",
           data: ["lecture3", "problem2"]
         },
-        // keys: ['google', 'facebook2', null, null],
-        // types: [
-        //   {type:"WindowCode",
-        //   data: "print('google')"},
-        //   {type:"WindowTerminal",
-        //   data: ["lecture3", "problem2"]}, {type:null}, {type:null}],
         tab3: {}
       },
-      //selectedTabType: [{type:"WindowCode"}, {type:"WindowTerminal"}, {type:null}, {type:null}],
-      // selectedTab: [
-      //   {
-      //     key: 'google',
-      //     type: 'WindowCode'
-      //   }, {
-      //     key: 'facebook',
-      //     type: 'WindowTerminal'
-      //   },
-      //   {}, {}
-      // ],
-      a: "WindowCode",
       tabs: [
         [{
           label: 'google',
@@ -128,42 +107,32 @@ export default {
           favico: require('../assets/logo.png')
         }]
       ],
-      codeData: [ //get data from DB
-        { tabkey: 'google',
-          code: "print('hi')" },
-        { tabkey: 'Live',
-          code: 'print("bye")'},
-      ]
     }
   },
   methods: {
-    addTab(label, type) {
-      let newTabs = [
-        {
-          label: label,
-          key: label,
-          type: type,
-          data: null,
-          pos: 1,
-        }
-      ]
-      console.log(...newTabs)
-      console.log(newTabs)
-      this.$refs.tab1.addTab(...newTabs)
-      this.selectedTab['tab1'].key = newTabs[0].key
-      this.clickTab(null, newTabs[0], null)
-      //this.tab = item 생성 탭 자동 선,
-    },
+    // addTab(label, type) {
+    //   let newTabs = [
+    //     {
+    //       label: label,
+    //       key: label,
+    //       type: type,
+    //       data: null,
+    //       pos: 1,
+    //     }
+    //   ]
+    //   this.$refs.tab1.addTab(...newTabs)
+    //   this.selectedTab['tab1'].key = newTabs[0].key
+    //   this.clickTab(null, newTabs[0], null)
+    //   //this.tab = item 생성 탭 자동 선택
+    // },
     removeTab(tab, index) {
-      console.log("removeSpecial", tab.key)
-      if (tab.key == "Live") {
-        this.drawer.on.splice(this.drawer.on.indexOf("Live"), 1)
-        this.specialTab.live = false
-      } else if (tab.key == "Sandbox") {
-        this.drawer.on.splice(this.drawer.on.indexOf("Sandbox"), 1)
-        this.specialTab.sandbox = false
-      } else {
+      console.log("removeSpecial", this.drawer.on)
+      if (tab.key == "Live" && this.drawer.on.includes(tab.key)) {
 
+        this.drawer.on.splice(this.drawer.on.indexOf("Live"), 1)
+      } else if (tab.key == "Sandbox" && this.drawer.on.includes(tab.key)) {
+        this.drawer.on.splice(this.drawer.on.indexOf("Sandbox"), 1)
+      } else {
       }
     },
     paneResize() {
@@ -172,28 +141,46 @@ export default {
       //this.$refs.tab3.doLayout()
       //this.$refs.tab4.doLayout()
     },
-    clickTab(event, tab, i) {
-      var index = tab.pos
-      this.selectedTab['tab'+`${index}`].type = tab.type
-      this.selectedTab['tab'+`${index}`].data = tab.data
+    clickTab(tab, pos) {
+      console.log("clickTAb")
+      var copy = JSON.parse(JSON.stringify( this.selectedTab.keys ));
+      copy[pos] = tab.key
+      this.selectedTab.keys = copy
     },
-    swapTab(tab, targetTab) {
-      this.clickTab(null, tab, null)
+    getTab(key) {
+      for (var list in this.tabs) {
+        list = this.tabs[list]
+        for (var ele in list) {
+          if (list[ele].key == key) {
+            return list[ele]
+          }
+        }
+      }
     },
-    // getTabType(key) {
-    //   console.log("key", key)
-    //   this.tabs.forEach(function(list) {
-    //     list.forEach(function(ele) {
-    //       if (ele.key == key) {
-    //         console.log(ele.key, ele.type)
-    //         return ele.type}
-    //     })
-    //   })
-    // },
     click() {
-      console.log(this.$refs.tab1.tabKey)
-
-    }
+      console.log(this.$refs.tab1.props)
+      console.log(this.$refs.tab1.tabs)
+      console.log(this.selectedTab.keys)
+    },
+    clickk() {
+      console.log('clickkk')
+    },
+    changeTab(action, key) { //request from sideTab
+      console.log(action, key)
+      if (action == 'add') {
+        let tab = {
+          label: key,
+          key: key,
+          type: "WindowCode",
+          data: "hi "+key,
+          pos: 1
+        }
+        this.$refs.tab1.addTab(tab)
+        this.clickTab(tab, 0)
+      } else if (action == "remove") {
+        this.$refs.tab1.removeTab(key)
+      }
+    },
   },
   computed: {
 
@@ -204,38 +191,20 @@ export default {
     this.tabsChrome = VueTabsChrome.VueTabsChrome //typeerror?
   },
   watch: {
-    drawer: {
-      deep: true,
-      handler() {
-
-        console.log('watch darwer', this.drawer.on)
-
-        if (this.drawer.selected != null) {
-          this.drawer.open = true
-        } else {
-          this.drawer.open = false
-        }
-
-        var vue = this
-        if (this.drawer.on.includes("Live") && !this.specialTab.live) {
-          this.addTab("Live", "WindowCode")
-          this.specialTab.live = true
-        } else if (!this.drawer.on.includes("Live") && this.specialTab.live){
-          console.log("else,,,", this.drawer.on)
-          this.$refs.tab1.removeTab("Live")
-          this.specialTab.live = false
-        }
-
-        if (this.drawer.on.includes("Sandbox") && !this.specialTab.sandbox) {
-          this.addTab("Sandbox", "WindowCode")
-          this.specialTab.sandbox = true
-        } else if (!this.drawer.on.includes("Sandbox") && this.specialTab.sandbox) {
-          console.log("else,,,@@", this.drawer.on)
-          this.$refs.tab1.removeTab("Sandbox")
-          this.specialTab.sandbox = false
-        }
-      }
-    },
+      "selectedTab.keys": {
+        deep: true,
+        handler: function(newVal) {
+        console.log(this.tabs[0], 'dddddddddddddd')
+        newVal.forEach((item, i) => { //check all ele in newVal
+          if (item != null) {
+            var tab = this.getTab(item)
+            var pos = tab.pos
+            this.selectedTab['tab'+`${pos}`].type = tab.type
+            this.selectedTab['tab'+`${pos}`].data = tab.data
+          }
+        });
+      },
+    }
   }
 
 };

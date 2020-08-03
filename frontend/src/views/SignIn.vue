@@ -3,7 +3,7 @@
     <v-row class="text-center">
       <v-col class cols="12">
         <router-link to="/">
-          <v-img :src="require('../assets/Forest_logo.jpg')" class="image1" contain height="300" />
+          <v-img :src="require('../assets/forest_logo_green.png')" class="image1" contain height="150" />
         </router-link>
         <p class="text_header">로그인</p>
       </v-col>
@@ -78,7 +78,6 @@ export default {
 
 <style scoped>
 .wrap-content {
-  padding-top: 100pt;
   width: 400pt;
 }
 ul {
@@ -99,6 +98,7 @@ a {
   font-size: 37pt;
 }
 .text_header{
+  padding-top: 2%;
   color: #66BB6A;
   font-size: 2em;
 }

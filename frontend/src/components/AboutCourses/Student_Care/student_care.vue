@@ -4,10 +4,8 @@
   <div class="sidebar">
   <v-card class="mx-auto" max-width="210">
     <v-list>
-      <v-list-item
-      v-on:click="selectedComponent='student'"
-      >
-        <v-list-item-title>학생별</v-list-item-title>
+      <v-list-item v-on:click="selectedComponent='student'">
+        <v-list-item-title >학생별</v-list-item-title>
       </v-list-item>
 
       <v-list-group>
@@ -26,12 +24,11 @@
           </template>
 
           <v-list-item
-            v-for="(admin, i) in admins"
+            v-for="(lec, i) in lecture"
             :key="i"
             link
-            @click=""
           >
-            <v-list-item-title v-text="admin[0]"></v-list-item-title>
+            <v-list-item-title v-text="lec[0]"> </v-list-item-title>
           </v-list-item>
         </v-list-group>
 
@@ -45,17 +42,16 @@
             </v-list-item-content>
           </template>
           <v-list-item
-            v-for="(crud, i) in cruds"
+            v-for="(ass,i) in assignment"
             :key="i"
-            link
             @click=""
           >
-            <v-list-item-title v-text="crud[0]"></v-list-item-title>
+            <v-list-item-title v-text="ass[0]"></v-list-item-title>
           </v-list-item>
         </v-list-group>
       </v-list-group>
 
-      <v-list-item   v-on:click="selectedComponent='lec_ass'">
+      <v-list-item v-on:click="selectedComponent='lec_ass'">
         <v-list-item-title>통계</v-list-item-title>
       </v-list-item>
 
@@ -63,6 +59,7 @@
   </v-card>
 </div>
 </row>
+
 <row>
 <keep-alive>
   <component v-bind:is="selectedComponent">
@@ -83,13 +80,16 @@ import statistics from '@/components/AboutCourses/Student_Care/statistics';
   export default {
     data: function() {
       return{
-            selectedComponent: 'student'
-            }
-      },
-    components : {
+            selectedComponent: 'student',
+            lecture: [['수업1','lec1'],['수업2','lec2']],
+            assignment: [['과제1','ass1'],['과제2','ass2']]
+      }
+    },
+    components: {
       student, lec_ass, statistics
     }
-};
+  }
+
 </script>
 
 <style scoped>

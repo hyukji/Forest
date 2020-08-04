@@ -83,7 +83,7 @@ export default {
     board: () => import("@/components/AboutCourses/board/board"),
     assignments: () => import("@/components/AboutCourses/assignments"),
     stud_care: () =>
-      import("../components/AboutCourses/Student_Care/student"),
+      import("../components/AboutCourses/Student_Care/student_care"),
     course_care: () => import("../components/AboutCourses/Course_Care"),
   },
   data: function () {

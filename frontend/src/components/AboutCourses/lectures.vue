@@ -1,7 +1,7 @@
 <template>
   <div class="lecturebody">
     <v-row v-if="user_isprof == 'prof'" justify="end" class="mb-3">
-      <!--           
+      <!--
       <v-btn class="my-3" v-bind="attrs" v-on="on" outlined color="secondary">강좌 개설하기</v-btn>-->
 
       <v-dialog v-if="!EditBool" v-model="NewLectureSend.dialog" persistent max-width="600px">

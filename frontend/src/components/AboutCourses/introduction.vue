@@ -1,8 +1,26 @@
 <template>
   <div>
+    <v-row  justify="end" class="mb-3">
+      <!--
+      <v-btn class="my-3" v-bind="attrs" v-on="on" outlined color="secondary">강좌 개설하기</v-btn>-->
+
+      <v-dialog v-if="!EditBool"  persistent max-width="600px">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-if="!EditBool"
+            class="ma-3"
+            outlined
+            color="secondary"
+            width="100"
+            @click="EditOn"
+          >수 정</v-btn>
+        </template>
+        <inoutform ></inoutform>
+      </v-dialog>
+    </v-row>
     <v-row>
       <v-col>
-        <v-card>
+        <v-card class="cards">
           <p class="card-title">개요</p>
           <v-container>
             <v-row>
@@ -21,7 +39,7 @@
         </v-card>
       </v-col>
       <v-col>
-        <v-card>
+        <v-card class="cards">
           <p class="card-title">추천 대상</p>
           <v-container>
             <v-row>
@@ -37,7 +55,26 @@
 
     <v-spacer></v-spacer>
     <p class="card-title">과목 소개</p>
-    <p class="body">준비중입니다</p>
+    <Editor
+      v-if="EditBool"
+      class="wrap-app "
+      mode="preview"
+      ref="editor"
+      hint="markdown 형식으로 작성하세요"
+      :outline="false"
+      :render-config="renderConfig"
+      v-model="text"
+      />
+    <Editor
+      v-if="!EditBool"
+      class="wrap-app "
+      mode="viewer"
+      ref="editor"
+      hint="markdown 형식으로 작성하세요"
+      :outline="false"
+      :render-config="renderConfig"
+      v-model="text"
+      />
     <p class="card-title">수업 과정</p>
     <ul>
       <v-list-item v-for="item in curriculum" :key="item.title">
@@ -50,18 +87,38 @@
         </v-list-item-content>
       </v-list-item>
     </ul>
+    <div class="save">
+      <v-btn
+        v-if="EditBool"
+        class="ma-3"
+        outlined
+        color="secondary"
+        width="100"
+        @click="EditLecture"
+      >저 장</v-btn>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import { Editor } from "vuetify-markdown-editor";
+import { VApp } from 'vuetify/lib';
 export default {
   name: "introduction",
-  components: {},
+  components: {Editor, VApp},
   data: () => ({
     selected: null,
     selected2: null,
+    EditBool: null,
     selectwho: [],
+    text: "",
+        renderConfig: {
+      // Mermaid config
+      mermaid: {
+        theme: "dark"
+      }
+    },
     course: {
       language: {
         icon: "fab fa-python",
@@ -126,11 +183,27 @@ export default {
       );
     },
   }),
-  methods: {},
+  watch: {
+    EditBool() {
+      this.showitem = this.EditBool ? this.items : this.$store.state.introduction;
+      this.items = JSON.parse(JSON.stringify(this.$store.state.introduction));
+    },
+  },
+  methods: {
+    EditOn() {
+      this.EditBool = true;
+    },
+    EditLecture() {
+      this.EditBool = false;
+    },
+  },
 };
 </script>
 
 <style scoped>
+.cards{
+  height: 220px;
+}
 .wrap-body {
   min-width: 800pt;
   max-width: 1000pt;
@@ -184,5 +257,10 @@ export default {
 }
 .d-flex {
   text-algin: center;
+}
+.save{
+  padding-right: 5%;
+  padding-bottom: 3%;
+  text-align: center;
 }
 </style>

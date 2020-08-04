@@ -31,15 +31,18 @@ server.on("listening", onListening)
 
 /* using socket.io (seulin) */
 
-var io = require('socket.io')(server)
+var io = require("socket.io")(server)
 pythonShell = require("./python.js")
-io.on('connection', function(socket) {
-  console.log('Connect from Client: ' + socket)
 
-  socket.on('code', async function(data) {
-    console.log('Message from Client: ' + data.code)
-    pythonShell(data.code,
-      function() {
+io.on("connection", function (socket) {
+  console.log("Connect from Client: ", socket)
+
+  socket.on("code", function (data) {
+    console.log("Message from Client: " + data.code)
+
+    pythonShell(
+      data.code,
+      function () {
         // console.log("giveMe input")
         // var input = ""
         // socket.emit('input').then(
@@ -50,13 +53,13 @@ io.on('connection', function(socket) {
         // console.log("before return@@", input))
         // return 5465
       },
-      function(result) {
-        console.log('result www', result)
+      function (result) {
+        console.log("result", result)
         var rtnMessage = {
-          success : 1,
-          message : result
+          success: 1,
+          message: result,
         }
-        socket.emit('result', rtnMessage)
+        socket.emit("result", rtnMessage)
       }
     )
     // .then(function (result) {
@@ -64,7 +67,6 @@ io.on('connection', function(socket) {
     // }).catch(function (err) {console.log(err)})
 
   })
-
 })
 
 /**

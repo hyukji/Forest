@@ -35,8 +35,6 @@ var io = require("socket.io")(server)
 pythonShell = require("./python.js")
 
 io.on("connection", function (socket) {
-  console.log("Connect from Client: ", socket)
-
   socket.on("code", function (data) {
     console.log("Message from Client: " + data.code)
 

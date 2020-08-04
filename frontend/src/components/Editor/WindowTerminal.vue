@@ -1,80 +1,62 @@
 <template>
-<div class="wrap">
-  <v-row no-gutters>
-    <v-menu transition="slide-y-transition">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          class="ma-2"
-          v-bind="attrs"
-          v-on="on"
-        >
-          {{ selected.lecture }}
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item-group v-model="selected.lecture" mandatory>
-        <v-list-item v-for="n in lectures" :key="n" :value="n" link>
-          <v-list-item-title v-text="n"></v-list-item-title>
-        </v-list-item>
-      </v-list-item-group>
-      </v-list>
-    </v-menu>
+  <div class="wrap">
+    <v-row no-gutters>
+      <v-menu transition="slide-y-transition">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="primary" class="ma-2" v-bind="attrs" v-on="on">{{ selected.lecture }}</v-btn>
+        </template>
+        <v-list>
+          <v-list-item-group v-model="selected.lecture" mandatory>
+            <v-list-item v-for="n in lectures" :key="n" :value="n" link>
+              <v-list-item-title v-text="n"></v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-menu>
 
-    <v-menu transition="slide-y-transition">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="secondary"
-          class="ma-2"
-          v-bind="attrs"
-          v-on="on"
-        >
-          {{ selected.problem }}
-        </v-btn>
-      </template>
-      <v-list>
-        <v-list-item-group v-model="selected.problem" mandatory>
-        <v-list-item v-for="n in problems" :key="n" :value="n" link>
-          <v-list-item-title v-text="n"></v-list-item-title>
-        </v-list-item>
-      </v-list-item-group>
-      </v-list>
-    </v-menu>
+      <v-menu transition="slide-y-transition">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="secondary" class="ma-2" v-bind="attrs" v-on="on">{{ selected.problem }}</v-btn>
+        </template>
+        <v-list>
+          <v-list-item-group v-model="selected.problem" mandatory>
+            <v-list-item v-for="n in problems" :key="n" :value="n" link>
+              <v-list-item-title v-text="n"></v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-menu>
 
-    <v-btn
-      color="primary"
-      class="ma-2"
-      @click="getCode">Run</v-btn>
-  </v-row>
-  <div v-for="i in results">
-  {{ i }}</div>
-  <input v-if="waiting" v-model="input" @keyup.enter="submit"/>
-</div>
+      <v-btn color="primary" class="ma-2" @click="getCode">Run</v-btn>
+    </v-row>
+    <div v-for="i in results">{{ i }}</div>
+    <input v-if="waiting" v-model="input" @keyup.enter="submit" />
+  </div>
 </template>
 
 <script>
-import { eventBus } from "../../main.js"
+import { eventBus } from "../../main.js";
 
 export default {
-  components: { },
+  components: {},
   data() {
     return {
-      selected: { lecture: "lecture1", problem: "problem1"},
+      selected: { lecture: "lecture1", problem: "problem1" },
       lectures: ["lecture1", "lecture2", "lecture3"],
       problems: ["problem1", "problem2"],
       results: [],
       input: "",
-      waiting: false
-    }
+      waiting: false,
+    };
   },
   props: {
     data: {
-      type: Array
-    }
+      type: Array,
+    },
   },
   methods: {
     getCode() {
-      eventBus.$emit('giveMeCode')
+      eventBus.$emit("giveMeCode");
     },
     // run(code) {
     //   //console.log(code)
@@ -82,49 +64,48 @@ export default {
     //     code: code
     //   })
     // },
+
     submit(event) {
-      console.log(event)
-      this.waiting = false
-      this.results.push(this.input)
-      this.$socket.emit('input', {
-        input: this.input
-      })
-      this.input=""
-      console.log(this.results)
-    }
+      console.log(event);
+      this.waiting = false;
+      this.results.push(this.input);
+      this.$socket.emit("input", {
+        input: this.input,
+      });
+      this.input = "";
+      console.log(this.results);
+    },
   },
-  computed: {
-  },
+  computed: {},
   created() {
-    eventBus.$on('sendCode', (code) => {
-      this.$socket.emit('code', {
-        code: code
-      })
-    })
-    this.$socket.on('result', (result) => {
+    eventBus.$on("sendCode", (code) => {
+      this.$socket.emit("code", {
+        code: code,
+      });
+    });
+
+    this.$socket.on("result", (result) => {
       //data format 다시 바꾸기
-      console.log(result.message)
-      this.results.push(result.message)
+      console.log(result.message);
+      this.results.push(result.message);
       //results를 리스트 말고 스트링으로 바꿔야 함
-      this.result = result.message
+      this.result = result.message;
     }),
-    this.$socket.on('input', () => {
-      this.waiting = true
-    })
+      this.$socket.on("input", () => {
+        this.waiting = true;
+      });
   },
   mounted() {
-    this.selected.lecture = this.data[0]
-    this.selected.problem = this.data[1]
-  }
-
-}
+    this.selected.lecture = this.data[0];
+    this.selected.problem = this.data[1];
+  },
+};
 </script>
 
 <style scoped>
 .wrap {
   width: 100%;
   height: 100%;
-  border: 1px solid #dddddd
+  border: 1px solid #dddddd;
 }
-
 </style>

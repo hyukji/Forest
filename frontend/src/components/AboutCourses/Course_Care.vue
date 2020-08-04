@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap-introduction">
+  <div>
     <div class="introduction-half right">
       <v-card class="mx-auto" max-width="70%">
         <p class="card-title">개요</p>
@@ -58,15 +58,15 @@
       </v-card>
     </div>
     <p class="paragraph-title">과목 소개</p>
-    <v-app>
       <Editor
+        class="wrap-app "
         mode="preview"
         ref="editor"
         hint="markdown 형식으로 작성하세요"
         :outline="false"
         :render-config="renderConfig"
-        v-model="text"/>
-    </v-app>
+        v-model="text"
+        />
     <p class="paragraph-title">수업 과정</p>
     <ul>
       <v-list-item v-for="item in curriculum" :key="item.title">
@@ -275,5 +275,7 @@ export default {
   padding-bottom: 3%;
   text-align: center;
 }
-
+.wrap-app{
+  padding-left:6%
+}
 </style>

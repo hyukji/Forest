@@ -36,70 +36,60 @@
 
 <script>
 import { eventBus } from "../../main.js";
+import VueSocketio from 'vue-socket.io';
 
 export default {
   components: {},
   data() {
     return {
-      selected: { lecture: "lecture1", problem: "problem1" },
       lectures: ["lecture1", "lecture2", "lecture3"],
       problems: ["problem1", "problem2"],
       results: [],
       input: "",
       waiting: false,
-    };
+      a: 0,
+    }
   },
   props: {
     data: {
-      type: Array,
+      type: Array
     },
+    selected: {
+      type: Object
+    }
   },
   methods: {
     getCode() {
-      eventBus.$emit("giveMeCode");
+      eventBus.$emit('exeCode', this.selected)
     },
-    // run(code) {
-    //   //console.log(code)
-    //   this.$socket.emit('code', {
-    //     code: code
-    //   })
-    // },
-
     submit(event) {
-      console.log(event);
-      this.waiting = false;
-      this.results.push(this.input);
-      this.$socket.emit("input", {
-        input: this.input,
-      });
-      this.input = "";
-      console.log(this.results);
-    },
+      this.waiting = false
+      this.results.push(this.input)
+      this.$socket.emit('input', {
+        input: this.input
+      })
+      this.input=""
+    }
   },
-  computed: {},
+  computed: {
+    hi() {
+      return this.a
+    }
+  },
   created() {
-    eventBus.$on("sendCode", (code) => {
-      this.$socket.emit("code", {
-        code: code,
-      });
-    });
 
-    this.$socket.on("result", (result) => {
+    this.$socket.on('result', (result) => {
       //data format 다시 바꾸기
-      console.log(result.message);
-      this.results.push(result.message);
+      console.log(this. a, "result", result)
+      this.results.push(result.message)
       //results를 리스트 말고 스트링으로 바꿔야 함
       this.result = result.message;
-    }),
+    })
       this.$socket.on("input", () => {
         this.waiting = true;
       });
-  },
-  mounted() {
-    this.selected.lecture = this.data[0];
-    this.selected.problem = this.data[1];
-  },
-};
+  }
+}
 </script>
 
 <style scoped>

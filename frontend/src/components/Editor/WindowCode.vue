@@ -23,26 +23,25 @@ export default {
   props: {
     data : {
       type: String
-    }
+    },
+    selected: null,
   },
   methods: {
     getCode() {
-      console.log("code excuted")
       return this.editor.getValue()
-    }
-    // removeTab () {
-    //   this.$refs.tab.removeTab(this.tab)
-    // },
+    },
+
   },
   created() {
-    eventBus.$on('giveMeCode', () => {
-      console.log(this.getCode, "this.getCode")
-      eventBus.$emit('sendCode', this.getCode())
+    eventBus.$on('exeCode', (selected) => {
+      if (this.selected.lecture == selected.lecture && this.selected.problem == selected.problem) {
+        //eventBus.$emit('sendCode', this.getCode())
+        console.log("front emit!!")
+        this.$socket.emit('code', {code: this.getCode()})
+      }
     })
-    console.log('editor created')
   },
   mounted() {
-    console.log('mounted')
     this.editor = ace.edit(this.$refs.editor, {
     	mode: "ace/mode/python",
     	theme: "ace/theme/chrome",
@@ -69,6 +68,10 @@ export default {
     this.editor.navigateLineEnd()
 
     }
+  },
+  beforeDestroy() {
+    console.log('code destroyed, execode off')
+    eventBus.$off('exeCode')
   }
 
 }

@@ -15,7 +15,8 @@
       v-model="selectedTab.keys[0]" :tabs="tabs[0]"
       @remove="removeTab" @click="clickk"/>
       <keep-alive>
-      <component :is="selectedTab.tab1.type" :data="selectedTab.tab1.data"/>
+      <component :is="selectedTab.tab1.type" :data="selectedTab.tab1.data"
+      :selected="selectedTab.tab1.selected"/>
     </keep-alive>
     </pane>
 
@@ -25,7 +26,8 @@
       v-model="selectedTab.keys[1]" :tabs="tabs[1]"
       @remove="removeTab" />
       <keep-alive>
-      <component :is="selectedTab.tab2.type" :data="selectedTab.tab2.data"/>
+      <component :is="selectedTab.tab2.type" :data="selectedTab.tab2.data"
+      :selected="selectedTab.tab2.selected"/>
     </keep-alive>
     </pane>
 
@@ -65,11 +67,12 @@ export default {
         keys: ['google', 'facebook2', null, null],
         tab1: {
           type: 'WindowCode',
-          data: "print('google')"
+          data: "print('google')",
+          selected: { lecture: "lecture3", problem: "problem2" }
         },
         tab2: {
           type: "WindowTerminal",
-          data: ["lecture3", "problem2"]
+          selected: { lecture: "lecture3", problem: "problem2" }
         },
         tab3: {}
       },
@@ -79,6 +82,7 @@ export default {
           key: 'google',
           type: 'WindowCode',
           data: "print('google')",
+          selected: { lecture: "lecture3", problem: "problem2" },
           pos: 1,
           favico: require('../assets/logo.png')
         },
@@ -86,7 +90,7 @@ export default {
           label: 'facebook',
           key: 'facebook',
           type: 'WindowTerminal',
-          data: ["lecture3", "problem1"],
+          selected: { lecture: "lecture1", problem: "problem1" },
           pos: 1,
           favico: require('../assets/logo.png')
         }],
@@ -95,6 +99,7 @@ export default {
           key: 'google2',
           type: 'WindowCode',
           data: "print('google2')",
+          selected: { lecture: "lecture1", problem: "problem1" },
           pos: 2,
           favico: require('../assets/logo.png')
         },
@@ -102,7 +107,7 @@ export default {
           label: 'facebook2',
           key: 'facebook2',
           type: 'WindowTerminal',
-          data: ["lecture3", "problem2"],
+          selected: { lecture: "lecture3", problem: "problem2" },
           pos: 2,
           favico: require('../assets/logo.png')
         }]
@@ -142,7 +147,6 @@ export default {
       //this.$refs.tab4.doLayout()
     },
     clickTab(tab, pos) {
-      console.log("clickTAb")
       var copy = JSON.parse(JSON.stringify( this.selectedTab.keys ));
       copy[pos] = tab.key
       this.selectedTab.keys = copy
@@ -158,9 +162,7 @@ export default {
       }
     },
     click() {
-      console.log(this.$refs.tab1.props)
-      console.log(this.$refs.tab1.tabs)
-      console.log(this.selectedTab.keys)
+
     },
     clickk() {
       console.log('clickkk')
@@ -194,13 +196,14 @@ export default {
       "selectedTab.keys": {
         deep: true,
         handler: function(newVal) {
-        console.log(this.tabs[0], 'dddddddddddddd')
+        console.log('tab change')
         newVal.forEach((item, i) => { //check all ele in newVal
           if (item != null) {
             var tab = this.getTab(item)
             var pos = tab.pos
             this.selectedTab['tab'+`${pos}`].type = tab.type
             this.selectedTab['tab'+`${pos}`].data = tab.data
+            this.selectedTab['tab'+`${pos}`].selected = tab.selected
           }
         });
       },

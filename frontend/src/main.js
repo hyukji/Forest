@@ -8,9 +8,15 @@ import { store } from "./store/store"
 import axios from "axios"
 Vue.prototype.$http = axios
 
-import io from "socket.io-client"
-const socket = io("http://localhost:3030")
+import SocketIO from 'socket.io-client';
+const socket = SocketIO('http://localhost:3030')
 Vue.prototype.$socket = socket
+// import VueSocketIO from "vue-socket.io"
+// Vue.use(new VueSocketIO({
+//   debug: true,
+//   connection: SocketIO('http://localhost:3030')
+//   })
+// )
 
 Vue.config.productionTip = false
 

@@ -14,6 +14,7 @@
             width="100"
             @click="EditOn"
           >수 정</v-btn>
+
         </template>
         <inoutform ></inoutform>
       </v-dialog>
@@ -202,7 +203,7 @@ export default {
 
 <style scoped>
 .cards{
-  height: 220px;
+  height: 240px;
 }
 .wrap-body {
   min-width: 800pt;

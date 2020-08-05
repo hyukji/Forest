@@ -33,7 +33,6 @@ export default {
       loading: true,
       user_course_info: [],
       user_position: "",
-      loading: true,
     };
   },
   created() {

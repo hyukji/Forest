@@ -24,6 +24,7 @@ function writeFile(name, code) {
 function run(code, getInput, callBack) {
   var fs = require("fs")
   var fileName = "script.py"
+  var result = " "
 
   fs.writeFile(fileName, code, function (err) {
     if (err) console.log(err)
@@ -35,6 +36,15 @@ function run(code, getInput, callBack) {
     console.log("mmess", message)
     callBack(message)
   })
+  // console.log(result, 'resulttttt')
+  // return new Promise(function(resolve, reject) {
+  //   if (result) {
+  //     console.log('result python', result)
+  //     resolve(result);
+  //   } else {
+  //     resolve(result);
+  //   }
+  // })
 
   //
   // PythonShell.runString(code, null, function(err, result) {

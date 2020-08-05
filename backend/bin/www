@@ -60,6 +60,10 @@ io.on("connection", function (socket) {
         socket.emit("result", rtnMessage)
       }
     )
+    // .then(function (result) {
+    //
+    // }).catch(function (err) {console.log(err)})
+
   })
 })
 

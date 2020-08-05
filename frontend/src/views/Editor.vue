@@ -1,111 +1,135 @@
 <template>
-<!-- <div class="wrap"> -->
-<v-row no-gutters class="wrap">
+  <!-- <div class="wrap"> -->
+  <v-row no-gutters class="wrap">
+    <side-tab :drawer="drawer" @changeTab="changeTab" />
 
-  <side-tab :drawer="drawer" @changeTab="changeTab"/>
+    <splitpanes id="splitpane" class="default-theme" @resize="paneResize">
+      <pane v-if="drawer.open" min-size="10" max-size="25">
+        <side-content :selected="drawer.selected" />
+      </pane>
 
-  <splitpanes id="splitpane" class="default-theme" @resize="paneResize">
+      <pane min-size="20" class="pane">
+        <component
+          :is="tabsChrome"
+          class="tab"
+          id="tab1"
+          ref="tab1"
+          v-model="selectedTab.keys[0]"
+          :tabs="tabs[0]"
+          @remove="removeTab"
+        />
+        <keep-alive>
+          <component
+            :is="selectedTab.tab1.type"
+            :data="selectedTab.tab1.data"
+            :selected="selectedTab.tab1.selected"
+          />
+        </keep-alive>
+      </pane>
 
-    <pane v-if="drawer.open" min-size="10" max-size="25">
-      <side-content :selected="drawer.selected"/>
-    </pane>
-
-    <pane min-size="20" class="pane">
-      <component :is="tabsChrome" class="tab" id="tab1" ref="tab1"
-      v-model="selectedTab.keys[0]" :tabs="tabs[0]"
-      @remove="removeTab" @click="clickk"/>
-      <keep-alive>
-      <component :is="selectedTab.tab1.type" :data="selectedTab.tab1.data"/>
-    </keep-alive>
-    </pane>
-
-    <pane min-size="20" class="pane">
-      <v-btn @click="click" />
-      <component :is="tabsChrome" class="tab" id="tab2" ref="tab2"
-      v-model="selectedTab.keys[1]" :tabs="tabs[1]"
-      @remove="removeTab" />
-      <keep-alive>
-      <component :is="selectedTab.tab2.type" :data="selectedTab.tab2.data"/>
-    </keep-alive>
-    </pane>
-
-  </splitpanes>
-
-</v-row>
-<!-- </div> -->
+      <pane min-size="20" class="pane">
+        <v-btn @click="click" />
+        <component
+          :is="tabsChrome"
+          class="tab"
+          id="tab2"
+          ref="tab2"
+          v-model="selectedTab.keys[1]"
+          :tabs="tabs[1]"
+          @remove="removeTab"
+        />
+        <keep-alive>
+          <component
+            :is="selectedTab.tab2.type"
+            :data="selectedTab.tab2.data"
+            :selected="selectedTab.tab2.selected"
+          />
+        </keep-alive>
+      </pane>
+    </splitpanes>
+  </v-row>
+  <!-- </div> -->
 </template>
 
 <script>
 // @ is an alias to /src
-import { Splitpanes, Pane } from 'splitpanes'
-import 'splitpanes/dist/splitpanes.css'
-import VueTabsChrome from 'vue-tabs-chrome'
-import Pdf from 'pdfvuer'
+import { Splitpanes, Pane } from "splitpanes"
+import "splitpanes/dist/splitpanes.css"
+import VueTabsChrome from "vue-tabs-chrome"
+import Pdf from "pdfvuer"
 
 export default {
   name: "editor",
   components: {
-    Drawer: () => import('@/components/Editor/Drawer'),
-    SideTab: () => import('@/components/Editor/SideTab'),
-    SideContent: () => import('@/components/Editor/SideContent'),
-    WindowCode: () => import('@/components/Editor/WindowCode'),
-    WindowTerminal: () => import('@/components/Editor/WindowTerminal'),
+    Drawer: () => import("@/components/Editor/Drawer"),
+    SideTab: () => import("@/components/Editor/SideTab"),
+    SideContent: () => import("@/components/Editor/SideContent"),
+    WindowCode: () => import("@/components/Editor/WindowCode"),
+    WindowTerminal: () => import("@/components/Editor/WindowTerminal"),
     Splitpanes,
-    Pane
+    Pane,
   },
   data() {
     return {
       drawer: {
         open: false,
         selected: null,
-        on: []
+        on: [],
+        // live or sandbox
       },
       tabsChrome: null,
       selectedTab: {
-        keys: ['google', 'facebook2', null, null],
+        keys: ["google", "facebook2", null, null],
         tab1: {
-          type: 'WindowCode',
-          data: "print('google')"
+          type: "WindowCode",
+          data: "print('google')",
+          selected: { lecture: "lecture3", problem: "problem2" },
         },
         tab2: {
           type: "WindowTerminal",
-          data: ["lecture3", "problem2"]
+          selected: { lecture: "lecture3", problem: "problem2" },
         },
-        tab3: {}
+        tab3: {},
       },
       tabs: [
-        [{
-          label: 'google',
-          key: 'google',
-          type: 'WindowCode',
-          data: "print('google')",
-          pos: 1,
-          favico: require('../assets/logo.png')
-        },
-        {
-          label: 'facebook',
-          key: 'facebook',
-          type: 'WindowTerminal',
-          data: ["lecture3", "problem1"],
-          pos: 1,
-          favico: require('../assets/logo.png')
-        }],
-        [{
-          label: 'google2',
-          key: 'google2',
-          type: 'WindowCode',
-          data: "print('google2')",
-          pos: 2,
-          favico: require('../assets/logo.png')
-        },
-        {
-          label: 'facebook2',
-          key: 'facebook2',
-          type: 'WindowTerminal',
-          data: ["lecture3", "problem2"],
-          pos: 2,
-          favico: require('../assets/logo.png')
-        }]
+        [
+          {
+            label: "google",
+            key: "google",
+            type: "WindowCode",
+            data: "print('google')",
+            selected: { lecture: "lecture3", problem: "problem2" },
+            pos: 1,
+            favico: require("../assets/logo.png"),
+          },
+          {
+            label: "facebook",
+            key: "facebook",
+            type: "WindowTerminal",
+            selected: { lecture: "lecture1", problem: "problem1" },
+            pos: 1,
+            favico: require("../assets/logo.png"),
+          },
+        ],
+        [
+          {
+            label: "google2",
+            key: "google2",
+            type: "WindowCode",
+            data: "print('google2')",
+            selected: { lecture: "lecture1", problem: "problem1" },
+            pos: 2,
+            favico: require("../assets/logo.png"),
+          },
+          {
+            label: "facebook2",
+            key: "facebook2",
+            type: "WindowTerminal",
+            selected: { lecture: "lecture3", problem: "problem2" },
+            pos: 2,
+            favico: require("../assets/logo.png"),
+          },
+        ],
       ],
     }
   },
@@ -128,7 +152,6 @@ export default {
     removeTab(tab, index) {
       console.log("removeSpecial", this.drawer.on)
       if (tab.key == "Live" && this.drawer.on.includes(tab.key)) {
-
         this.drawer.on.splice(this.drawer.on.indexOf("Live"), 1)
       } else if (tab.key == "Sandbox" && this.drawer.on.includes(tab.key)) {
         this.drawer.on.splice(this.drawer.on.indexOf("Sandbox"), 1)
@@ -142,8 +165,7 @@ export default {
       //this.$refs.tab4.doLayout()
     },
     clickTab(tab, pos) {
-      console.log("clickTAb")
-      var copy = JSON.parse(JSON.stringify( this.selectedTab.keys ));
+      var copy = JSON.parse(JSON.stringify(this.selectedTab.keys))
       copy[pos] = tab.key
       this.selectedTab.keys = copy
     },
@@ -157,23 +179,17 @@ export default {
         }
       }
     },
-    click() {
-      console.log(this.$refs.tab1.props)
-      console.log(this.$refs.tab1.tabs)
-      console.log(this.selectedTab.keys)
-    },
-    clickk() {
-      console.log('clickkk')
-    },
-    changeTab(action, key) { //request from sideTab
+    click() {},
+    changeTab(action, key) {
+      //request from sideTab
       console.log(action, key)
-      if (action == 'add') {
+      if (action == "add") {
         let tab = {
           label: key,
           key: key,
           type: "WindowCode",
-          data: "hi "+key,
-          pos: 1
+          data: "hi " + key,
+          pos: 1,
         }
         this.$refs.tab1.addTab(tab)
         this.clickTab(tab, 0)
@@ -182,32 +198,31 @@ export default {
       }
     },
   },
-  computed: {
-
-  },
+  computed: {},
   created() {
     console.log("created")
     //document.documentElement.style.overflow='hidden'
     this.tabsChrome = VueTabsChrome.VueTabsChrome //typeerror?
   },
   watch: {
-      "selectedTab.keys": {
-        deep: true,
-        handler: function(newVal) {
-        console.log(this.tabs[0], 'dddddddddddddd')
-        newVal.forEach((item, i) => { //check all ele in newVal
+    "selectedTab.keys": {
+      deep: true,
+      handler: function(newVal) {
+        console.log("tab change")
+        newVal.forEach((item, i) => {
+          //check all ele in newVal
           if (item != null) {
             var tab = this.getTab(item)
             var pos = tab.pos
-            this.selectedTab['tab'+`${pos}`].type = tab.type
-            this.selectedTab['tab'+`${pos}`].data = tab.data
+            this.selectedTab["tab" + `${pos}`].type = tab.type
+            this.selectedTab["tab" + `${pos}`].data = tab.data
+            this.selectedTab["tab" + `${pos}`].selected = tab.selected
           }
-        });
+        })
       },
-    }
-  }
-
-};
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -218,7 +233,6 @@ export default {
   padding: 0;
 }
 .side {
-
 }
 
 #splitpane {
@@ -235,8 +249,5 @@ export default {
 
 .tab {
   display: block;
-
 }
-
-
 </style>

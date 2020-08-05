@@ -1,6 +1,9 @@
 <template>
   <div class="wrap-body">
-    <v-row>
+    <v-row v-show="loading">
+      <v-text>로딩중</v-text>
+    </v-row>
+    <v-row v-show="!loading">
       <div>
         <side />
       </div>
@@ -21,25 +24,29 @@ export default {
     list_stud: () => import("@/components/MyCourse/List_Stud"),
     list_prof: () => import("@/components/MyCourse/List_Prof"),
 
-    side: () => import("@/components/MyCourse/Side")
+    side: () => import("@/components/MyCourse/Side"),
   },
-  data: function() {
+  data: function () {
     return {
       user_course_info: [],
-      user_position: ""
+      user_position: "",
+      loading: true,
     };
   },
   created() {
     this.$http
       .get("/api/home/mycourse")
-      .then(res => {
+      .then((res) => {
         this.user_course_info = res.data.course_info;
         this.user_position = res.data.position;
       })
-      .catch(function(error) {
+      .then(() => {
+        this.loading = false;
+      })
+      .catch(function (error) {
         alert("error");
       });
-  }
+  },
 };
 </script>
 

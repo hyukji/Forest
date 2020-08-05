@@ -46,7 +46,7 @@ export default {
       results: [],
       input: "",
       waiting: false,
-      a: 0,
+      a: 0
     }
   },
   props: {
@@ -75,24 +75,18 @@ export default {
       return this.a
     }
   },
-  computed: {},
   created() {
-
     this.$socket.on('result', (result) => {
       //data format 다시 바꾸기
-      this.a = this.a + 1
-      console.log(this. a, "result", result.message)
+      console.log("result", result)
       this.results.push(result.message)
       //results를 리스트 말고 스트링으로 바꿔야 함
       this.result = result.message;
-    }),
-      this.$socket.on("input", () => {
-        this.waiting = true;
-      });
-  },
-  beforeDestroy() {
-
-  },
+    })
+      // this.$socket.on("input", () => {
+      //   this.waiting = true;
+      // });
+  }
 }
 </script>
 

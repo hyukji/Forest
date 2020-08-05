@@ -1,14 +1,19 @@
 <template>
-  <div class="wrap-body">
-    <v-row>
-      <div>
-        <side />
-      </div>
-      <v-col class="pl-10">
-        <list_stud v-if="user_position == 'stud'" v-model="user_course_info"></list_stud>
-        <list_prof v-if="user_position == 'prof'" v-model="user_course_info"></list_prof>
-      </v-col>
-    </v-row>
+  <div>
+    <div v-if="loading" class="loading">
+      <img src="../assets/loading.gif">
+    </div>
+    <div class="wrap-body" v-if="!loading" id="content">
+      <v-row>
+        <div>
+          <side />
+        </div>
+        <v-col class="pl-10">
+          <list_stud v-if="user_position == 'stud'" v-model="user_course_info"></list_stud>
+          <list_prof v-if="user_position == 'prof'" v-model="user_course_info"></list_prof>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
@@ -21,24 +26,33 @@ export default {
     list_stud: () => import("@/components/MyCourse/List_Stud"),
     list_prof: () => import("@/components/MyCourse/List_Prof"),
 
-    side: () => import("@/components/MyCourse/Side")
+    side: () => import("@/components/MyCourse/Side"),
   },
-  data: function() {
+  data: function () {
     return {
+      loading: true,
       user_course_info: [],
-      user_position: ""
+      user_position: "",
+      loading: true,
     };
   },
   created() {
     this.$http
       .get("/api/home/mycourse")
-      .then(res => {
+      .then((res) => {
         this.user_course_info = res.data.course_info;
         this.user_position = res.data.position;
       })
-      .catch(function(error) {
+      .then(() => {
+        this.loading = false;
+      })
+      .catch(function (error) {
         alert("error");
-      });
+      })
+      .then(() => {
+        this.loading=false;
+      })
+
   }
 };
 </script>
@@ -53,5 +67,19 @@ export default {
   font-size: 1.5rem;
   font-weight: 600;
   padding-bottom: 2%;
+}
+.loading {
+    position: fixed;
+    width: 40%;
+    height: 40%;
+    text-align: center;
+    top: 30%;
+    left: 30%;
+}
+img{
+  max-width: 100%;
+  height: auto;
+}
+#content{
 }
 </style>

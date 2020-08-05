@@ -36,7 +36,6 @@
 
 <script>
 import { eventBus } from "../../main.js";
-import VueSocketio from 'vue-socket.io';
 
 export default {
   components: {},
@@ -47,7 +46,7 @@ export default {
       results: [],
       input: "",
       waiting: false,
-      a: 0,
+      a: 0
     }
   },
   props: {
@@ -77,17 +76,16 @@ export default {
     }
   },
   created() {
-
     this.$socket.on('result', (result) => {
       //data format 다시 바꾸기
-      console.log(this. a, "result", result)
+      console.log("result", result)
       this.results.push(result.message)
       //results를 리스트 말고 스트링으로 바꿔야 함
       this.result = result.message;
     })
-      this.$socket.on("input", () => {
-        this.waiting = true;
-      });
+      // this.$socket.on("input", () => {
+      //   this.waiting = true;
+      // });
   }
 }
 </script>

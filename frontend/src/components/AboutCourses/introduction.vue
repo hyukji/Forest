@@ -111,7 +111,7 @@ export default {
     selected: null,
     selected2: null,
     EditBool: null,
-    selectwho: [],
+    selectwho: null,
     text: "",
         renderConfig: {
       // Mermaid config

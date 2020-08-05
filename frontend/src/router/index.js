@@ -14,23 +14,28 @@ import User_Header from "../components/User_Header.vue"
 import Main_Header from "../components/Main_Header.vue"
 import Editor_Header from "../components/Editor_Header.vue"
 
+import newedit from "../components/NewEditor/newedit"
+
 Vue.use(VueRouter)
 
-/*
-isAuthenticated = (to, from, next) => {
-  if (!this.$store.state.isauth) {
-    next("/signin") // allow to enter route
-  } else {
-    next() // go to '/login';
-  }
-}
-*/
 const routes = [
   {
     path: "*",
     name: "E404",
     components: {
       body: E404,
+    },
+  },
+  {
+    path: "/newedit",
+    components: {
+      body: newedit,
+    },
+  },
+  {
+    path: "/prac",
+    components: {
+      body: hello,
     },
   },
   {

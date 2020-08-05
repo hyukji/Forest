@@ -1,6 +1,19 @@
 <template>
+  <v-card width="100%">
+  <v-card-title>
+    학생별
+    <v-spacer></v-spacer>
+    <v-text-field
+      v-model="search"
+      append-icon="mdi-magnify"
+      label="Search"
+      single-line
+      hide-details
+    ></v-text-field>
+  </v-card-title>
   <v-data-table
     :headers="headers"
+    :search="search"
     :items="information"
     class="elevation-1"
   >
@@ -13,12 +26,14 @@
       <td class="text-xs-right">{{ props.item.assignment_average_grade }}</td>
     </template>
   </v-data-table>
+  </v-card>
 </template>
 
 <script>
   export default {
     data () {
       return {
+        search: '',
         headers: [
           {
             text: '이 름 ',

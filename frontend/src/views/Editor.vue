@@ -232,8 +232,6 @@ export default {
   margin: 0;
   padding: 0;
 }
-.side {
-}
 
 #splitpane {
   position: absolute;

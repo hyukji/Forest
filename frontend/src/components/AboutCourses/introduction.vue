@@ -14,6 +14,7 @@
             width="100"
             @click="EditOn"
           >수 정</v-btn>
+          <font-awesome-icon icon="user-secret" />
         </template>
         <inoutform ></inoutform>
       </v-dialog>
@@ -104,6 +105,9 @@
 // @ is an alias to /src
 import { Editor } from "vuetify-markdown-editor";
 import { VApp } from 'vuetify/lib';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+library.add(faUserSecret)
 export default {
   name: "introduction",
   components: {Editor, VApp},
@@ -202,7 +206,7 @@ export default {
 
 <style scoped>
 .cards{
-  height: 220px;
+  height: 240px;
 }
 .wrap-body {
   min-width: 800pt;

@@ -15,6 +15,8 @@
   </v-card>
   </div>
 
+  <div class="pa-4"> </div>
+
   <div>
     <keep-alive>
       <component v-bind:is="selectedComponent">
@@ -36,7 +38,7 @@ export default {
       selectedComponent: 'notice'
     }
   },
-  component: {
+  components: {
     notice, qnaboard
   }
 }

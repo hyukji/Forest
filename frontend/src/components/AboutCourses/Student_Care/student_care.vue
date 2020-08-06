@@ -1,5 +1,5 @@
 <template>
-  <div max-wodth="100%">
+  <div>
   <v-layout col wrap>
   <div class="sidebar">
   <v-card class="mx-auto" max-width="210">
@@ -59,7 +59,7 @@
   </v-card>
   </div>
 
-  <div class="pa-6"> </div>
+  <div class="pa-4"> </div>
 
   <div>
   <keep-alive>

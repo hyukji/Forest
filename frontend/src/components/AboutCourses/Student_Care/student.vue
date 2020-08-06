@@ -1,6 +1,8 @@
 <template>
-  <v-card width="100%">
+  <div class="notice">
+  <v-card>
   <v-card-title>
+    <div class="pa-2"></div>
     학생별
     <v-spacer></v-spacer>
     <v-text-field
@@ -26,7 +28,8 @@
       <td class="text-xs-right">{{ props.item.assignment_average_grade }}</td>
     </template>
   </v-data-table>
-  </v-card>
+</v-card>
+</div>
 </template>
 
 <script>
@@ -38,13 +41,14 @@
           {
             text: '이 름 ',
             align: 'left',
-            value: 'name'
+            value: 'name',
+            width: '12%'
           },
-          { text: '학 번 ', value: 'student_id' },
-          { text: 'I D ', value: 'web_id' },
-          { text: '최근 접속 시각 ', value: 'recent_access' },
-          { text: '수업 진행률 ', value: 'progress' },
-          { text: '과제 평균 점수 ', value: 'assignment_average_grade' }
+          { text: '학 번 ', value: 'student_id', width: '15%'},
+          { text: 'I D ', value: 'web_id', width: '18%' },
+          { text: '최근 접속 시각 ', value: 'recent_access', width: '25%' },
+          { text: '수업 진행률 ', value: 'progress', width: '15%' },
+          { text: '과제 평균 점수 ', value: 'assignment_average_grade', width: '15%' }
 
         ],
         information: [
@@ -151,8 +155,7 @@
 }
 .notice {
   display: inline-block;
-  width: 79%;
-  padding-left: 5%;
+  width: 145%;
 }
 .body-title {
   font-size: 1.5rem;

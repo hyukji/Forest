@@ -130,7 +130,8 @@ export default {
 }
 .notice {
   display: inline-block;
-  width: 180%;
+  max-width: 900px;
+  min-width: 800px;
 }
 .body-title {
   font-size: 1.5rem;

@@ -42,13 +42,13 @@
             text: '이 름 ',
             align: 'left',
             value: 'name',
-            width: '12%'
+            width: '10%'
           },
           { text: '학 번 ', value: 'student_id', width: '15%'},
           { text: 'I D ', value: 'web_id', width: '18%' },
           { text: '최근 접속 시각 ', value: 'recent_access', width: '25%' },
           { text: '수업 진행률 ', value: 'progress', width: '15%' },
-          { text: '과제 평균 점수 ', value: 'assignment_average_grade', width: '15%' }
+          { text: '과제 평균 점수 ', value: 'assignment_average_grade', width: '17%' }
 
         ],
         information: [
@@ -155,7 +155,8 @@
 }
 .notice {
   display: inline-block;
-  width: 145%;
+  max-width: 900px;
+  min-width: 800px;
 }
 .body-title {
   font-size: 1.5rem;

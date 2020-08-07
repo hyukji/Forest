@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mx-auto">
   <v-layout col wrap>
   <div class="sidebar">
   <v-card class="mx-auto" max-width="210">
@@ -24,6 +24,7 @@
       </component>
     </keep-alive>
   </div>
+
 </v-layout>
 </div>
 </template>

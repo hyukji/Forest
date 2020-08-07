@@ -1,5 +1,12 @@
 <template>
-  <v-navigation-drawer dark mini-variant mini-variant-width="56" permanent class="menu">
+  <v-navigation-drawer
+    dark
+    mini-variant
+    mini-variant-width="56"
+    height="100%"
+    permanent
+    class="menu"
+  >
     <v-list dense nav>
       <v-list-item-group v-model="drawer.selected" active-class>
         <v-list-item v-for="tab in main" :key="tab.name" :value="tab.name">
@@ -120,6 +127,9 @@ export default {
   height: 100%;
   padding: 0px;
   margin: 0px; */
+}
+.menu {
+  height: 100%;
 }
 .content {
 }

@@ -1,9 +1,11 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import createPersistedState from "vuex-persistedstate"
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
+  plugins: [createPersistedState()],
   //기본 접근방법 : this.$store.state.items
   state: {
     dashboard: [null],
@@ -37,11 +39,16 @@ export const store = new Vuex.Store({
       console.log("storage add")
     },
 
+    addIntroData(state, newIntro) {
+      state.introduction.push(newIntro)
+      console.log("storage add")
+    },
+
     /*
     auth_request(state) {
       state.status = "loading"
     },
-    
+
     auth_success(state, user) {
       state.status = "success"
       state.user = user

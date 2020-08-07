@@ -24,7 +24,6 @@
                   class="chiptitle mr-10"
                   v-text="`${item.totalscore} / ${item.totalperfect}`"
                 ></v-chip>
-
                 <v-icon
                   class="mx-5"
                   v-if="EditBool"

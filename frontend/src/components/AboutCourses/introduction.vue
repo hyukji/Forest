@@ -1,10 +1,7 @@
 <template>
   <div>
     <v-row  justify="end" class="mb-3">
-      <!--
-      <v-btn class="my-3" v-bind="attrs" v-on="on" outlined color="secondary">강좌 개설하기</v-btn>-->
-
-      <v-dialog v-if="!EditBool"  persistent max-width="600px">
+      <v-dialog  persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             v-if="!EditBool"
@@ -14,41 +11,95 @@
             width="100"
             @click="EditOn"
           >수 정</v-btn>
-          <font-awesome-icon icon="user-secret" />
+          <v-btn
+            v-if="EditBool"
+            class="ma-3"
+            outlined
+            color="secondary"
+            width="100"
+            @click="Editcancle"
+          >취 소</v-btn>
         </template>
         <inoutform ></inoutform>
       </v-dialog>
     </v-row>
     <v-row>
       <v-col>
-        <v-card class="cards">
+        <v-card v-if="!EditBool" class="cards">
           <p class="card-title">개요</p>
           <v-container>
             <v-row>
               <v-col class="wrap-total-list">
                 <p>Language</p>
                 <v-icon size="40pt">{{ course.language.icon }}</v-icon>
-                <p>{{ course.language.title }}</p>
+                <p class="intro-title">{{ course.language.title }}</p>
               </v-col>
               <v-col class="wrap-total-list">
                 <p>Difficulty</p>
                 <v-icon size="40pt">{{ course.difficulty.icon }}</v-icon>
-                <p>{{ course.difficulty.title }}</p>
+                <p class="intro-title">{{ course.difficulty.title }}</p>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
+        <v-card v-if="EditBool" class="cards">
+          <p class="card-title">개요</p>
+          <v-container>
+            <v-row>
+              <v-col class="wrap-total-list">
+                <v-autocomplete
+                  :items="language"
+                  :filter="customFilter"
+                  item-text="pack.title"
+                  label="Language"
+                  v-model="course.language"
+                  item-value="pack"
+                ></v-autocomplete>
+              </v-col>
+              <v-col class="wrap-total-list">
+                <v-autocomplete
+                  :items="difficulty"
+                  :filter="customFilter"
+                  item-text="pack.title"
+                  label="Difficulty"
+                  v-model="course.difficulty"
+                  item-value="pack"
+                ></v-autocomplete>
               </v-col>
             </v-row>
           </v-container>
         </v-card>
       </v-col>
       <v-col>
-        <v-card class="cards">
+        <v-card v-if="!EditBool" class="cards">
           <p class="card-title">추천 대상</p>
           <v-container>
-            <v-row>
+            <v-row v-if="!course.recommend">
+              <v-col class="wrap-total-list">
+                <font-awesome-icon :icon="['fad', 'carrot']" style="font-size: 50pt; --fa-primary-color: green; --fa-secondary-color: tomato; --fa-secondary-opacity: 1.0;" />
+                <v-list-item-title> 선택해주세요 </v-list-item-title>
+              </v-col>
+            </v-row>
+            <v-row v-else>
               <v-col class="wrap-total-list" v-for="item in course.recommend" :key="item.title">
                 <v-icon size="40pt" v-text="item.icon"></v-icon>
                 <v-list-item-title class="toal-list-title" v-text="item.title"></v-list-item-title>
               </v-col>
             </v-row>
+          </v-container>
+        </v-card>
+        <v-card v-if="EditBool" class="cards">
+          <p class="card-title">추천 대상</p>
+          <v-container>
+            <v-autocomplete
+              :items="recommend"
+              :filter="customFilter"
+              item-text="pack.title"
+              label="추천대상"
+              v-model="course.recommend"
+              item-value="pack"
+              multiple
+            ></v-autocomplete>
           </v-container>
         </v-card>
       </v-col>
@@ -64,7 +115,7 @@
       hint="markdown 형식으로 작성하세요"
       :outline="false"
       :render-config="renderConfig"
-      v-model="text"
+      v-model="course.intro"
       />
     <Editor
       v-if="!EditBool"
@@ -74,20 +125,8 @@
       hint="markdown 형식으로 작성하세요"
       :outline="false"
       :render-config="renderConfig"
-      v-model="text"
+      v-model="course.intro"
       />
-    <p class="card-title">수업 과정</p>
-    <ul>
-      <v-list-item v-for="item in curriculum" :key="item.title">
-        <v-list-item-avatar>
-          <v-icon size="20pt" color="grey">far fa-clipboard</v-icon>
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title class="course_title" v-text="item.list_title"></v-list-item-title>
-          <v-list-item-content v-text="item.content"></v-list-item-content>
-        </v-list-item-content>
-      </v-list-item>
-    </ul>
     <div class="save">
       <v-btn
         v-if="EditBool"
@@ -95,7 +134,7 @@
         outlined
         color="secondary"
         width="100"
-        @click="EditLecture"
+        @click="EditIntro"
       >저 장</v-btn>
     </div>
   </div>
@@ -106,16 +145,15 @@
 import { Editor } from "vuetify-markdown-editor";
 import { VApp } from 'vuetify/lib';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-library.add(faUserSecret)
+import { faCarrot } from '@fortawesome/pro-duotone-svg-icons'
+library.add(faCarrot)
 export default {
   name: "introduction",
   components: {Editor, VApp},
   data: () => ({
-    selected: null,
-    selected2: null,
+    showitem: [],
+    items: [],
     EditBool: null,
-    selectwho: null,
     text: "",
         renderConfig: {
       // Mermaid config
@@ -123,6 +161,72 @@ export default {
         theme: "dark"
       }
     },
+    language: [
+      {
+        pack: {
+          icon: "fab fa-python",
+          title: "python"
+        }
+      },
+      {
+        pack: {
+          icon: "fab fa-java",
+          title: "javascript",
+        }
+      },
+      {
+        pack: {
+          icon: "fab fa-vuejs",
+          title: "vue.js",
+        }
+      },
+    ],
+    difficulty: [
+      {
+        pack: {
+          title: "입문",
+          icon: "far fa-smile-wink",
+        }
+      },
+      {
+        pack: {
+          title: "초보",
+          icon: "far fa-smile-beam",
+        }
+      },
+      {
+        pack: {
+          title: "중급",
+          icon: "far fa-flushed",
+        }
+      },
+      {
+        pack: {
+          title: "고급",
+          icon: "far fa-sad-tear",
+        }
+      }
+    ],
+    recommend: [
+      {
+        pack: {
+          icon: "fas fa-flushed",
+          title: "코딩 입문자",
+        }
+      },
+      {
+        pack: {
+          icon: "fab fa-python",
+          title: "파이썬 개발자",
+        }
+      },
+      {
+        pack: {
+          icon: "fab fa-java",
+          title: "java 개발자",
+        }
+      },
+    ],
     course: {
       language: {
         icon: "fab fa-python",
@@ -132,51 +236,9 @@ export default {
         icon: "far fa-smile-wink",
         title: "입문",
       },
-      recommend: [
-        {
-          icon: "fas fa-flushed",
-          title: "코딩 입문자",
-        },
-        {
-          icon: "fab fa-python",
-          title: "파이썬 개발자",
-        },
-        {
-          icon: "fab fa-java",
-          title: "java 개발자",
-        },
-      ],
-      intro: "파이썬 기본 강좌입니다",
-      curriculum: [
-        {
-          list_title: "Course1",
-          content: "course1 내용입니다",
-        },
-        {
-          list_title: "Course2",
-          content: "course2 내용입니다",
-        },
-        {
-          list_title: "Course3",
-          content: "course3 내용입니다",
-        },
-      ],
+      intro: "# hello",
     },
-    middle_title: "강의소개",
-    curriculum: [
-      {
-        list_title: "Course1",
-        content: "course1 내용입니다",
-      },
-      {
-        list_title: "Course2",
-        content: "course2 내용입니다",
-      },
-      {
-        list_title: "Course3",
-        content: "course3 내용입니다",
-      },
-    ],
+
     customFilter(item, queryText, itemText) {
       const hasValue = (val) => (val != null ? val : "");
       const text = hasValue(item.name);
@@ -197,16 +259,38 @@ export default {
     EditOn() {
       this.EditBool = true;
     },
-    EditLecture() {
+    Editcancle() {
+      this.$store.state.introduction = JSON.parse(JSON.stringify(this.items));
       this.EditBool = false;
     },
+    EditIntro() {
+      this.$store.state.introduction = JSON.parse(JSON.stringify(this.showitem));
+      this.$http
+        .put("/api/mycourse/" + this.$route.params.course_code + "/intro", {
+          newIntro: this.course,
+        })
+        .then((res) => {
+          // alert(res.data.message);
+        })
+        .catch(function (error) {
+          alert("error");
+        });
+
+      this.EditBool = false;
+    },
+
+  },
+  created() {
+    var course_code = this.$route.params.course_code;
+    this.items = JSON.parse(JSON.stringify(this.$store.state.introduction));
+    this.EditBool = false;
   },
 };
 </script>
 
 <style scoped>
 .cards{
-  height: 240px;
+  min-height: 250px;
 }
 .wrap-body {
   min-width: 800pt;
@@ -266,5 +350,8 @@ export default {
   padding-right: 5%;
   padding-bottom: 3%;
   text-align: center;
+}
+.intro-title{
+  margin-bottom: 0;
 }
 </style>

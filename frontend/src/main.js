@@ -8,8 +8,8 @@ import { store } from "./store/store"
 import axios from "axios"
 Vue.prototype.$http = axios
 
-import SocketIO from 'socket.io-client';
-const socket = SocketIO('http://3.35.3.214:3030')
+import SocketIO from "socket.io-client"
+const socket = SocketIO("http://3.35.3.214:3030")
 Vue.prototype.$socket = socket
 // import VueSocketIO from "vue-socket.io"
 // Vue.use(new VueSocketIO({

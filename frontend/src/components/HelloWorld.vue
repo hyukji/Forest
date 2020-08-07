@@ -1,17 +1,8 @@
 <template>
-  <v-tabs v-model="active" color="cyan" dark slider-color="yellow">
-    <draggable v-model="tabs" class="v-tabs__container">
-      <v-tab v-for="tab in tabs" :key="tab.id" ripple>{{ tab.name }}</v-tab>
-    </draggable>
-    <v-tab-item v-for="tab in tabs" :key="tab.id">
-      <v-card flat>
-        <v-card-text>{{ tab.text }}</v-card-text>
-      </v-card>
-    </v-tab-item>
-  </v-tabs>
+  <a>ddd</a>
 </template>
 <script>
-import draggable from "vuedraggable";
+import draggable from "vuedraggable"
 export default {
   name: "v-tabs",
   components: {
@@ -38,7 +29,7 @@ export default {
           text: "This is a 3rd tab",
         },
       ],
-    };
+    }
   },
-};
+}
 </script>

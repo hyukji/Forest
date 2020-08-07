@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row  justify="end" class="mb-3">
-      <v-dialog v-if="!EditBool"  persistent max-width="600px">
+      <v-dialog  persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             v-if="!EditBool"
@@ -11,6 +11,14 @@
             width="100"
             @click="EditOn"
           >수 정</v-btn>
+          <v-btn
+            v-if="EditBool"
+            class="ma-3"
+            outlined
+            color="secondary"
+            width="100"
+            @click="Editcancle"
+          >취 소</v-btn>
         </template>
         <inoutform ></inoutform>
       </v-dialog>
@@ -107,7 +115,7 @@
       hint="markdown 형식으로 작성하세요"
       :outline="false"
       :render-config="renderConfig"
-      v-model="text"
+      v-model="course.intro"
       />
     <Editor
       v-if="!EditBool"
@@ -117,7 +125,7 @@
       hint="markdown 형식으로 작성하세요"
       :outline="false"
       :render-config="renderConfig"
-      v-model="text"
+      v-model="course.intro"
       />
     <div class="save">
       <v-btn
@@ -143,10 +151,9 @@ export default {
   name: "introduction",
   components: {Editor, VApp},
   data: () => ({
-    selected: null,
-    selected2: null,
+    showitem: [],
+    items: [],
     EditBool: null,
-    selectwho: null,
     text: "",
         renderConfig: {
       // Mermaid config
@@ -229,9 +236,7 @@ export default {
         icon: "far fa-smile-wink",
         title: "입문",
       },
-
-      intro: "파이썬 기본 강좌입니다",
-
+      intro: "# hello",
     },
 
     customFilter(item, queryText, itemText) {
@@ -254,10 +259,31 @@ export default {
     EditOn() {
       this.EditBool = true;
     },
+    Editcancle() {
+      this.$store.state.introduction = JSON.parse(JSON.stringify(this.items));
+      this.EditBool = false;
+    },
     EditIntro() {
+      this.$store.state.introduction = JSON.parse(JSON.stringify(this.showitem));
+      this.$http
+        .put("/api/mycourse/" + this.$route.params.course_code + "/intro", {
+          newIntro: this.course,
+        })
+        .then((res) => {
+          // alert(res.data.message);
+        })
+        .catch(function (error) {
+          alert("error");
+        });
+
       this.EditBool = false;
     },
 
+  },
+  created() {
+    var course_code = this.$route.params.course_code;
+    this.items = JSON.parse(JSON.stringify(this.$store.state.introduction));
+    this.EditBool = false;
   },
 };
 </script>

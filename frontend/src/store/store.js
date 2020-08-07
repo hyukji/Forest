@@ -37,11 +37,16 @@ export const store = new Vuex.Store({
       console.log("storage add")
     },
 
+    addIntroData(state, newIntro) {
+      state.introduction.push(newIntro)
+      console.log("storage add")
+    },
+
     /*
     auth_request(state) {
       state.status = "loading"
     },
-    
+
     auth_success(state, user) {
       state.status = "success"
       state.user = user

@@ -27,7 +27,7 @@ const routes = [
     },
   },
   {
-    path: "/newedit",
+    path: "/newedit/:course_code",
     components: {
       body: newedit,
     },

@@ -1,51 +1,64 @@
 <template>
-  <div class="wrap-body">
-    <p class="body-title"></p>
+  <div>
+  <v-layout col wrap>
+  <div class="sidebar">
+  <v-card class="mx-auto" max-width="210">
+    <v-list>
+      <v-list-item v-on:click="selectedComponent='notice'">
+        <v-list-item-title >공지사항</v-list-item-title>
+      </v-list-item>
 
-    <div class="wrap-board">
-      <sidebar-board sidebar_title="게시판" @ChangeComponent="change_middle_title"></sidebar-board>
-      <component :is="selectedComponent" />
-    </div>
+      <v-list-item v-on:click="selectedComponent='qnaboard'">
+        <v-list-item-title>QnA</v-list-item-title>
+      </v-list-item>
+    </v-list>
+  </v-card>
   </div>
+
+  <div class="pa-4"> </div>
+
+  <div>
+    <keep-alive>
+      <component v-bind:is="selectedComponent">
+        <p> Default content </p>
+      </component>
+    </keep-alive>
+  </div>
+</v-layout>
+</div>
 </template>
 
 <script>
-// @ is an alias to /src
-export default {
-  name: "Mycourse",
-  components: {
-    qnaboard: () => import("@/components/AboutCourses/board/qnaboard"),
-    notice: () => import("@/components/AboutCourses/board/notice"),
+import notice from "@/components/AboutCourses/board/notice"
+import qnaboard from "@/components/AboutCourses/board/qnaboard"
 
-    SidebarBoard: () => import("@/components/AboutCourses/board/sidebar_board"),
+export default {
+  data: function() {
+    return{
+      selectedComponent: 'notice'
+    }
   },
-  data: function () {
-    return {
-      selectedComponent: "notice",
-    };
-  },
-  computed: {
-    select_tap_array() {
-      var selected_tap = [];
-      var isprof = this.user_isprof;
-      console.log(isprof);
-      this.tap_data.forEach((items) => {
-        if (items.limit != isprof) {
-          selected_tap.push(items);
-        }
-      });
-      return selected_tap;
-    },
-  },
-  methods: {
-    change_middle_title: function (component) {
-      this.selectedComponent = component;
-      console.log(this.selectedComponent);
-    },
-  },
-  created() {},
-};
+  components: {
+    notice, qnaboard
+  }
+}
 </script>
 
 <style scoped>
+.sidebar {
+  float: left;
+  width: 20%;
+  padding-left: 2%;
+}
+.side_title {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.wrap-side-list {
+  border-top: 2px solid #8d8d8d;
+}
+.side-list-title {
+  margin-top: auto;
+  margin-bottom: auto;
+}
 </style>

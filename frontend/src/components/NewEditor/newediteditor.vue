@@ -16,7 +16,7 @@
           <v-text>
             {{ el.tab_title }}
           </v-text>
-          <v-icon>fad fa-times</v-icon>
+          <v-icon class="fal fa-times"></v-icon>
         </v-tab>
       </draggable>
 

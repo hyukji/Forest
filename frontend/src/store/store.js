@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
   //기본 접근방법 : this.$store.state.items
   state: {
     dashboard: [null],
-    introduction: [null],
+    introduction: null,
     assignments: [null],
     lecture: [null],
     board: [null],

@@ -15,7 +15,10 @@ router.put("/:course_code/intro", function (req, res, next) {
       res.json({ result: 0, message: "존재하지 않는 강의입니다." })
       return
     }
-    db_course.assignment = req.body.newAssign
+    db_course.introduction = req.body.newIntro
+    console.log(db_course.introduction)
+    console.log(req.body.newIntro)
+
     db_course.save(function (err) {
       if (err) {
         console.error(err)

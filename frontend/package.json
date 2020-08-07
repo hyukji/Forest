@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^5.14.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.30",
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "ace-builds": "^1.4.12",
     "axios": "^0.19.2",

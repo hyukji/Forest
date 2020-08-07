@@ -4,7 +4,7 @@
       <v-dialog  persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            v-if="!EditBool"
+            v-show="!EditBool"
             class="ma-3"
             outlined
             color="secondary"
@@ -12,7 +12,7 @@
             @click="EditOn"
           >수 정</v-btn>
           <v-btn
-            v-if="EditBool"
+            v-show="EditBool"
             class="ma-3"
             outlined
             color="secondary"
@@ -120,7 +120,7 @@
       />
     <div class="save">
       <v-btn
-        v-if="EditBool"
+        v-show="EditBool"
         class="ma-3"
         outlined
         color="secondary"
@@ -190,6 +190,7 @@ export default {
         });
 
       this.EditBool = false;
+      console.log(this.EditBool);
     },
 
   },

@@ -57,12 +57,12 @@
       </div>
 
       <p class="body-title">{{ selectedTitle }}</p>
-
+      <keep-alive>
       <component
         v-bind:is="selectedComponent"
         :isprof="user_isprof"
       ></component>
-
+    </keep-alive>
       <!--
       <dashboard v-if="middle_title == '대시보드'"></dashboard>
       <grade v-else-if="middle_title == '학습현황'"></grade>

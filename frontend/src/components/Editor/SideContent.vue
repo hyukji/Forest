@@ -9,10 +9,7 @@
 
 <script>
 export default {
-  model: {
-    prop: "loading",
-  },
-  props: { selected: String, loading: String },
+  props: { selected: String },
   components: {
     Tree: () => import("@/components/Editor/Side_tree"),
     Explain: () => import("@/components/Editor/Side_explain"),
@@ -32,9 +29,6 @@ export default {
           } else {
             alert(res.data.message)
           }
-        })
-        .then(() => {
-          this.loading = false
         })
         .catch(function(error) {
           alert("error to getdata")

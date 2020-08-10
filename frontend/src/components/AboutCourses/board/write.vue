@@ -1,57 +1,60 @@
 <template>
   <v-card class="notice">
     <div>
-      <v-container fluid>
-
-        <v-row>
-          <v-col cols="2">
-            <v-subheader>등록일</v-subheader>
-          </v-col>
-          <v-col cols="9">
-            <v-text-field
-              value="10.00"
-            ></v-text-field>
+      <v-container fluid class="pa-9">
+        <p class="writeTitle"> 공지사항 </p>
+        <v-row >
+          <v-col>
+            <v-text-field label="제 목" single-line></v-text-field>
           </v-col>
         </v-row>
 
         <v-row>
-          <v-col cols="2">
-            <v-subheader>제목</v-subheader>
-          </v-col>
-          <v-col cols="9">
+          <v-col cols="6">
             <v-text-field
-              value="28.00"
-            ></v-text-field>
+            <v-text-field label="작성자" single-line>
+            </v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-text-field
+            <v-text-field label="등록일" single-line>
+            </v-text-field>
           </v-col>
         </v-row>
 
-        <v-row>
-          <v-col cols="2">
-            <v-subheader>작성자</v-subheader>
-          </v-col>
-          <v-col cols="9">
-            <v-text-field
-              value="example"
-              suffix="@gmail.com"
-            ></v-text-field>
+        <v-textarea
+          v-model="title"
+          label="내 용"
+          counter
+          maxlength="1000"
+          full-width
+          single-line
+          class="content"
+        ></v-textarea>
+        <template>
+            <v-file-input label="파일 첨부" outlined dense></v-file-input>
+        </template>
+
+        <v-row >
+          <v-col cols="8"></v-col>
+          <v-col cols="4" class="mb-3">
+            <v-btn
+            outlined
+            color="secondary"
+            width="100"
+            >저 장</v-btn>
+            <v-btn
+            outlined
+            color="secondary"
+            width="100"
+            class="ma-3"
+            >취 소</v-btn>
           </v-col>
         </v-row>
-
-        <v-row>
-          <v-col cols="4">
-            <v-subheader>내용</v-subheader>
-          </v-col>
-          <v-col cols="8">
-            <v-text-field
-              value="12:30:00"
-              type="time"
-              suffix="PST"
-            ></v-text-field>
-          </v-col>
-        </v-row>
-
       </v-container>
-    </div>
+
+  </div>
+
 
  </v-card>
 </template>
@@ -70,5 +73,12 @@ export default{
   display: inline-block;
   max-width: 900px;
   min-width: 800px;
+}
+.writeTitle{
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.content{
+  padding-bottom: 30px;
 }
 </style>

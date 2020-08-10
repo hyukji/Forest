@@ -9,10 +9,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^5.14.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.30",
-<<<<<<< HEAD
     "@fortawesome/pro-duotone-svg-icons": "^5.14.0",
-=======
->>>>>>> 3fede5f54b186bc4846b05c83c9c21c7096781da
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "ace-builds": "^1.4.12",
     "axios": "^0.19.2",

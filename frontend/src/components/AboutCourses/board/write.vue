@@ -2,7 +2,7 @@
   <v-card class="notice">
     <div>
       <v-container fluid class="pa-9">
-        <p class="writeTitle"> 공지사항 </p>
+        <p class="writeTitle"> 공지사항</p>
         <v-row >
           <v-col>
             <v-text-field label="제 목" single-line></v-text-field>
@@ -18,6 +18,7 @@
           <v-col cols="6">
             <v-text-field
             <v-text-field label="등록일" single-line>
+              <p>{{ createDate | moment('YYYY-MM-DD HH:mm:ss') }}</p>
             </v-text-field>
           </v-col>
         </v-row>
@@ -34,6 +35,7 @@
         <template>
             <v-file-input label="파일 첨부" outlined dense></v-file-input>
         </template>
+
 
         <v-row >
           <v-col cols="8"></v-col>
@@ -60,10 +62,19 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import VueMoment from 'vue-moment'
+Vue.use(VueMoment);
+
 export default{
   name: 'Write',
   data: ()=> ({
-    es: 3
+    text: 'center',
+        icon: 'justify',
+        toggle_none: null,
+        toggle_one: 0,
+        toggle_exclusive: 2,
+        toggle_multiple: [0, 1, 2],
   })
 }
 </script>
@@ -76,7 +87,7 @@ export default{
 }
 .writeTitle{
   font-size: 1.5rem;
-  font-weight: 600;
+  font-weight: 300;
 }
 .content{
   padding-bottom: 30px;

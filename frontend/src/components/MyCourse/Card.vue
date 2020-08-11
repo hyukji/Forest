@@ -29,7 +29,7 @@ export default {
     prof: "",
     logoname: "",
     progess: 0,
-    progess_data: ""
+    progess_data: "",
   }),
   props: ["card_info"],
   methods: {
@@ -43,7 +43,7 @@ export default {
       var index = this.sendData.length - 1;
       this.position = this.sendData[index];
       this.sendData.pop();
-    }
+    },
   },
   created() {
     this.title = this.card_info.title;
@@ -52,7 +52,7 @@ export default {
     this.progess_data = "진행률 " + this.card_info.progress + "%";
     this.progess = this.card_info.progress;
     this.logoname = this.card_info.logo_name;
-  }
+  },
 };
 </script>
 

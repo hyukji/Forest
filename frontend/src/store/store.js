@@ -1,6 +1,7 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import createPersistedState from "vuex-persistedstate"
+import { eventBus } from "@/main.js"
 
 Vue.use(Vuex)
 
@@ -13,10 +14,12 @@ export const store = new Vuex.Store({
     assignments: [null],
     lecture: [null],
     board: [null],
-    stud_care: [null],
-    course_care: [null],
-  },
+    stud_management: null,
+    course_management: [null],
 
+    nowTab: null,
+    selectedTab: [null, null],
+  },
   //기본 접근방법 : this.$store.commit('경로명/함수명') ex this.$store.commit("auth_success", user_email)
   mutations: {
     setCourseData(state, db) {
@@ -26,7 +29,7 @@ export const store = new Vuex.Store({
       state.assignments = db.assignment
       state.board = db.board
       state.stud_care = db.stud_care
-      state.course_care = db.course_care
+      state.course_management = db.course_management
     },
 
     addLectureData(state, newlecture) {
@@ -39,11 +42,72 @@ export const store = new Vuex.Store({
       console.log("storage add")
     },
 
+    delSideTabData(state, tabdata) {
+      state.nowTab.forEach((OneEditor, idx) => {
+        OneEditor.forEach((onetab, i) => {
+          if (onetab.tab_title == tabdata.tab_title) {
+            //같은 게 존재!
+            OneEditor.splice(i, 1)
+          }
+        })
+      })
+    },
+
+    delSideTabData(state, tabdata) {
+      state.nowTab.forEach((OneEditor, idx) => {
+        OneEditor.forEach((onetab, i) => {
+          if (onetab.tab_title == tabdata.tab_title) {
+            //같은 게 존재!
+            OneEditor.splice(i, 1)
+          }
+        })
+      })
+    },
+
+    setTabData(state, tabdata) {
+      console.log("now state", state.nowTab)
+      if (state.nowTab == null) {
+        state.nowTab = [
+          [tabdata],
+          [
+            {
+              tab_title: "WindowTeminal",
+              data: "#WindowTeminal",
+              _id: "0",
+            },
+          ],
+        ]
+      } else {
+        var isTabExist = false
+        state.nowTab.forEach((OneEditor, idx) => {
+          OneEditor.forEach((onetab, i) => {
+            if (onetab._id == tabdata._id) {
+              //같은 게 존재!
+              isTabExist = true
+              state.selectedTab[idx] = "tabs-L" + idx + "-P" + i
+            }
+          })
+        })
+
+        if (!isTabExist) {
+          state.nowTab[0].push(tabdata)
+          state.selectedTab[0] =
+            "tabs-L" + 0 + "-P" + (state.nowTab[0].length - 1)
+        }
+      }
+      eventBus.$emit("selectedTab", state.selectedTab)
+
+      //state.dashboard = tabdata
+    },
     addIntroData(state, newIntro) {
       state.introduction.push(newIntro)
       console.log("storage add")
     },
 
+    addIntroData(state, newCM) {
+      state.course_management.push(newCM)
+      console.log("storage add")
+    },
     /*
     auth_request(state) {
       state.status = "loading"

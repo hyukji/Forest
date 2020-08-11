@@ -60,13 +60,14 @@ export default {
   data() {
     return {
       main: [
-        { name: "Tree", icon: "fas fa-list" },
-        { name: "Explain", icon: "far fa-file-alt" },
+        { name: "Tree", icon: "far fa-list" },
+        { name: "AssignTree", icon: "far fa-check-square" },
+        { name: "Explain", icon: "fas fa-book-reader" },
         { name: "Search", icon: "fas fa-search" },
         { name: "Setting", icon: "fas fa-cog" },
       ],
       additional: [
-        { name: "Live", icon: "fas fa-laptop-code" },
+        { name: "Live", icon: "fas fa-chalkboard-teacher" },
         { name: "Sandbox", icon: "fas fa-code" },
       ],
     };

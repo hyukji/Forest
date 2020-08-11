@@ -44,7 +44,12 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item class="pb-3" v-for="(subItem, i) in item.subitems" :key="i">
+          <v-list-item
+            class="pb-3"
+            v-for="(subItem, i) in item.subitems"
+            :key="i"
+            @click="open_editor(subItem._id)"
+          >
             <v-list-item-content>
               <v-row align="center">
                 <v-col cols="10" class="py-0">
@@ -99,6 +104,10 @@ export default {
     },
   },
   methods: {
+    open_editor(itme_id) {
+      var newWindow = window.open("/newedit/" + this.$route.params.course_code);
+      newWindow.my_special_setting = itme_id;
+    },
     delLecture(type, numLecture, numSubLecture) {
       if (type == "title") {
         this.sendData.splice(numLecture, 1);
@@ -114,7 +123,9 @@ export default {
       //this.sendData.subitems.splice(content);
     },
   },
-  created() {},
+  created() {
+    console.log("senddata is ", this.sendData);
+  },
 };
 </script>
 

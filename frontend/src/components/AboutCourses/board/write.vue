@@ -11,15 +11,11 @@
 
         <v-row>
           <v-col cols="6">
-            <v-text-field
             <v-text-field label="작성자" single-line>
             </v-text-field>
           </v-col>
           <v-col cols="6">
-            <v-text-field
-            <v-text-field label="등록일" single-line>
-              <p>{{ createDate | moment('YYYY-MM-DD HH:mm:ss') }}</p>
-            </v-text-field>
+              <p> 등록일 : {{$moment().format('YYYY-MM-DD HH:mm')}}</p>
           </v-col>
         </v-row>
 
@@ -63,8 +59,8 @@
 
 <script>
 import Vue from 'vue'
-import VueMoment from 'vue-moment'
-Vue.use(VueMoment);
+import vueMoment from 'vue-moment'
+Vue.use(vueMoment)
 
 export default{
   name: 'Write',
@@ -75,7 +71,12 @@ export default{
         toggle_one: 0,
         toggle_exclusive: 2,
         toggle_multiple: [0, 1, 2],
-  })
+  }),
+  methods: {
+    moment: function () {
+      return moment();
+    }
+  }
 }
 </script>
 

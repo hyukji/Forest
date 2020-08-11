@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mx-auto">
   <v-layout col wrap>
   <div class="sidebar">
   <v-card class="mx-auto" max-width="210">
@@ -19,11 +19,14 @@
 
   <div>
     <keep-alive>
-      <component v-bind:is="selectedComponent">
+      <component v-bind:is="selectedComponent" @eventData="changewrite">
         <p> Default content </p>
       </component>
     </keep-alive>
+
   </div>
+
+
 </v-layout>
 </div>
 </template>
@@ -31,15 +34,25 @@
 <script>
 import notice from "@/components/AboutCourses/board/notice"
 import qnaboard from "@/components/AboutCourses/board/qnaboard"
+import write from "@/components/AboutCourses/board/write"
 
 export default {
+  name: 'Child',
   data: function() {
     return{
-      selectedComponent: 'notice'
+      selectedComponent: 'notice',
+      childData: 20
     }
   },
   components: {
-    notice, qnaboard
+    notice, qnaboard, write
+  },
+  methods: {
+    changewrite (data) {
+      console.log(data)
+      this.selectedComponent = "write"
+      console.log(this.childData)
+    }
   }
 }
 </script>

@@ -59,25 +59,7 @@ export default {
       tabeditor: null,
     };
   },
-  method: {
-    changeTab(action, key) {
-      //request from sideTab
-      console.log(action, key);
-      if (action == "add") {
-        let tab = {
-          label: key,
-          key: key,
-          type: "WindowCode",
-          data: "hi " + key,
-          pos: 1,
-        };
-        this.$refs.tab1.addTab(tab);
-        this.clickTab(tab, 0);
-      } else if (action == "remove") {
-        this.$refs.tab1.removeTab(key);
-      }
-    },
-  },
+  method: {},
   created() {
     this.tabeditor = this.$store.state.nowTab;
   },

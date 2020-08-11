@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
   //기본 접근방법 : this.$store.state.items
   state: {
     dashboard: [null],
-    introduction: [null],
+    introduction: null,
     assignments: [null],
     lecture: [null],
     board: [null],
@@ -42,6 +42,28 @@ export const store = new Vuex.Store({
       console.log("storage add")
     },
 
+    delSideTabData(state, tabdata) {
+      state.nowTab.forEach((OneEditor, idx) => {
+        OneEditor.forEach((onetab, i) => {
+          if (onetab.tab_title == tabdata.tab_title) {
+            //같은 게 존재!
+            OneEditor.splice(i, 1)
+          }
+        })
+      })
+    },
+
+    delSideTabData(state, tabdata) {
+      state.nowTab.forEach((OneEditor, idx) => {
+        OneEditor.forEach((onetab, i) => {
+          if (onetab.tab_title == tabdata.tab_title) {
+            //같은 게 존재!
+            OneEditor.splice(i, 1)
+          }
+        })
+      })
+    },
+
     setTabData(state, tabdata) {
       console.log("now state", state.nowTab)
       if (state.nowTab == null) {
@@ -49,7 +71,7 @@ export const store = new Vuex.Store({
           [tabdata],
           [
             {
-              tab_title: "WindowTeminal.vue",
+              tab_title: "WindowTeminal",
               data: "#WindowTeminal",
               _id: "0",
             },
@@ -77,11 +99,16 @@ export const store = new Vuex.Store({
 
       //state.dashboard = tabdata
     },
+    addIntroData(state, newIntro) {
+      state.introduction.push(newIntro)
+      console.log("storage add")
+    },
+
     /*
     auth_request(state) {
       state.status = "loading"
     },
-    
+
     auth_success(state, user) {
       state.status = "success"
       state.user = user

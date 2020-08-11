@@ -52,7 +52,7 @@
         </v-list-group>
       </v-list-group>
 
-      <v-list-item v-on:click="selectedComponent='lec_ass'">
+      <v-list-item v-on:click="selectedComponent='statistics'">
         <v-list-item-title>통계</v-list-item-title>
       </v-list-item>
     </v-list>

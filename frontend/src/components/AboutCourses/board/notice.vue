@@ -18,7 +18,7 @@
             outlined
             color="secondary"
             width="100"
-            @click="EditOn"
+            @click="sendEditData"
           >글쓰기</v-btn>
       </v-card-title>
       <v-data-table
@@ -116,9 +116,12 @@ export default {
       }
     ]
   }),
+  props: ['sendData'],
   methods: {
-    a: function(datasd) {
-      console.log(datasd);
+    sendEditData: function() {
+      console.log('child 데이터 수정 후 전달')
+      let changeData = this.sendData + 30
+      this.$emit('eventData', changeData)
     }
   }
 };
@@ -130,7 +133,8 @@ export default {
 }
 .notice {
   display: inline-block;
-  width: 180%;
+  max-width: 900px;
+  min-width: 800px;
 }
 .body-title {
   font-size: 1.5rem;

@@ -90,8 +90,8 @@ export default {
 }
 .freeboard {
   display: inline-block;
-  width: 180%;
-  padding-left: 5%;
+  max-width: 900px;
+  min-width: 800px;
 }
 .body-title {
   font-size: 1.5rem;

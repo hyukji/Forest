@@ -13,8 +13,8 @@ export const store = new Vuex.Store({
     assignments: [null],
     lecture: [null],
     board: [null],
-    stud_care: [null],
-    course_care: [null],
+    stud_care: null,
+    course_management: [null],
   },
 
   //기본 접근방법 : this.$store.commit('경로명/함수명') ex this.$store.commit("auth_success", user_email)
@@ -26,7 +26,7 @@ export const store = new Vuex.Store({
       state.assignments = db.assignment
       state.board = db.board
       state.stud_care = db.stud_care
-      state.course_care = db.course_care
+      state.course_management = db.course_management
     },
 
     addLectureData(state, newlecture) {
@@ -44,6 +44,10 @@ export const store = new Vuex.Store({
       console.log("storage add")
     },
 
+    addIntroData(state, newCM) {
+      state.course_management.push(newCM)
+      console.log("storage add")
+    },
     /*
     auth_request(state) {
       state.status = "loading"

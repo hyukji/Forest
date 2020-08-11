@@ -57,12 +57,10 @@
       </div>
 
       <p class="body-title">{{ selectedTitle }}</p>
-      <keep-alive>
       <component
         v-bind:is="selectedComponent"
         :isprof="user_isprof"
       ></component>
-    </keep-alive>
       <!--
       <dashboard v-if="middle_title == '대시보드'"></dashboard>
       <grade v-else-if="middle_title == '학습현황'"></grade>
@@ -97,7 +95,7 @@ export default {
     assignments: () => import("@/components/AboutCourses/assignments"),
     stud_care: () =>
       import("../components/AboutCourses/Student_Care/student_care"),
-    course_care: () => import("../components/AboutCourses/Course_Care"),
+    course_management: () => import("../components/AboutCourses/course_management"),
   },
   data: function() {
     return {
@@ -128,7 +126,7 @@ export default {
           limit: "stud",
         },
         {
-          component_name: "course_care",
+          component_name: "course_management",
           middle_title: "강의관리",
           limit: "stud",
         },

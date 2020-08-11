@@ -19,8 +19,7 @@
             v-on="on"
             outlined
             color="secondary"
-            >강좌 개설하기</v-btn
-          >
+            >강좌 개설하기</v-btn>
         </template>
         <Course_form></Course_form>
       </v-dialog>

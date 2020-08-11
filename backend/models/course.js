@@ -53,8 +53,9 @@ var studCareSchema = new Schema({
   iswatched: Boolean,
 })
 
-var courseCareSchema = new Schema({
+var coursemanagementSchema = new Schema({
   text: String,
+  name: String,
   uploaded_date: Date,
   iswatched: Boolean,
 })
@@ -74,10 +75,13 @@ var courseSchema = new Schema({
   lecture: [lectureSchema],
   assignment: [assignSchema],
   board: [boardSchema],
-
   stud_care: [studCareSchema],
-  course_care: [courseCareSchema],
-
+  course_management: {
+    text: String,
+    name: String,
+    uploaded_date: Date,
+    iswatched: Boolean,
+  },
   create_date: { type: Date, default: Date.now },
   Updated_date: { type: Date, default: Date.now },
 })

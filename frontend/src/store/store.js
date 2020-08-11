@@ -14,8 +14,8 @@ export const store = new Vuex.Store({
     assignments: [null],
     lecture: [null],
     board: [null],
-    stud_care: [null],
-    course_care: [null],
+    stud_management: null,
+    course_management: [null],
 
     nowTab: null,
     selectedTab: [null, null],
@@ -29,7 +29,7 @@ export const store = new Vuex.Store({
       state.assignments = db.assignment
       state.board = db.board
       state.stud_care = db.stud_care
-      state.course_care = db.course_care
+      state.course_management = db.course_management
     },
 
     addLectureData(state, newlecture) {
@@ -104,6 +104,10 @@ export const store = new Vuex.Store({
       console.log("storage add")
     },
 
+    addIntroData(state, newCM) {
+      state.course_management.push(newCM)
+      console.log("storage add")
+    },
     /*
     auth_request(state) {
       state.status = "loading"

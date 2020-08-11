@@ -76,7 +76,7 @@
             </v-row>
             <v-row v-else>
               <v-col class="wrap-total-list" v-for="item in course.recommend" :key="item.title">
-                <v-list-item-title class="toal-list-title" v-text="item"></v-list-item-title>
+                <v-list-item-title class="total-list-title" v-text="item"></v-list-item-title>
               </v-col>
             </v-row>
           </v-container>
@@ -218,7 +218,7 @@ export default {
   margin: 0 auto;
   text-align: center;
 }
-.toal-list-title {
+.total-list-title {
   font-size: 1.25rem;
   padding-top: 6%;
   font-weight: 550;

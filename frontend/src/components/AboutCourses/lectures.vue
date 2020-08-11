@@ -107,7 +107,7 @@ export default {
   },
   created() {
     var course_code = this.$route.params.course_code;
-    this.items = JSON.parse(JSON.stringify(this.$store.state.introduction));
+    this.items = JSON.parse(JSON.stringify(this.$store.state.lecture));
 
     this.EditBool = false;
   },

@@ -15,7 +15,7 @@ export const store = new Vuex.Store({
     lecture: [null],
     board: [null],
     stud_management: null,
-    course_management: [null],
+    course_management: null,
 
     nowTab: null,
     selectedTab: [null, null],
@@ -119,12 +119,12 @@ export const store = new Vuex.Store({
 
       //state.dashboard = tabdata
     },
-    addIntroData(state, newIntro) {
+    addIntroData(state, ) {
       state.introduction.push(newIntro)
       console.log("storage add")
     },
 
-    addIntroData(state, newCM) {
+    addCMData(state, newCM) {
       state.course_management.push(newCM)
       console.log("storage add")
     },

@@ -1,4 +1,4 @@
-<template>
+title<template>
   <div>
     <v-row  justify="end" class="mb-3">
       <v-dialog  persistent max-width="600px">
@@ -23,32 +23,40 @@
         <inoutform ></inoutform>
       </v-dialog>
     </v-row>
-    <p class="card-title"> 강좌 제목 </p>
-    <v-col v-show="!EditBool">
-      <p>{{course.name}}</p>
-    </v-col>
-    <v-col v-show="EditBool">
-      <v-form>
-          <v-text-field
-            v-model="course.name"
-            label="강좌 제목"
-          ></v-text-field>
+    <div>
+      <p class="card-title"> 강좌 제목 </p>
+      <v-col v-show="!EditBool">
+        <p>{{course.title}}</p>
+      </v-col>
+      <v-col v-show="EditBool">
+        <v-form>
+            <v-text-field
+              v-model="course.title"
+              label="강좌 제목"
+            ></v-text-field>
+          </v-form>
+      </v-col>
+    </div>
+    <div>
+      <p class="card-title"> 이미지 관리 </p>
+    </div>
+    <div>
+      <p class="card-title"> 교수 목록 </p>
+      <v-col v-show="!EditBool" class="wrap-total-list" v-for="item in course.prof" :key="item.title">
+        <v-list-item-title class="toal-list-title" v-text="item"></v-list-item-title>
+      </v-col>
+      <v-col v-show="EditBool">
+        <v-form>
+            <v-autocomplete
+              :filter="customFilter"
+              multiple
+              :items="professor"
+              v-model="course.prof"
+              label="교수 추가"
+            ></v-autocomplete>
         </v-form>
-    </v-col>
-    <p class="card-title"> 교수 목록 </p>
-    <v-col v-show="!EditBool" class="wrap-total-list" v-for="item in course.prof" :key="item.title">
-      <v-list-item-title class="toal-list-title" v-text="item"></v-list-item-title>
-    </v-col>
-    <v-col v-show="EditBool">
-      <v-form>
-          <v-autocomplete
-            multiple
-            :items="professor"
-            v-model="course.prof"
-            label="교수 추가"
-          ></v-autocomplete>
-      </v-form>
-    </v-col>
+      </v-col>
+    </div>
     <div class="save">
       <v-btn
         v-if="EditBool"
@@ -69,11 +77,20 @@
 export default {
   name: "course_management",
   data: () => ({
+    showitem: [],
     EditBool: null,
     course: null,
     professor: [ "신동훈", "이성진", "김선준"],
+    customFilter(item, queryText, itemText) {
+      const hasValue = (val) => (val != null ? val : "");
+      const text = hasValue(item.name);
+      const query = hasValue(queryText);
+      return (
+        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
+        -1
+      );
+    },
   }),
-  props: [""],
   watch: {
     EditBool() {
       this.showitem = this.EditBool ? this.course : this.$store.state.course_management;
@@ -81,9 +98,6 @@ export default {
     },
   },
   methods: {
-    savecourse: function(event) {
-      alert("저장되었습니다");
-    },
     EditOn() {
       this.EditBool = true;
     },
@@ -103,8 +117,8 @@ export default {
         .catch(function (error) {
           alert("error");
         });
-
       this.EditBool = false;
+      console.log(this.EditBool);
     },
   },
   created() {
@@ -134,5 +148,9 @@ export default {
   font-size: 1.25rem;
   padding-top: 6%;
   font-weight: 550;
+}
+.wrap-total-list {
+  margin: 0 auto;
+  text-align: center;
 }
 </style>

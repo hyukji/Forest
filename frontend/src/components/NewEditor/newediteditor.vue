@@ -1,7 +1,12 @@
 <template>
   <div class="wrap">
     <v-tabs v-model="selectedtab" grow>
-      <draggable class="v-tab" :clone="clone" v-model="element" group="tabgroup">
+      <draggable
+        class="v-tab"
+        :clone="clone"
+        v-model="element"
+        group="tabgroup"
+      >
         <v-tab
           v-for="(el, i) in element"
           :key="el"
@@ -9,7 +14,7 @@
           class="primary--text"
         >
           <v-btn class="mr-1" icon>
-            <v-icon small color="primary">far fa-leaf</v-icon>
+            <v-icon small color="primary">{{ el.icon }}</v-icon>
           </v-btn>
           <v-row>
             <v-col>
@@ -24,8 +29,15 @@
       </draggable>
 
       <v-tabs-items v-model="selectedtab">
-        <v-tab-item v-for="(el, i) in element" :key="el" :value="'tabs-L' + index + '-P' + i">
-          <WindowTeminal v-if="el.tab_title == 'WindowTeminal.vue'" :savedcode="el.data"></WindowTeminal>
+        <v-tab-item
+          v-for="(el, i) in element"
+          :key="el"
+          :value="'tabs-L' + index + '-P' + i"
+        >
+          <WindowTeminal
+            v-if="el.tab_title == 'WindowTeminal' && el._id == 0"
+            :savedcode="el.data"
+          ></WindowTeminal>
           <WindowCode v-else :savedcode="el.data"></WindowCode>
         </v-tab-item>
       </v-tabs-items>
@@ -34,9 +46,9 @@
 </template>
 
 <script>
-import { Splitpanes, Pane } from "splitpanes";
-import draggable from "vuedraggable";
-import { eventBus } from "@/main.js";
+import { Splitpanes, Pane } from "splitpanes"
+import draggable from "vuedraggable"
+import { eventBus } from "@/main.js"
 
 export default {
   components: {
@@ -56,29 +68,29 @@ export default {
       allSelected: null,
       selectedtab: null,
       element: null,
-    };
+    }
   },
   computed: {},
   watch: {
     selectedtab(val) {
-      this.$store.state.selectedTab[this.index] = this.selectedtab;
+      this.$store.state.selectedTab[this.index] = this.selectedtab
     },
     element(val) {
-      this.$store.state.nowTab[this.index] = this.element;
+      this.$store.state.nowTab[this.index] = this.element
     },
   },
   methods: {
     removeTab(i) {
-      this.element.splice(i, 1);
+      this.element.splice(i, 1)
     },
   },
   created() {
-    this.element = this.$store.state.nowTab[this.index];
+    this.element = this.$store.state.nowTab[this.index]
     eventBus.$on("selectedTab", (selectedTab) => {
-      this.selectedtab = selectedTab[this.index];
-    });
+      this.selectedtab = selectedTab[this.index]
+    })
   },
-};
+}
 </script>
 
 <style scoped>

@@ -3,7 +3,10 @@
   <!-- <div v-if="loading" class="loading">
     <img src="@/assets/loading.gif" />
   </div> -->
-  <component :is="selected" class="content" />
+  <card>
+    <component :is="selected" class="content"> </component>
+  </card>
+
   <!-- </v-navigation-drawer> -->
 </template>
 
@@ -11,7 +14,8 @@
 export default {
   props: { selected: String },
   components: {
-    Tree: () => import("@/components/Editor/Side_tree"),
+    LectureTree: () => import("@/components/Editor/Side_LectureTree"),
+    AssignTree: () => import("@/components/Editor/Side_AssignTree"),
     Explain: () => import("@/components/Editor/Side_explain"),
     Search: () => import("@/components/Editor/Side_search"),
     Setting: () => import("@/components/Editor/Side_setting"),
@@ -19,6 +23,7 @@ export default {
   data() {
     return {}
   },
+
   methods: {
     getCoursedData: function() {
       this.$http

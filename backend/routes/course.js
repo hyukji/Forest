@@ -7,7 +7,6 @@ const { db } = require("../models/course")
 router.get("/", function (req, res, next) {})
 
 router.put("/:course_code/intro", function (req, res, next) {
-  console.log(1)
   var code = req.params.course_code
 
   Course.findOne({ code: code }, function (err, db_course) {
@@ -16,8 +15,6 @@ router.put("/:course_code/intro", function (req, res, next) {
       return
     }
     db_course.introduction = req.body.newIntro
-    console.log(db_course.introduction)
-    console.log(req.body.newIntro)
 
     db_course.save(function (err) {
       if (err) {
@@ -153,7 +150,6 @@ router.get("/:course_code/assign", function (req, res, next) {
   })
 })
 router.put("/:course_code/course_management", function (req, res, next) {
-  console.log(2)
   var code = req.params.course_code
 
   Course.findOne({ code: code }, function (err, db_course) {
@@ -162,8 +158,6 @@ router.put("/:course_code/course_management", function (req, res, next) {
       return
     }
     db_course.course_management = req.body.newCM
-    console.log("db_course=",db_course.course_management)
-    console.log(req.body.newCM)
 
     db_course.save(function (err) {
       if (err) {

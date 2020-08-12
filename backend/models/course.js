@@ -69,8 +69,8 @@ var courseSchema = new Schema({
   introduction: {
     Updated_date: { type: Date, default: Date.now },
     recommend: [String],
-    difficulty: String,
-    language: String,
+    difficulty: {title: String, icon: String},
+    language: {title: String, icon: String},
     intro: String,
   },
   lecture: [lectureSchema],

@@ -67,8 +67,10 @@
           </v-col>
           <v-col sm="10">
             <v-card class="card" outlined tile>
-              <v-col >
+              <v-col>
                 <v-text-field
+                  outlined
+                  dense
                   input type='password'
                   v-on:keyup.enter="signIn"
                 ></v-text-field>
@@ -152,8 +154,8 @@
 .writeTitle{
   font-size: 1.3rem;
   font-weight: 900;
-  padding-left: 40px;
-  color: #424242;
+  padding-left: 20px;
+  color: #616161;
 }
 .content{
   padding-bottom: 30px;

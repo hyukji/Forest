@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row  justify="end" class="mb-3">
+    <v-row v-if="isprof == 'prof'" justify="end" class="mb-3">
       <v-dialog  persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -23,6 +23,7 @@
         <inoutform ></inoutform>
       </v-dialog>
     </v-row>
+    <v-row v-if="isprof == 'stud'" class="my-7"></v-row>
     <v-row>
       <v-col>
         <v-card v-if="!EditBool" class="cards">
@@ -31,11 +32,13 @@
             <v-row>
               <v-col class="wrap-total-list">
                 <p>Language</p>
-                <p class="intro-title">{{ course.language}}</p>
+                <v-icon size="40pt">{{ course.language.icon }}</v-icon>
+                <p class="intro-title">{{ course.language.title}}</p>
               </v-col>
               <v-col class="wrap-total-list">
                 <p>Difficulty</p>
-                <p class="intro-title">{{ course.difficulty}}</p>
+                <v-icon size="40pt" color=secondary>{{ course.difficulty.icon }}</v-icon>
+                <p class="intro-title">{{ course.difficulty.title}}</p>
               </v-col>
             </v-row>
           </v-container>
@@ -48,16 +51,20 @@
                 <v-autocomplete
                   :items="language"
                   :filter="customFilter"
+                  item-text="pack.title"
                   label="Language"
                   v-model="course.language"
+                  item-value="pack"
                 ></v-autocomplete>
               </v-col>
               <v-col class="wrap-total-list">
                 <v-autocomplete
                   :items="difficulty"
                   :filter="customFilter"
+                  item-text="pack.title"
                   label="Difficulty"
                   v-model="course.difficulty"
+                  item-value="pack"
                 ></v-autocomplete>
               </v-col>
             </v-row>
@@ -76,6 +83,7 @@
             </v-row>
             <v-row v-else>
               <v-col class="wrap-total-list" v-for="item in course.recommend" :key="item.title">
+                <i class="fad fa-user-graduate" style="font-size: 50pt; --fa-secondary-opacity: 1.0; --fa-primary-color: navy; --fa-secondary-color: bisque;"></i>
                 <v-list-item-title class="total-list-title" v-text="item"></v-list-item-title>
               </v-col>
             </v-row>
@@ -138,7 +146,9 @@ import { VApp } from 'vuetify/lib';
 export default {
   name: "introduction",
   components: {Editor, VApp},
+  props: ["isprof"],
   data: () => ({
+    user_isprof: null,
     showitem: [],
     EditBool: null,
         renderConfig: {
@@ -147,8 +157,43 @@ export default {
         theme: "dark"
       }
     },
-    language: [ "python", "javascript", "vue.js"],
-    difficulty: [ "입문", "초보", "중급", "고급"],
+    language: [
+      {
+        pack: {
+          title: "python", icon: "fab fa-python"
+      }
+      },
+      {
+        pack: {
+          title: "javascript", icon: "fab fa-java"
+        }
+      },
+      {
+        pack:{
+          title: "vue.js", icon: "fab fa-vuejs"
+        }
+      }],
+    difficulty: [
+      {
+        pack: {
+          title: "입문", icon: "fas fa-seedling"
+        }
+      },
+      {
+        pack: {
+          title: "초보", icon: "fab fa-pagelines"
+        }
+      },
+      {
+        pack: {
+          title: "중급", icon: "fas fa-tree-large"
+        }
+      },
+      {
+        pack: {
+          title: "고급", icon: "fas fa-tree-christmas"
+        }
+      }],
     recommend: [ "코딩 입문자", "파이썬 개발자", "java 개발자"],
     course: null,
 
@@ -189,14 +234,12 @@ export default {
         });
 
       this.EditBool = false;
-      console.log(this.EditBool);
     },
 
   },
   created() {
     var course_code = this.$route.params.course_code;
     this.course = JSON.parse(JSON.stringify(this.$store.state.introduction));
-    console.log("this ",this.course);
     this.EditBool = false;
   },
 };

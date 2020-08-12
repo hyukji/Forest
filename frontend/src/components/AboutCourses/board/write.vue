@@ -12,7 +12,7 @@
           <v-col sm="10">
             <v-card class="card" outlined tile>
               <v-col >
-                  <v-text-field dense outlined></v-text-field>
+                <v-text-field dense outlined></v-text-field>
               </v-col>
             </v-card>
           </v-col>
@@ -25,6 +25,7 @@
           <v-col sm="10">
             <v-card class="card" outlined tile>
               <v-col >
+                <v-text-field dense outlined></v-text-field>
               </v-col>
             </v-card>
           </v-col>
@@ -62,19 +63,65 @@
         <v-row no-gutters>
           <v-col sm="2">
             <v-card class="pa-5" outlined style="background-color: #d7e9d6" tile>
-              등록일</v-card>
+              비밀번호</v-card>
           </v-col>
           <v-col sm="10">
+            <v-card class="card" outlined tile>
+              <v-col >
+                <v-text-field
+                  input type='password'
+                  v-on:keyup.enter="signIn"
+                ></v-text-field>
+
+              </v-col>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row no-gutters>
+          <v-col sm="2">
+            <v-card class="pa-5" outlined style="background-color: #d7e9d6" tile>
+              등록일</v-card>
+          </v-col>
+          <v-col sm="4">
             <v-card class="card" outlined tile>
               <v-col class="pa-5">
                 <p> {{$moment().format('YYYY-MM-DD HH:mm')}}</p>
               </v-col>
             </v-card>
           </v-col>
+          <v-col sm="2">
+            <v-card class="pa-5" outlined style="background-color: #d7e9d6" tile>
+              최종수정일</v-card>
+          </v-col>
+          <v-col sm="4">
+            <v-card class="card" outlined tile>
+              <v-col class="pa-5">
+                <p> {{$moment().format('YYYY-MM-DD HH:mm')}}</p>
+              </v-col>
+            </v-card>
+          </v-col>
+
         </v-row>
 
       </v-col>
     </v-row>
+    <v-row >
+          <v-col cols="8"></v-col>
+          <v-col cols="4" class="mb-3">
+            <v-btn
+            outlined
+            color="secondary"
+            width="100"
+            >저 장</v-btn>
+            <v-btn
+            outlined
+            color="secondary"
+            width="100"
+            class="ma-3"
+            >취 소</v-btn>
+          </v-col>
+        </v-row>
+
   </div>
 </template>
 
@@ -105,7 +152,8 @@
 .writeTitle{
   font-size: 1.3rem;
   font-weight: 900;
-  padding-left: 20px;
+  padding-left: 40px;
+  color: #424242;
 }
 .content{
   padding-bottom: 30px;

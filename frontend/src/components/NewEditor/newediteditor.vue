@@ -34,10 +34,10 @@
           :key="el"
           :value="'tabs-L' + index + '-P' + i"
         >
-          <WindowTeminal
-            v-if="el.tab_title == 'WindowTeminal' && el._id == 0"
+          <WindowTerminal
+            v-if="el.tab_title == 'WindowTerminal' && el._id == 0"
             :savedcode="el.data"
-          ></WindowTeminal>
+          ></WindowTerminal>
           <WindowCode v-else :savedcode="el.data"></WindowCode>
         </v-tab-item>
       </v-tabs-items>
@@ -60,7 +60,7 @@ export default {
     SideContent: () => import("@/components/Editor/SideContent"),
     WindowCode: () => import("../NewEditor/newWindowCode"),
 
-    WindowTeminal: () => import("../NewEditor/newWindowTerminal"),
+    WindowTerminal: () => import("../NewEditor/newWindowTerminal"),
   },
   props: ["index"],
   data() {

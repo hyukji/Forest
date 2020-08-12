@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    dark
+    color="#333333"
     mini-variant
     mini-variant-width="56"
     height="100%"
@@ -11,7 +11,7 @@
       <v-list-item-group v-model="drawer.selected" active-class>
         <v-list-item v-for="tab in main" :key="tab.name" :value="tab.name">
           <v-list-item-action>
-            <v-icon>{{ tab.icon }}</v-icon>
+            <v-icon :color="(drawer.selected == tab.name) ? 'white' : '#858585'">{{ tab.icon }}</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
@@ -20,17 +20,12 @@
         </v-list-item>
       </v-list-item-group>
 
-      <v-divider />
-      <v-divider />
+      <v-divider class="my-2" color="#858585" />
 
       <v-list-item-group v-model="drawer.on" active-class multiple>
-        <v-list-item
-          v-for="tab in additional"
-          :key="tab.name"
-          :value="tab.name"
-        >
+        <v-list-item v-for="tab in additional" :key="tab.name" :value="tab.name">
           <v-list-item-action>
-            <v-icon>{{ tab.icon }}</v-icon>
+            <v-icon :color="(drawer.on.includes(tab.name)) ? 'white' : '#858585'">{{ tab.icon }}</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
@@ -39,8 +34,6 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-
-    <v-btn @click="click" />
   </v-navigation-drawer>
 </template>
 
@@ -48,6 +41,7 @@
 // @ is an alias to /src
 
 export default {
+  //:type="show_pw ? 'text' : 'password'"
   name: "sidetab",
   components: {
     // tree: () => import('@/components/editor/side_tree'),
@@ -65,18 +59,16 @@ export default {
     return {
       beforeChange: [],
       main: [
-        { name: "LectureTree", icon: "far fa-list" },
-        { name: "AssignTree", icon: "far fa-check-square" },
-        { name: "Explain", icon: "fas fa-book-reader" },
+        { name: "MainList", icon: "far fa-list" },
         { name: "Search", icon: "fas fa-search" },
         { name: "Setting", icon: "fas fa-cog" },
       ],
       additional: [
         { name: "Live", icon: "fas fa-chalkboard-teacher" },
-        { name: "WindowTeminal", icon: "far fa-window-alt" },
+        { name: "WindowTerminal", icon: "far fa-window-alt" },
         { name: "Sandbox", icon: "fas fa-box-open" },
       ],
-    }
+    };
   },
   watch: {
     drawer: {
@@ -86,44 +78,43 @@ export default {
   },
   methods: {
     click() {
-      console.log(this.drawer.on)
-      console.log(this.beforeChange)
+      console.log(this.drawer.on);
+      console.log(this.beforeChange);
     },
     changeTab(action, key) {
-      this.$emit("changeTab", action, key)
+      this.$emit("changeTab", action, key);
     },
   },
   watch: {
-    "drawer.selected": function(newVal) {
+    "drawer.selected": function (newVal) {
       if (newVal != null) {
-        this.drawer.open = true
+        this.drawer.open = true;
       } else {
-        this.drawer.open = false
+        this.drawer.open = false;
       }
     },
-    "drawer.on": function(newVal) {
-      console.log("watch drawer.on start")
-      var oldVal = this.beforeChange
-      this.beforeChange = newVal
+    "drawer.on": function (newVal) {
+      var oldVal = this.beforeChange;
+      this.beforeChange = newVal;
       if (newVal.length > oldVal.length) {
         newVal.forEach((item, i) => {
           if (!oldVal.includes(item)) {
-            this.$store.commit("setSideTabData", item)
+            this.$store.commit("setSideTabData", item);
           }
-        })
+        });
       } else if (oldVal.length > newVal.length) {
         oldVal.forEach((item, i) => {
           if (!newVal.includes(item)) {
-            this.$store.commit("delSideTabData", item)
+            this.$store.commit("delSideTabData", item);
           }
-        })
+        });
       } else {
-        console.log("removed by Editor tab")
+        console.log("removed by Editor tab");
         // already removed by Editor tab
       }
     },
   },
-}
+};
 </script>
 
 <style scoped>

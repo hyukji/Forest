@@ -1,35 +1,37 @@
 <template>
-  <a>ddd</a>
+  <div>
+    <editor
+      :initialValue="editorText"
+      :options="editorOptions"
+      previewStyle="tab"
+    />
+    <div>end</div>
+    <viewer :initialValue="editorText" height="500px" />
+  </div>
 </template>
+
 <script>
-import draggable from "vuedraggable"
+// global registerx
+import "codemirror/lib/codemirror.css"
+import "@toast-ui/editor/dist/toastui-editor.css"
+import "@toast-ui/editor/dist/toastui-editor-viewer.css"
+
+import { Editor, Viewer } from "@toast-ui/vue-editor"
+
 export default {
-  name: "v-tabs",
   components: {
-    draggable,
+    editor: Editor,
+    viewer: Viewer,
   },
-  methods: {},
   data() {
     return {
-      active: 0,
-      tabs: [
-        {
-          id: 1,
-          name: "1st Tab",
-          text: "This is a 1st tab",
-        },
-        {
-          id: 2,
-          name: "2nd Tab",
-          text: "This is a 2nd tab",
-        },
-        {
-          id: 3,
-          name: "3rd Tab",
-          text: "This is a 3rd tab",
-        },
-      ],
+      editorText: "This is initialValue.",
+      editorOptions: {
+        hideModeSwitch: true,
+      },
     }
   },
 }
 </script>
+
+<style scoped></style>

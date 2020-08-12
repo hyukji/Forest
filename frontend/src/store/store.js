@@ -89,8 +89,8 @@ export const store = new Vuex.Store({
           [tabdata],
           [
             {
-              tab_title: "WindowTeminal",
-              data: "#WindowTeminal",
+              tab_title: "WindowTerminal",
+              data: "#WindowTerminal",
               _id: "0",
               icon: "far fa-leaf-maple",
             },
@@ -119,7 +119,7 @@ export const store = new Vuex.Store({
 
       //state.dashboard = tabdata
     },
-    addIntroData(state, ) {
+    addIntroData(state) {
       state.introduction.push(newIntro)
       console.log("storage add")
     },

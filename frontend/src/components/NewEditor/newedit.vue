@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import { Splitpanes, Pane } from "splitpanes"
-import { eventBus } from "@/main.js"
+import { Splitpanes, Pane } from "splitpanes";
+import { eventBus } from "@/main.js";
 
 export default {
   components: {
@@ -52,18 +52,18 @@ export default {
       loading: true,
       drawer: {
         open: true,
-        selected: "LectureTree",
+        selected: "MainList",
         on: [],
         // live or sandbox
       },
       tabeditor: null,
-    }
+    };
   },
   method: {},
   created() {
-    this.tabeditor = this.$store.state.nowTab
+    this.tabeditor = this.$store.state.nowTab;
   },
-}
+};
 </script>
 
 <style scoped>

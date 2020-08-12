@@ -170,7 +170,6 @@ export default {
           alert("error");
         });
       this.EditBool = false;
-      console.log(this.EditBool);
     },
     chooseimg(image) {
       this.course.image = image.img;
@@ -179,9 +178,8 @@ export default {
   created() {
     var course_code = this.$route.params.course_code;
     this.course = JSON.parse(JSON.stringify(this.$store.state.course_management));
-    console.log("this ",this.course);
     this.EditBool = false;
-    
+
   }
 };
 </script>

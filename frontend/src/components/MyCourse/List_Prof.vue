@@ -3,23 +3,24 @@
     <v-row align="end">
       <v-chip
         class="body-title ma-3 mt-8"
-        color="secondary"
+        color="#d7e9d6"
         label
-        text-color="white"
+        text-color="primary"
         large
       >
         <v-icon class="mr-2" left>mdi-label</v-icon>내 강의실
       </v-chip>
-
+      <v-col cols="7"></v-col>  
       <v-dialog v-model="dialog" max-width="400px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            class="my-3"
+            class="add my-3"
             v-bind="attrs"
             v-on="on"
             outlined
             color="secondary"
-            >강좌 개설하기</v-btn>
+            ><v-icon size="12pt" left>fas fa-seedling</v-icon>
+            강좌 개설하기</v-btn>
         </template>
         <Course_form></Course_form>
       </v-dialog>
@@ -96,5 +97,8 @@ export default {
   margin-top: 2%;
 }
 .card {
+}
+.add{
+  font-weight: 600;
 }
 </style>

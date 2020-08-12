@@ -82,6 +82,7 @@ var courseSchema = new Schema({
     prof: [String],
     uploaded_date: Date,
     iswatched: Boolean,
+    image: String,
   },
   create_date: { type: Date, default: Date.now },
   Updated_date: { type: Date, default: Date.now },

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row  justify="end" class="mb-3">
+    <v-row v-if="isprof == 'prof'" justify="end" class="mb-3">
       <v-dialog  persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -23,6 +23,7 @@
         <inoutform ></inoutform>
       </v-dialog>
     </v-row>
+    <v-row v-if="isprof == 'stud'" class="my-7"></v-row>
     <v-row>
       <v-col>
         <v-card v-if="!EditBool" class="cards">
@@ -138,7 +139,9 @@ import { VApp } from 'vuetify/lib';
 export default {
   name: "introduction",
   components: {Editor, VApp},
+  props: ["isprof"],
   data: () => ({
+    user_isprof: null,
     showitem: [],
     EditBool: null,
         renderConfig: {

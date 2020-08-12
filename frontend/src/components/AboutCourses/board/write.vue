@@ -67,8 +67,10 @@
           </v-col>
           <v-col sm="10">
             <v-card class="card" outlined tile>
-              <v-col >
+              <v-col>
                 <v-text-field
+                  outlined
+                  dense
                   input type='password'
                   v-on:keyup.enter="signIn"
                 ></v-text-field>

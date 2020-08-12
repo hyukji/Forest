@@ -183,7 +183,6 @@ export default {
           newIntro: this.course,
         })
         .then((res) => {
-          // alert(res.data.message);
         })
         .catch(function (error) {
           alert("error");

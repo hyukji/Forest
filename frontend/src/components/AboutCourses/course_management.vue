@@ -39,6 +39,49 @@ title<template>
     </div>
     <div>
       <p class="card-title"> 이미지 관리 </p>
+      <div v-show="!EditBool">
+        <v-img
+          class="portrait"
+          :src="course.image"
+          width="300"
+          v-bind="attrs"
+          v-on="on"
+        ></v-img>
+      </div>
+      <v-row v-show="EditBool">
+        <v-img
+          class="portrait"
+          :src="course.image"
+          width="300"
+          v-bind="attrs"
+          v-on="on"
+        ></v-img>
+        <v-row>
+          <v-col cols="12" sm="6" offset-sm="3">
+            <v-card>
+              <v-container fluid>
+                <v-row>
+                  <v-col
+                    v-for="image in images"
+                    :key="image.title"
+                    class="d-flex child-flex"
+                    cols="4"
+                  >
+                    <v-card flat tile class="d-flex" @click="chooseimg(image)">
+                      <v-img
+                        :src="image.img"
+                        aspect-ratio="1"
+                        class="grey lighten-2"
+                      >
+                      </v-img>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-row>
     </div>
     <div>
       <p class="card-title"> 교수 목록 </p>
@@ -81,6 +124,16 @@ export default {
     EditBool: null,
     course: null,
     professor: [ "신동훈", "이성진", "김선준"],
+    images: [
+      {title: "C++", img: require("../../assets/C++.png")},
+      {title: "python", img: require("../../assets/python.png")},
+      {title: "E404", img: require("../../assets/E404.png")},
+      {title: "java", img: require("../../assets/java.png")},
+      {title: "logo", img: require("../../assets/logo.png")},
+      {title: "main", img: require("../../assets/main.png")},
+      {title: "E404", img: require("../../assets/E404.png")},
+      {title: "main", img: require("../../assets/main.png")},
+      {title: "python", img: require("../../assets/python.png")}],
     customFilter(item, queryText, itemText) {
       const hasValue = (val) => (val != null ? val : "");
       const text = hasValue(item.name);
@@ -112,7 +165,6 @@ export default {
           newCM: this.course,
         })
         .then((res) => {
-          // alert(res.data.message);
         })
         .catch(function (error) {
           alert("error");
@@ -120,6 +172,9 @@ export default {
       this.EditBool = false;
       console.log(this.EditBool);
     },
+    chooseimg(image) {
+      this.course.image = image.img;
+    }
   },
   created() {
     var course_code = this.$route.params.course_code;
@@ -151,6 +206,10 @@ export default {
 }
 .wrap-total-list {
   margin: 0 auto;
+  text-align: center;
+}
+.portrait{
+  margin: 3%;
   text-align: center;
 }
 </style>

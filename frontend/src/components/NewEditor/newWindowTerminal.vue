@@ -42,7 +42,7 @@
         </v-menu>
       </v-col>
 
-      <v-btn color="secondary" outlined class="ma-2" @click>
+      <v-btn color="secondary" outlined class="ma-2" @click="run">
         실행
       </v-btn>
       <v-btn color="secondary" outlined class="ma-2" @click>
@@ -53,6 +53,8 @@
     <div>
       {{ model }}
     </div>
+    <div v-for="i in results">{{ i }}</div>
+    <input v-if="waiting" v-model="input" @keyup.enter="submit" />
   </div>
 </template>
 
@@ -62,6 +64,9 @@ export default {
   data() {
     return {
       model: { tab_title: "" },
+      results: [],
+      waiting: true,
+      input: ""
     }
   },
   computed: {
@@ -104,7 +109,26 @@ export default {
       this.items = this.$store.state.nowTab[0]
       this.items.push(this.$store.state.nowTab[1])
     },
+    run() {
+      this.$socket.emit('code', {code: 'print("hello")'})
+    },
+    submit(event) {
+      this.waiting = false
+      this.results.push(this.input)
+      this.$socket.emit('input', {
+        input: this.input
+      })
+      this.input=""
+    }
+
   },
+  created() {
+    this.$socket.on('result', (result) => {
+      console.log("result", result)
+      this.results.push(result.message)
+      //results를 리스트 말고 스트링으로?
+    })
+  }
 }
 </script>
 

@@ -3,7 +3,21 @@ var io = {}
 module.exports = (server) => {
   io = require('socket.io')(server);
   io.on('connection', function(socket) {
-    console.log('Connected'+socket);
+    console.log("Connect from Client: " + socket)
+    socket.on('code', function (data) {
+      console.log("Message from Client: " + data.code)
+      require('./docker')(data.code, function(result) {
+        io.emit('result', result)
+      })
+
+    socket.on('input', function(id, input) {
+      console.log('input', id, input)
+      require('./dockerin')(id, input, function(result) {
+        io.emit('result', result)
+      })
+    })
+
+  })
   });
 }
 //

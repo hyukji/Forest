@@ -22,11 +22,11 @@
       <SideTab :drawer="drawer" />
 
       <splitpanes id="splitpane" class="default-theme">
-        <pane v-if="drawer.open" size="20">
+        <pane v-if="drawer.open" size="20" min-size="15">
           <side-content :selected="drawer.selected" />
         </pane>
 
-        <pane v-for="(element, index) in tabeditor" :key="element.id">
+        <pane v-for="(element, index) in tabeditor" :key="element.id" min-size="15">
           <newediteditor :index="index"></newediteditor>
         </pane>
       </splitpanes>
@@ -61,6 +61,12 @@ export default {
   },
   method: {},
   created() {
+    var openWindow_id = window.my_special_setting;
+
+    if (openWindow_id) {
+      this.$store.commit("StartTab", openWindow_id);
+    }
+
     this.tabeditor = this.$store.state.nowTab;
   },
 };

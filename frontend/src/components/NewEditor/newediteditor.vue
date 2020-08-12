@@ -38,7 +38,7 @@
             v-if="el.tab_title == 'WindowTerminal' && el._id == 0"
             :savedcode="el.data"
           ></WindowTerminal>
-          <WindowCode v-else :savedcode="el.data"></WindowCode>
+          <WindowCode v-else :tabitem="el"></WindowCode>
         </v-tab-item>
       </v-tabs-items>
     </v-tabs>
@@ -73,15 +73,23 @@ export default {
   computed: {},
   watch: {
     selectedtab(val) {
-      this.$store.state.selectedTab[this.index] = this.selectedtab
+      this.$store.commit("ChangeSelectedTab", {
+        selected: this.selectedtab,
+        idx: this.index,
+      })
+      //this.$store.state.selectedTab[this.index] = this.selectedtab
     },
     element(val) {
-      this.$store.state.nowTab[this.index] = this.element
+      console.log("console nowtab", this.element)
+      this.$store.commit("ChangeNowTab", { el: this.element, idx: this.index })
+
+      //this.$store.state.nowTab[this.index] = this.element
     },
   },
   methods: {
     removeTab(i) {
       this.element.splice(i, 1)
+      console.log("it is stroe tab ", this.$store.state.nowTab[this.index])
     },
   },
   created() {

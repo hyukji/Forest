@@ -17,7 +17,7 @@ export const store = new Vuex.Store({
     stud_management: null,
     course_management: null,
 
-    nowTab: null,
+    nowTab: [[], []],
     selectedTab: [null, null],
   },
   //기본 접근방법 : this.$store.commit('경로명/함수명') ex this.$store.commit("auth_success", user_email)
@@ -82,43 +82,92 @@ export const store = new Vuex.Store({
       //console.log("??", state.nowTab[0])
     },
 
-    setTabData(state, tabdata) {
-      console.log("now state", state.nowTab)
-      if (state.nowTab == null) {
-        state.nowTab = [
-          [tabdata],
-          [
-            {
-              tab_title: "WindowTerminal",
-              data: "#WindowTerminal",
-              _id: "0",
-              icon: "far fa-leaf-maple",
-            },
-          ],
-        ]
-      } else {
-        var isTabExist = false
-        state.nowTab.forEach((OneEditor, idx) => {
-          OneEditor.forEach((onetab, i) => {
-            if (onetab._id == tabdata._id) {
-              //같은 게 존재!
-              isTabExist = true
-              state.selectedTab[idx] = "tabs-L" + idx + "-P" + i
-            }
-          })
-        })
+    ChangeNowTab(state, TabData) {
+      state.nowTab[TabData.idx] = TabData.el
+    },
+    ChangeSelectedTab(state, TabData) {
+      state.selectedTab[TabData.idx] = TabData.selected
+    },
 
-        console.log("isTabExist ", isTabExist)
-        if (!isTabExist) {
-          state.nowTab[0].push(tabdata)
-          state.selectedTab[0] =
-            "tabs-L" + 0 + "-P" + (state.nowTab[0].length - 1)
-        }
+    StartTab(state, TabId) {
+      console.log("Starttab ", TabId)
+      state.nowTab.forEach((Onetab, index) => {
+        state.nowTab[index] = []
+      })
+
+      console.log(state.nowTab)
+      var openWindowTab = null
+      state.lecture.forEach((element) => {
+        element.subitems.forEach((el) => {
+          if (el._id == TabId) {
+            openWindowTab = el
+          }
+        })
+      })
+
+      console.log("openWindowTab", openWindowTab)
+
+      var tabdata = {
+        tab_title: openWindowTab.subtitle,
+        data: "#" + openWindowTab.subtitle,
+        _id: openWindowTab._id,
+        icon: "far fa-leaf",
       }
+      if (state.nowTab[0] == null) {
+        state.nowTab[0] = [tabdata]
+      } else {
+        state.nowTab[0].push(tabdata)
+      }
+      state.selectedTab[0] = "tabs-L" + 0 + "-P" + (state.nowTab[0].length - 1)
+
+      var newTab = {
+        tab_title: "WindowTerminal",
+        data: "#WindowTerminal",
+        _id: "0",
+        icon: "far fa-leaf-maple",
+      }
+
+      state.nowTab[1].push(newTab)
+
+      console.log("finish. ", state.nowTab)
+      eventBus.$emit("selectedTab", state.selectedTab)
+    },
+
+    setTabData(state, tabdata) {
+      var isTabExist = false
+      state.nowTab.forEach((OneEditor, idx) => {
+        OneEditor.forEach((onetab, i) => {
+          if (onetab._id == tabdata._id) {
+            //같은 게 존재!
+            isTabExist = true
+            state.selectedTab[idx] = "tabs-L" + idx + "-P" + i
+          }
+        })
+      })
+
+      if (!isTabExist) {
+        state.nowTab[0].push(tabdata)
+        state.selectedTab[0] =
+          "tabs-L" + 0 + "-P" + (state.nowTab[0].length - 1)
+      }
+
       eventBus.$emit("selectedTab", state.selectedTab)
 
       //state.dashboard = tabdata
     },
+
+    setTabCode(state, NewTabData) {
+      console.log("input code is", NewTabData)
+      state.nowTab.forEach((OneEditor, idx) => {
+        OneEditor.forEach((onetab, i) => {
+          if (onetab._id == NewTabData.TabId) {
+            //같은 게 존재!
+            onetab.data = NewTabData.newcode
+          }
+        })
+      })
+    },
+
     addIntroData(state) {
       state.introduction.push(newIntro)
       console.log("storage add")

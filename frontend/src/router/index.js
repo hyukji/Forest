@@ -7,6 +7,8 @@ import SignUp from "../views/SignUp.vue"
 import MyCourse from "../views/MyCourse.vue"
 import AboutCourse from "../views/AboutCourse.vue"
 import hello from "../components/HelloWorld.vue"
+import prac from "../components/forprac.vue"
+
 import E404 from "../views/E404.vue"
 import Editor from "../views/Editor.vue"
 
@@ -35,7 +37,7 @@ const routes = [
   {
     path: "/prac",
     components: {
-      body: hello,
+      body: prac,
     },
   },
   {

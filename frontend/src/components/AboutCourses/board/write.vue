@@ -1,123 +1,99 @@
 <template>
-  <v-card class="notice">
-    <div>
-      <vue-good-table
-        :columns="columns"
-        :rows="rows"/>
-    </div>
-    <div>
-      <v-container fluid class="pa-9">
-        <p class="writeTitle"> 공지사항</p>
-        <v-row >
-          <v-col>
-            <v-text-field label="제 목" single-line></v-text-field>
+  <div class="notice">
+    <p class="writeTitle">공 지 사 항</p>
+    <v-row>
+      <v-col>
+
+        <v-row no-gutters>
+          <v-col sm="2">
+            <v-card class="pa-5" outlined style="background-color: #d7e9d6" tile>
+              제목</v-card>
+          </v-col>
+          <v-col sm="10">
+            <v-card class="card" outlined tile>
+              <v-col >
+                  <v-text-field dense outlined></v-text-field>
+              </v-col>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row no-gutters>
+          <v-col sm="2">
+            <v-card class="pa-5" outlined style="background-color: #d7e9d6" tile>
+              작성자</v-card>
+          </v-col>
+          <v-col sm="10">
+            <v-card class="card" outlined tile>
+              <v-col >
+              </v-col>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row no-gutters>
+          <v-col sm="2">
+          <v-card class="content1" outlined style="background-color: #d7e9d6" tile>
+              내용</v-card>
+          </v-col>
+          <v-col sm="10">
+            <v-card class="content" outlined tile>
+              <v-col >
+                <v-textarea v-model="title" counter maxlength="1000"
+                full-width outlined class="content"></v-textarea>
+                </v-col>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row no-gutters>
+          <v-col sm="2">
+            <v-card class="pa-5" outlined style="background-color: #d7e9d6" tile>
+                파일첨부</v-card>
+          </v-col>
+          <v-col sm="10">
+            <v-card
+              class="card"
+              outlined
+              tile>
+              <v-col >
+                <v-file-input outlined dense></v-file-input>
+                </v-col>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row no-gutters>
+          <v-col sm="2">
+            <v-card class="pa-5" outlined style="background-color: #d7e9d6" tile>
+              등록일</v-card>
+          </v-col>
+          <v-col sm="10">
+            <v-card class="card" outlined tile>
+              <v-col class="pa-5">
+                <p> {{$moment().format('YYYY-MM-DD HH:mm')}}</p>
+              </v-col>
+            </v-card>
           </v-col>
         </v-row>
 
-        <v-row>
-          <v-col cols="6">
-            <v-text-field label="작성자" single-line>
-            </v-text-field>
-          </v-col>
-          <v-col cols="6">
-              <p> 등록일 : {{$moment().format('YYYY-MM-DD HH:mm')}}</p>
-          </v-col>
-        </v-row>
-
-        <v-textarea
-          v-model="title"
-          label="내 용"
-          counter
-          maxlength="1000"
-          full-width
-          single-line
-          class="content"
-        ></v-textarea>
-        <template>
-            <v-file-input label="파일 첨부" outlined dense></v-file-input>
-        </template>
-
-
-        <v-row >
-          <v-col cols="8"></v-col>
-          <v-col cols="4" class="mb-3">
-            <v-btn
-            outlined
-            color="secondary"
-            width="100"
-            >저 장</v-btn>
-            <v-btn
-            outlined
-            color="secondary"
-            width="100"
-            class="ma-3"
-            >취 소</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-
+      </v-col>
+    </v-row>
   </div>
-
-
- </v-card>
 </template>
 
 <script>
-import Vue from 'vue'
-import vueMoment from 'vue-moment'
-Vue.use(vueMoment)
+  import Vue from 'vue'
+  import vueMoment from 'vue-moment'
+  Vue.use(vueMoment)
 
-import VueGoodTablePlugin from 'vue-good-table'
-import 'vue-good-table/dist/vue-good-table.css'
-Vue.use(VueGoodTablePlugin)
-
-export default{
-  name: 'Write',
-  data: ()=> ({
-    text: 'center',
-        icon: 'justify',
-        toggle_none: null,
-        toggle_one: 0,
-        toggle_exclusive: 2,
-        toggle_multiple: [0, 1, 2],
-        columns: [
-        {
-          label: 'Name',
-          field: 'name',
-        },
-        {
-          label: 'Age',
-          field: 'age',
-          type: 'number',
-        },
-        {
-          label: 'Created On',
-          field: 'createdAt',
-          type: 'date',
-          dateInputFormat: 'YYYY-MM-DD',
-          dateOutputFormat: 'MMM Do YY',
-        },
-        {
-          label: 'Percent',
-          field: 'score',
-          type: 'percentage',
-        },
-      ],
-      rows: [
-        { id:1, name:"John", age: 20, createdAt: '201-10-31:9: 35 am',score: 0.03343 },
-        { id:2, name:"Jane", age: 24, createdAt: '2011-10-31', score: 0.03343 },
-        { id:3, name:"Susan", age: 16, createdAt: '2011-10-30', score: 0.03343 },
-        { id:4, name:"Chris", age: 55, createdAt: '2011-10-11', score: 0.03343 },
-        { id:5, name:"Dan", age: 40, createdAt: '2011-10-21', score: 0.03343 },
-        { id:6, name:"John", age: 20, createdAt: '2011-10-31', score: 0.03343 },
-      ]
-  }),
-  methods: {
-    moment: function () {
-      return moment();
+  export default{
+    name: 'Write',
+    data: ()=> ({
+    }),
+    methods: {
+      moment: function () {
+        return moment();
+      }
     }
   }
-}
+
 </script>
 
 <style scoped>
@@ -127,10 +103,29 @@ export default{
   min-width: 800px;
 }
 .writeTitle{
-  font-size: 1.5rem;
-  font-weight: 300;
+  font-size: 1.3rem;
+  font-weight: 900;
+  padding-left: 20px;
 }
 .content{
   padding-bottom: 30px;
 }
+.typing{
+  height: 10px;
+  width: 200px;
+  padding-top: 0;
+}
+.card{
+  height: 66px;
+}
+.content{
+  height: 200px;
+}
+.content1{
+  height: 200px;
+  padding-top: 90px;
+  padding-bottom: 90px;
+  padding-left: 20px;
+}
+
 </style>

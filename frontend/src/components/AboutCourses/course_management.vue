@@ -40,24 +40,22 @@ title<template>
     <div>
       <p class="card-title"> 이미지 관리 </p>
       <div v-show="!EditBool">
-        <v-card
+        <v-img
           class="portrait"
-          img="course.image"
-          height="300"
+          :src="course.image"
           width="300"
           v-bind="attrs"
           v-on="on"
-        ></v-card>
+        ></v-img>
       </div>
-      <v-row align="center" v-show="EditBool">
-        <v-card
+      <v-row v-show="EditBool">
+        <v-img
           class="portrait"
-          img="course.image"
-          height="300"
+          :src="course.image"
           width="300"
           v-bind="attrs"
           v-on="on"
-        ></v-card>
+        ></v-img>
         <v-row>
           <v-col cols="12" sm="6" offset-sm="3">
             <v-card>
@@ -65,13 +63,13 @@ title<template>
                 <v-row>
                   <v-col
                     v-for="image in images"
-                    :key="image"
+                    :key="image.title"
                     class="d-flex child-flex"
                     cols="4"
                   >
-                    <v-card flat tile class="d-flex">
+                    <v-card flat tile class="d-flex" @click="chooseimg(image)">
                       <v-img
-                        :src="image"
+                        :src="image.img"
                         aspect-ratio="1"
                         class="grey lighten-2"
                       >
@@ -126,15 +124,16 @@ export default {
     EditBool: null,
     course: null,
     professor: [ "신동훈", "이성진", "김선준"],
-    images: ["../../assets/C++.png",
-    "../../assets/python.png",
-    "../../assets/java.png",
-    "../../assets/E404.png",
-    "../../assets/logo.png",
-    "../../assets/main.png",
-    "../../assets/E404.png",
-    "../../assets/logo.png",
-    "../../assets/main.png"],
+    images: [
+      {title: "C++", img: require("../../assets/C++.png")},
+      {title: "python", img: require("../../assets/python.png")},
+      {title: "E404", img: require("../../assets/E404.png")},
+      {title: "java", img: require("../../assets/java.png")},
+      {title: "logo", img: require("../../assets/logo.png")},
+      {title: "main", img: require("../../assets/main.png")},
+      {title: "E404", img: require("../../assets/E404.png")},
+      {title: "main", img: require("../../assets/main.png")},
+      {title: "python", img: require("../../assets/python.png")}],
     customFilter(item, queryText, itemText) {
       const hasValue = (val) => (val != null ? val : "");
       const text = hasValue(item.name);
@@ -166,7 +165,6 @@ export default {
           newCM: this.course,
         })
         .then((res) => {
-          // alert(res.data.message);
         })
         .catch(function (error) {
           alert("error");
@@ -174,6 +172,9 @@ export default {
       this.EditBool = false;
       console.log(this.EditBool);
     },
+    chooseimg(image) {
+      this.course.image = image.img;
+    }
   },
   created() {
     var course_code = this.$route.params.course_code;

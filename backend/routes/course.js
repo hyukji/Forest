@@ -161,8 +161,8 @@ router.put("/:course_code/course_management", function (req, res, next) {
       res.json({ result: 0, message: "존재하지 않는 강의입니다." })
       return
     }
-    db_course.Course_management = req.body.newCM
-    console.log(db_course.Course_management)
+    db_course.course_management = req.body.newCM
+    console.log("db_course=",db_course.course_management)
     console.log(req.body.newCM)
 
     db_course.save(function (err) {

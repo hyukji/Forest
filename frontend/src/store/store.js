@@ -42,10 +42,10 @@ export const store = new Vuex.Store({
       console.log("storage add")
     },
 
-    delSideTabData(state, tabdata) {
-      state.nowTab.forEach((OneEditor, idx) => {
+    delSideTabData(state, tabname) {
+      state.nowTab.forEach((OneEditor) => {
         OneEditor.forEach((onetab, i) => {
-          if (onetab.tab_title == tabdata.tab_title) {
+          if (onetab.tab_title == tabname) {
             //같은 게 존재!
             OneEditor.splice(i, 1)
           }
@@ -53,15 +53,33 @@ export const store = new Vuex.Store({
       })
     },
 
-    delSideTabData(state, tabdata) {
+    setSideTabData(state, tabname) {
+      var newTab = {
+        tab_title: tabname,
+        data: "#" + tabname,
+        _id: "0",
+        icon: "far fa-leaf-maple",
+      }
+
+      var isTabExist = false
       state.nowTab.forEach((OneEditor, idx) => {
         OneEditor.forEach((onetab, i) => {
-          if (onetab.tab_title == tabdata.tab_title) {
+          if (onetab.tab_title == newTab.tab_title) {
             //같은 게 존재!
-            OneEditor.splice(i, 1)
+            isTabExist = true
+            state.selectedTab[idx] = "tabs-L" + idx + "-P" + i
           }
         })
       })
+
+      if (!isTabExist) {
+        state.nowTab[0].push(newTab)
+        state.selectedTab[0] =
+          "tabs-L" + 0 + "-P" + (state.nowTab[0].length - 1)
+      }
+
+      eventBus.$emit("selectedTab", state.selectedTab)
+      //console.log("??", state.nowTab[0])
     },
 
     setTabData(state, tabdata) {
@@ -71,9 +89,10 @@ export const store = new Vuex.Store({
           [tabdata],
           [
             {
-              tab_title: "WindowTeminal",
-              data: "#WindowTeminal",
+              tab_title: "WindowTerminal",
+              data: "#WindowTerminal",
               _id: "0",
+              icon: "far fa-leaf-maple",
             },
           ],
         ]
@@ -89,6 +108,7 @@ export const store = new Vuex.Store({
           })
         })
 
+        console.log("isTabExist ", isTabExist)
         if (!isTabExist) {
           state.nowTab[0].push(tabdata)
           state.selectedTab[0] =
@@ -99,7 +119,7 @@ export const store = new Vuex.Store({
 
       //state.dashboard = tabdata
     },
-    addIntroData(state, ) {
+    addIntroData(state) {
       state.introduction.push(newIntro)
       console.log("storage add")
     },

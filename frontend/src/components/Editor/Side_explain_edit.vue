@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div class="pt-8 #252526 black--text">
     <editor
+      dark
       :initialValue="editorText"
       :options="editorOptions"
       previewStyle="tab"
     />
-    <div>end</div>
-    <viewer :initialValue="editorText" height="500px" />
+    <div class="white pa-2 my-3">
+      <viewer :initialValue="editorText" height="500px" color="primary" />
+    </div>
   </div>
 </template>
 
@@ -28,10 +30,15 @@ export default {
       editorText: "This is initialValue.",
       editorOptions: {
         hideModeSwitch: true,
+        exts: ["colorSyntax"],
       },
     }
   },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.tui-editor-contents {
+  font-size: 3rem;
+}
+</style>

@@ -130,7 +130,6 @@ export default {
       this.id = result.id
     })
   }
-  }
 }
 </script>
 

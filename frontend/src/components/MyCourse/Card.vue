@@ -7,12 +7,12 @@
 
       <v-card-subtitle>{{this.prof}}</v-card-subtitle>
       <div class="btn-nowlearn">
-        <v-btn class="teal white--text" small @click="open_editor">바로학습</v-btn>
+        <v-btn class="secondary" small @click="open_editor">바로학습</v-btn>
       </div>
 
       <v-divider class="mx-4"></v-divider>
       <v-card-subtitle>{{this.progess_data}}</v-card-subtitle>
-      <v-progress-linear v-model="progess" color="teal"></v-progress-linear>
+      <v-progress-linear v-model="progess" color="primary"></v-progress-linear>
     </v-card>
   </div>
 </template>

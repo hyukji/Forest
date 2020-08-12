@@ -154,8 +154,8 @@
 .writeTitle{
   font-size: 1.3rem;
   font-weight: 900;
-  padding-left: 40px;
-  color: #424242;
+  padding-left: 20px;
+  color: #616161;
 }
 .content{
   padding-bottom: 30px;

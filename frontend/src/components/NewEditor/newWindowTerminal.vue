@@ -110,24 +110,26 @@ export default {
       this.items.push(this.$store.state.nowTab[1])
     },
     run() {
-      this.$socket.emit('code', {code: 'print("hello")'})
+      this.results = []
+      this.$socket.emit('code', {code:
+        'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)'})
     },
     submit(event) {
-      this.waiting = false
-      this.results.push(this.input)
-      this.$socket.emit('input', {
-        input: this.input
-      })
+      //this.waiting = false
+      //this.results.push(this.input)
+      this.$socket.emit('input', this.id, this.input)
       this.input=""
     }
 
   },
   created() {
     this.$socket.on('result', (result) => {
+      //data format 다시 바꾸기
       console.log("result", result)
-      this.results.push(result.message)
-      //results를 리스트 말고 스트링으로?
+      this.results = this.results.concat(result.data.split('\n'))
+      this.id = result.id
     })
+  }
   }
 }
 </script>

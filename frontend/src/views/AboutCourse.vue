@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="loading" class="loading">
-      <img src="../assets/loading.gif">
+      <img src="../assets/loading.gif" />
     </div>
     <div v-if="user_isprof" class="wrap-body">
       <v-card class="mx-auto" outlined>
@@ -12,20 +12,24 @@
               <v-row align="end">
                 <v-col cols="6">
                   <v-card-title class="brief-title mx-5">
-                    {{
-                    courseData.name
-                    }}
+                    {{ courseData.name }}
                   </v-card-title>
                   <v-card-subtitle class="brief-subtitle mx-6">
-                    {{
-                    courseData.prof[0]
-                    }}
+                    {{ courseData.prof[0] }}
                   </v-card-subtitle>
                 </v-col>
-                <v-btn class="secondary white--text btn-learn mb-5" x-large width="175" outlined>바로학습</v-btn>
+                <v-btn
+                  class="secondary white--text btn-learn mb-5"
+                  x-large
+                  width="175"
+                  outlined
+                  >바로학습</v-btn
+                >
               </v-row>
               <v-col cols="11">
-                <v-card-subtitle class="brief-process-line-title pt-2">진행률 70%</v-card-subtitle>
+                <v-card-subtitle class="brief-process-line-title pt-2"
+                  >진행률 70%</v-card-subtitle
+                >
                 <v-progress-linear
                   class="mx-3"
                   v-model="progess_data"
@@ -47,14 +51,16 @@
             class="menu-title"
             text
             v-on:click="change_middle_title(title.middle_title)"
-          >{{ title.middle_title }}</v-btn>
+            >{{ title.middle_title }}</v-btn
+          >
         </v-row>
       </div>
 
       <p class="body-title">{{ selectedTitle }}</p>
-
-      <component v-bind:is="selectedComponent" :isprof="user_isprof"></component>
-
+      <component
+        v-bind:is="selectedComponent"
+        :isprof="user_isprof"
+      ></component>
       <!--
       <dashboard v-if="middle_title == '대시보드'"></dashboard>
       <grade v-else-if="middle_title == '학습현황'"></grade>
@@ -75,7 +81,7 @@
 </template>
 
 <script>
-import { eventBus } from "../main.js";
+import { eventBus } from "../main.js"
 
 // @ is an alias to /src
 export default {
@@ -89,9 +95,9 @@ export default {
     assignments: () => import("@/components/AboutCourses/assignments"),
     stud_care: () =>
       import("../components/AboutCourses/Student_Care/student_care"),
-    course_care: () => import("../components/AboutCourses/Course_Care"),
+    course_management: () => import("../components/AboutCourses/course_management"),
   },
-  data: function () {
+  data: function() {
     return {
       loading: true,
       progess_data: 70,
@@ -120,76 +126,76 @@ export default {
           limit: "stud",
         },
         {
-          component_name: "course_care",
+          component_name: "course_management",
           middle_title: "강의관리",
           limit: "stud",
         },
       ],
-    };
+    }
   },
   computed: {
     select_tap_array() {
-      var selected_tap = [];
-      var isprof = this.user_isprof;
-      console.log(isprof);
+      var selected_tap = []
+      var isprof = this.user_isprof
+      console.log(isprof)
       this.tap_data.forEach((items) => {
         if (items.limit != isprof) {
-          selected_tap.push(items);
+          selected_tap.push(items)
         }
-      });
-      return selected_tap;
+      })
+      return selected_tap
     },
   },
   methods: {
-    change_middle_title: function (title) {
-      var selected_com = "";
-      this.tap_data.forEach(function (value) {
+    change_middle_title: function(title) {
+      var selected_com = ""
+      this.tap_data.forEach(function(value) {
         if (value.middle_title == title) {
-          selected_com = value.component_name;
+          selected_com = value.component_name
         }
-      });
+      })
 
-      this.selectedComponent = selected_com;
-      this.selectedTitle = title;
+      this.selectedComponent = selected_com
+      this.selectedTitle = title
     },
-    getCoursedData: function () {
+    getCoursedData: function() {
       this.$http
         .get("/api/mycourse/" + this.courseData.code + "/coursedata")
         .then((res) => {
           if (res.data.result) {
-            this.courseData.name = res.data.db_course.name;
-            this.courseData.code = res.data.db_course.code;
-            this.courseData.language = res.data.db_course.language;
-            this.courseData.prof = res.data.db_course.prof;
+            this.courseData.name = res.data.db_course.name
+            this.courseData.code = res.data.db_course.code
+            this.courseData.language = res.data.db_course.language
+            this.courseData.prof = res.data.db_course.prof
 
-            this.user_isprof = res.data.isprof;
-            this.$store.commit("setCourseData", res.data.db_course);
+            this.user_isprof = res.data.isprof
+            this.$store.commit("setCourseData", res.data.db_course)
           } else {
-            alert(res.data.message);
-            this.$router.push("/mycourse");
+            alert(res.data.message)
+            this.$router.push("/mycourse")
           }
         })
         .then(() => {
-          this.loading=false;
+          this.loading = false
         })
-        .catch(function (error) {
-          alert("error to getdata");
-        });
+        .catch(function(error) {
+          alert("error to getdata")
+        })
     },
   },
   created() {
-    this.courseData.code = this.$route.params.course_code;
+    this.courseData.code = this.$route.params.course_code
 
     if (this.$route.query.tab != null) {
-      this.middle_title = this.$route.query.tab;
+      this.middle_title = this.$route.query.tab
     }
     eventBus.$on("bell_route", (route) => {
-      this.middle_title = route;
-    });
-    this.$route.query.tab = "";
-    this.getCoursedData();
+      this.middle_title = route
+    })
+    this.$route.query.tab = ""
+    this.getCoursedData()
   },
-};
+}
 </script>
 <style scoped>
 .wrap-body {
@@ -237,16 +243,15 @@ export default {
   margin: 0 auto;
 }
 .loading {
-    position: fixed;
-    width: 40%;
-    height: 40%;
-    text-align: center;
-    top: 30%;
-    left: 30%;
+  position: fixed;
+  width: 40%;
+  height: 40%;
+  text-align: center;
+  top: 30%;
+  left: 30%;
 }
-img{
+img {
   max-width: 100%;
   height: auto;
 }
-
 </style>

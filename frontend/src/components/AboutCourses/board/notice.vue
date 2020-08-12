@@ -1,10 +1,25 @@
 <template>
   <div class="notice">
-    <v-card background-color="#f9fcfc" outlined color="#f9fcfc">
-      <v-card-title class="search">
+    <v-card>
+      <v-card-title>
+        <div class="pa-2"></div>
+        공지사항
         <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-text-field v-model="search" label="Search" append-icon="mdi-magnify" hide-details></v-text-field>
+        <v-text-field
+          v-model="search"
+          label="Search"
+          append-icon="mdi-magnify"
+          single-line
+          hide-details
+          ></v-text-field>
+          <v-btn
+            v-if="!EditBool"
+            class="ma-3"
+            outlined
+            color="secondary"
+            width="100"
+            @click="sendEditData"
+          >글쓰기</v-btn>
       </v-card-title>
       <v-data-table
         class="table"
@@ -101,9 +116,12 @@ export default {
       }
     ]
   }),
+  props: ['sendData'],
   methods: {
-    a: function(datasd) {
-      console.log(datasd);
+    sendEditData: function() {
+      console.log('child 데이터 수정 후 전달')
+      let changeData = this.sendData + 30
+      this.$emit('eventData', changeData)
     }
   }
 };
@@ -115,8 +133,8 @@ export default {
 }
 .notice {
   display: inline-block;
-  width: 79%;
-  padding-left: 5%;
+  max-width: 900px;
+  min-width: 800px;
 }
 .body-title {
   font-size: 1.5rem;

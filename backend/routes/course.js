@@ -6,6 +6,33 @@ const { db } = require("../models/course")
 
 router.get("/", function (req, res, next) {})
 
+router.put("/:course_code/intro", function (req, res, next) {
+  console.log(1)
+  var code = req.params.course_code
+
+  Course.findOne({ code: code }, function (err, db_course) {
+    if (db_course == null) {
+      res.json({ result: 0, message: "존재하지 않는 강의입니다." })
+      return
+    }
+    db_course.introduction = req.body.newIntro
+    console.log(db_course.introduction)
+    console.log(req.body.newIntro)
+
+    db_course.save(function (err) {
+      if (err) {
+        console.error(err)
+        res.json({ result: 0, message: "Failed to save introduction" })
+        return
+      }
+
+      res.json({
+        result: 1,
+        message: "intro 저장 성공",
+      })
+    })
+  })
+})
 router.post("/:course_code/assign", function (req, res, next) {
   var code = req.params.course_code
 
@@ -125,7 +152,33 @@ router.get("/:course_code/assign", function (req, res, next) {
     })
   })
 })
+router.put("/:course_code/course_management", function (req, res, next) {
+  console.log(2)
+  var code = req.params.course_code
 
+  Course.findOne({ code: code }, function (err, db_course) {
+    if (db_course == null) {
+      res.json({ result: 0, message: "존재하지 않는 강의입니다." })
+      return
+    }
+    db_course.course_management = req.body.newCM
+    console.log("db_course=",db_course.course_management)
+    console.log(req.body.newCM)
+
+    db_course.save(function (err) {
+      if (err) {
+        console.error(err)
+        res.json({ result: 0, message: "Failed to save CM" })
+        return
+      }
+
+      res.json({
+        result: 1,
+        message: "CM 저장 성공",
+      })
+    })
+  })
+})
 router.get("/:course_code/coursedata", async function (req, res, next) {
   var code = req.params.course_code
   var user_isprof
@@ -156,7 +209,7 @@ router.get("/:course_code/coursedata", async function (req, res, next) {
 
     if (user_isprof == "stud") {
       delete db_course.stud_care
-      delete db_course.course_care
+      delete db_course.course_management
     }
 
     res.json({

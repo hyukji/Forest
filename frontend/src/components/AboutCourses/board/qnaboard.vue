@@ -1,13 +1,25 @@
-
-
 <template>
   <div class="freeboard">
-    <v-card background-color="#f9fcfc" outlined color="#f9fcfc">
-      <v-card-title class="search">
+    <v-card>
+      <v-card-title>
+        <div class="pa-2"></div>
+        QnA
         <v-spacer></v-spacer>
-        <v-spacer></v-spacer>
-        <v-text-field v-model="search" label="Search" append-icon="mdi-magnify" hide-details></v-text-field>
-        <v-btn class="teal white--text bottom-btn" depressed>글쓰기</v-btn>
+        <v-text-field
+          v-model="search"
+          label="Search"
+          append-icon="mdi-magnify"
+          single-line
+          hide-details
+          ></v-text-field>
+          <v-btn
+            v-if="!EditBool"
+            class="ma-3"
+            outlined
+            color="secondary"
+            width="100"
+            @click="EditOn"
+          >글쓰기</v-btn>
       </v-card-title>
       <v-data-table :headers="headers" :items="notice_items">
         <template slot="items" slot-scope="props">
@@ -78,8 +90,8 @@ export default {
 }
 .freeboard {
   display: inline-block;
-  width: 79%;
-  padding-left: 5%;
+  max-width: 900px;
+  min-width: 800px;
 }
 .body-title {
   font-size: 1.5rem;
@@ -94,4 +106,3 @@ export default {
   background-color: "#f9fcfc";
 }
 </style>
-

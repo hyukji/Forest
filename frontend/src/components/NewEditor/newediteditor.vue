@@ -1,29 +1,54 @@
 <template>
-  <div>
-    <v-tabs>
-      <draggable class="v-tab" :clone="clone" v-model="element" group="tabgroup">
+  <div class="wrap">
+    <v-tabs v-model="selectedtab" grow>
+      <draggable
+        class="v-tab"
+        :clone="clone"
+        v-model="element"
+        group="tabgroup"
+      >
         <v-tab
-          v-for="(el) in element"
+          v-for="(el, i) in element"
           :key="el"
-          :href="'#tabs-' + el.tab_title"
+          :href="'#tabs-L' + index + '-P' + i"
           class="primary--text"
         >
-          <v-text>{{el.tab_title}}</v-text>
+          <v-btn class="mr-1" icon>
+            <v-icon small color="primary">{{ el.icon }}</v-icon>
+          </v-btn>
+          <v-row>
+            <v-col>
+              <v-text>{{ el.tab_title }}</v-text>
+            </v-col>
+
+            <v-btn class="my-1" icon @click="removeTab(i)">
+              <v-icon small color="primary">fal fa-times</v-icon>
+            </v-btn>
+          </v-row>
         </v-tab>
       </draggable>
 
-      <v-tab-item v-for="(el) in element" :key="el" :value="'tabs-'+ el.tab_title">
-        <v-card flat>
-          <v-card-text>{{el.data}}</v-card-text>
-        </v-card>
-      </v-tab-item>
+      <v-tabs-items v-model="selectedtab">
+        <v-tab-item
+          v-for="(el, i) in element"
+          :key="el"
+          :value="'tabs-L' + index + '-P' + i"
+        >
+          <WindowTerminal
+            v-if="el.tab_title == 'WindowTerminal' && el._id == 0"
+            :savedcode="el.data"
+          ></WindowTerminal>
+          <WindowCode v-else :savedcode="el.data"></WindowCode>
+        </v-tab-item>
+      </v-tabs-items>
     </v-tabs>
   </div>
 </template>
 
 <script>
-import { Splitpanes, Pane } from "splitpanes";
-import draggable from "vuedraggable";
+import { Splitpanes, Pane } from "splitpanes"
+import draggable from "vuedraggable"
+import { eventBus } from "@/main.js"
 
 export default {
   components: {
@@ -33,89 +58,44 @@ export default {
     Drawer: () => import("@/components/Editor/Drawer"),
     SideTab: () => import("@/components/Editor/SideTab"),
     SideContent: () => import("@/components/Editor/SideContent"),
+    WindowCode: () => import("../NewEditor/newWindowCode"),
+
+    WindowTerminal: () => import("../NewEditor/newWindowTerminal"),
   },
+  props: ["index"],
   data() {
     return {
-      drawer: {
-        open: false,
-        selected: null,
-        on: [],
-        // live or sandbox
-      },
-      tabs: null,
-      text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    };
+      allSelected: null,
+      selectedtab: null,
+      element: null,
+    }
   },
-
-  props: ["element"],
+  computed: {},
   watch: {
-    "selectedTab.keys": {
-      deep: true,
-      handler: function (newVal) {
-        console.log("tab change");
-        newVal.forEach((item, i) => {
-          //check all ele in newVal
-          if (item != null) {
-            var tab = this.getTab(item);
-            var pos = tab.pos;
-            this.selectedTab["tab" + `${pos}`].type = tab.type;
-            this.selectedTab["tab" + `${pos}`].data = tab.data;
-            this.selectedTab["tab" + `${pos}`].selected = tab.selected;
-          }
-        });
-      },
+    selectedtab(val) {
+      this.$store.state.selectedTab[this.index] = this.selectedtab
+    },
+    element(val) {
+      this.$store.state.nowTab[this.index] = this.element
     },
   },
-  method: {
-    removeTab(tab, index) {
-      console.log("removeSpecial", this.drawer.on);
-      if (tab.key == "Live" && this.drawer.on.includes(tab.key)) {
-        this.drawer.on.splice(this.drawer.on.indexOf("Live"), 1);
-      } else if (tab.key == "Sandbox" && this.drawer.on.includes(tab.key)) {
-        this.drawer.on.splice(this.drawer.on.indexOf("Sandbox"), 1);
-      } else {
-      }
-    },
-    paneResize() {
-      this.$refs.tab1.doLayout();
-      this.$refs.tab2.doLayout();
-      //this.$refs.tab3.doLayout()
-      //this.$refs.tab4.doLayout()
-    },
-    clickTab(tab, pos) {
-      var copy = JSON.parse(JSON.stringify(this.selectedTab.keys));
-      copy[pos] = tab.key;
-      this.selectedTab.keys = copy;
-    },
-    getTab(key) {
-      for (var list in this.tabs) {
-        list = this.tabs[list];
-        for (var ele in list) {
-          if (list[ele].key == key) {
-            return list[ele];
-          }
-        }
-      }
-    },
-    click() {},
-    changeTab(action, key) {
-      //request from sideTab
-      console.log(action, key);
-      if (action == "add") {
-        let tab = {
-          label: key,
-          key: key,
-          type: "WindowCode",
-          data: "hi " + key,
-          pos: 1,
-        };
-        this.$refs.tab1.addTab(tab);
-        this.clickTab(tab, 0);
-      } else if (action == "remove") {
-        this.$refs.tab1.removeTab(key);
-      }
+  methods: {
+    removeTab(i) {
+      this.element.splice(i, 1)
     },
   },
-};
+  created() {
+    this.element = this.$store.state.nowTab[this.index]
+    eventBus.$on("selectedTab", (selectedTab) => {
+      this.selectedtab = selectedTab[this.index]
+    })
+  },
+}
 </script>
+
+<style scoped>
+.wrap {
+  width: 100%;
+  height: 100%;
+}
+</style>

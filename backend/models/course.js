@@ -7,10 +7,10 @@ var dashSchema = new Schema({
 })
 
 var introSchema = new Schema({
-  text: [String],
   Updated_date: { type: Date, default: Date.now },
   recommend: [String],
   difficulty: String,
+  language: String,
   intro: String,
 })
 
@@ -53,8 +53,10 @@ var studCareSchema = new Schema({
   iswatched: Boolean,
 })
 
-var courseCareSchema = new Schema({
+var coursemanagementSchema = new Schema({
   text: String,
+  name: String,
+  prof: [String],
   uploaded_date: Date,
   iswatched: Boolean,
 })
@@ -64,14 +66,24 @@ var courseSchema = new Schema({
   code: String,
   language: String,
   dashboard: [dashSchema],
-  introduction: [introSchema],
+  introduction: {
+    Updated_date: { type: Date, default: Date.now },
+    recommend: [String],
+    difficulty: String,
+    language: String,
+    intro: String,
+  },
   lecture: [lectureSchema],
   assignment: [assignSchema],
   board: [boardSchema],
-
   stud_care: [studCareSchema],
-  course_care: [courseCareSchema],
-
+  course_management: {
+    title: String,
+    prof: [String],
+    uploaded_date: Date,
+    iswatched: Boolean,
+    image: String,
+  },
   create_date: { type: Date, default: Date.now },
   Updated_date: { type: Date, default: Date.now },
 })

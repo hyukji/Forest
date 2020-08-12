@@ -5,6 +5,12 @@ import router from "./router"
 import vuetify from "./plugins/vuetify"
 import { store } from "./store/store"
 
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+
+Vue.component("font-awesome-icon", FontAwesomeIcon)
+
+Vue.config.productionTip = false
+
 import axios from "axios"
 Vue.prototype.$http = axios
 

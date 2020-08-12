@@ -1,6 +1,6 @@
 <template>
   <div>
-  <row>
+  <v-layout col wrap>
   <div class="sidebar">
   <v-card class="mx-auto" max-width="210">
     <v-list>
@@ -27,6 +27,7 @@
             v-for="(lec, i) in lecture"
             :key="i"
             link
+            v-on:click="lec[1]"
           >
             <v-list-item-title v-text="lec[0]"> </v-list-item-title>
           </v-list-item>
@@ -51,23 +52,23 @@
         </v-list-group>
       </v-list-group>
 
-      <v-list-item v-on:click="selectedComponent='lec_ass'">
+      <v-list-item v-on:click="selectedComponent='statistics'">
         <v-list-item-title>통계</v-list-item-title>
       </v-list-item>
-
     </v-list>
   </v-card>
+  </div>
+
+  <div class="pa-4"> </div>
+
+  <div>
+  <keep-alive>
+    <component v-bind:is="selectedComponent">
+      <p> Default content </p>
+    </component>
+  </keep-alive>
 </div>
-</row>
-
-<row>
-<keep-alive>
-  <component v-bind:is="selectedComponent">
-    <p> Default content </p>
-  </component>
-</keep-alive>
-</row>
-
+</v-layout>
 </div>
 </template>
 
@@ -94,7 +95,6 @@ import statistics from '@/components/AboutCourses/Student_Care/statistics';
 
 <style scoped>
 .sidebar {
-  padding-top: 3%;
   float: left;
   width: 20%;
   padding-left: 2%;

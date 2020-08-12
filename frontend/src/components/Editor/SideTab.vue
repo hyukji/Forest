@@ -1,10 +1,17 @@
 <template>
-  <v-navigation-drawer dark mini-variant mini-variant-width="56" permanent class="menu">
+  <v-navigation-drawer
+    color="#333333"
+    mini-variant
+    mini-variant-width="56"
+    height="100%"
+    permanent
+    class="menu"
+  >
     <v-list dense nav>
       <v-list-item-group v-model="drawer.selected" active-class>
         <v-list-item v-for="tab in main" :key="tab.name" :value="tab.name">
           <v-list-item-action>
-            <v-icon>{{ tab.icon }}</v-icon>
+            <v-icon :color="(drawer.selected == tab.name) ? 'white' : '#858585'">{{ tab.icon }}</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
@@ -13,13 +20,12 @@
         </v-list-item>
       </v-list-item-group>
 
-      <v-divider />
-      <v-divider />
+      <v-divider class="my-2" color="#858585" />
 
       <v-list-item-group v-model="drawer.on" active-class multiple>
         <v-list-item v-for="tab in additional" :key="tab.name" :value="tab.name">
           <v-list-item-action>
-            <v-icon>{{ tab.icon }}</v-icon>
+            <v-icon :color="(drawer.on.includes(tab.name)) ? 'white' : '#858585'">{{ tab.icon }}</v-icon>
           </v-list-item-action>
 
           <v-list-item-content>
@@ -28,8 +34,6 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-
-    <v-btn @click="click" />
   </v-navigation-drawer>
 </template>
 
@@ -37,6 +41,7 @@
 // @ is an alias to /src
 
 export default {
+  //:type="show_pw ? 'text' : 'password'"
   name: "sidetab",
   components: {
     // tree: () => import('@/components/editor/side_tree'),
@@ -52,15 +57,16 @@ export default {
   },
   data() {
     return {
+      beforeChange: [],
       main: [
-        { name: "Tree", icon: "fas fa-list" },
-        { name: "Explain", icon: "far fa-file-alt" },
+        { name: "MainList", icon: "far fa-list" },
         { name: "Search", icon: "fas fa-search" },
         { name: "Setting", icon: "fas fa-cog" },
       ],
       additional: [
-        { name: "Live", icon: "fas fa-laptop-code" },
-        { name: "Sandbox", icon: "fas fa-code" },
+        { name: "Live", icon: "fas fa-chalkboard-teacher" },
+        { name: "WindowTerminal", icon: "far fa-window-alt" },
+        { name: "Sandbox", icon: "fas fa-box-open" },
       ],
     };
   },
@@ -88,21 +94,18 @@ export default {
       }
     },
     "drawer.on": function (newVal) {
-      console.log("watch drawer.on start");
       var oldVal = this.beforeChange;
       this.beforeChange = newVal;
-      console.log(newVal, oldVal);
       if (newVal.length > oldVal.length) {
         newVal.forEach((item, i) => {
-          console.log(item, !oldVal.includes(item), oldVal);
           if (!oldVal.includes(item)) {
-            this.changeTab("add", item);
+            this.$store.commit("setSideTabData", item);
           }
         });
       } else if (oldVal.length > newVal.length) {
         oldVal.forEach((item, i) => {
           if (!newVal.includes(item)) {
-            this.changeTab("remove", item);
+            this.$store.commit("delSideTabData", item);
           }
         });
       } else {
@@ -120,6 +123,9 @@ export default {
   height: 100%;
   padding: 0px;
   margin: 0px; */
+}
+.menu {
+  height: 100%;
 }
 .content {
 }

@@ -181,6 +181,7 @@ export default {
     this.course = JSON.parse(JSON.stringify(this.$store.state.course_management));
     console.log("this ",this.course);
     this.EditBool = false;
+    
   }
 };
 </script>

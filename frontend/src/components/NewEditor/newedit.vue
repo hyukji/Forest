@@ -52,7 +52,7 @@ export default {
       loading: true,
       drawer: {
         open: true,
-        selected: "Tree",
+        selected: "MainList",
         on: [],
         // live or sandbox
       },

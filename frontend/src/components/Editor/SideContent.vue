@@ -2,8 +2,9 @@
   <!-- <v-navigation-drawer permanent="permanent" dark class="content"> -->
   <!-- <div v-if="loading" class="loading">
     <img src="@/assets/loading.gif" />
-  </div> -->
-  <component :is="selected" class="content" />
+  </div>-->
+  <component :is="selected" class="content"></component>
+
   <!-- </v-navigation-drawer> -->
 </template>
 
@@ -11,14 +12,14 @@
 export default {
   props: { selected: String },
   components: {
-    Tree: () => import("@/components/Editor/Side_tree"),
-    Explain: () => import("@/components/Editor/Side_explain"),
+    MainList: () => import("@/components/Editor/Side_MainList"),
     Search: () => import("@/components/Editor/Side_search"),
     Setting: () => import("@/components/Editor/Side_setting"),
   },
   data() {
     return {}
   },
+
   methods: {
     getCoursedData: function() {
       this.$http
@@ -45,7 +46,6 @@ export default {
 .content {
   width: 100%;
   height: 100%;
-  background-color: #363636;
-  color: #ffffff;
+  background-color: #252526;
 }
 </style>

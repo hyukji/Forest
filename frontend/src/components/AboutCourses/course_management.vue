@@ -39,6 +39,51 @@ title<template>
     </div>
     <div>
       <p class="card-title"> 이미지 관리 </p>
+      <div v-show="!EditBool">
+        <v-card
+          class="portrait"
+          img="course.image"
+          height="300"
+          width="300"
+          v-bind="attrs"
+          v-on="on"
+        ></v-card>
+      </div>
+      <v-row align="center" v-show="EditBool">
+        <v-card
+          class="portrait"
+          img="course.image"
+          height="300"
+          width="300"
+          v-bind="attrs"
+          v-on="on"
+        ></v-card>
+        <v-row>
+          <v-col cols="12" sm="6" offset-sm="3">
+            <v-card>
+              <v-container fluid>
+                <v-row>
+                  <v-col
+                    v-for="image in images"
+                    :key="image"
+                    class="d-flex child-flex"
+                    cols="4"
+                  >
+                    <v-card flat tile class="d-flex">
+                      <v-img
+                        :src="image"
+                        aspect-ratio="1"
+                        class="grey lighten-2"
+                      >
+                      </v-img>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-row>
     </div>
     <div>
       <p class="card-title"> 교수 목록 </p>
@@ -81,6 +126,15 @@ export default {
     EditBool: null,
     course: null,
     professor: [ "신동훈", "이성진", "김선준"],
+    images: ["../../assets/C++.png",
+    "../../assets/python.png",
+    "../../assets/java.png",
+    "../../assets/E404.png",
+    "../../assets/logo.png",
+    "../../assets/main.png",
+    "../../assets/E404.png",
+    "../../assets/logo.png",
+    "../../assets/main.png"],
     customFilter(item, queryText, itemText) {
       const hasValue = (val) => (val != null ? val : "");
       const text = hasValue(item.name);
@@ -151,6 +205,10 @@ export default {
 }
 .wrap-total-list {
   margin: 0 auto;
+  text-align: center;
+}
+.portrait{
+  margin: 3%;
   text-align: center;
 }
 </style>

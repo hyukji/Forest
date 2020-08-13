@@ -111,8 +111,8 @@ export default {
     },
     run() {
       this.results = []
-      this.$socket.emit('code', {code:
-        'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)'})
+      var string = 'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)'
+      this.$socket.emit('code', {code: this.model.data })
     },
     submit(event) {
       //this.waiting = false
@@ -129,7 +129,6 @@ export default {
       this.results = this.results.concat(result.data.split('\n'))
       this.id = result.id
     })
-  }
   }
 }
 </script>

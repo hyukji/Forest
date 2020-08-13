@@ -11,7 +11,7 @@ module.exports = (code, lastCallBack) => {
   }
 
 
-  fs.writeFile('./script/script.py', code, function (err) {
+  fs.writeFile('script/script.py', code, function (err) {
     if (err) console.log(err)
   })
 

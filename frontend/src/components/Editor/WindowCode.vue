@@ -62,6 +62,7 @@ export default {
     data(val) {
       this.editor.setValue(val);
       this.editor.navigateLineEnd();
+      console.log(val);
     },
   },
   beforeDestroy() {

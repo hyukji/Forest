@@ -1,8 +1,15 @@
 <template>
-  <v-card class="mx-auto" outlined max-width="250">
-    <v-card-title>{{ this.name }}</v-card-title>
-    <v-card-subtitle>{{ this.id }}</v-card-subtitle>
-  </v-card>
+  <div class="wrap">
+    <div>prac</div>
+    <editor
+      v-model="content"
+      @init="editorInit"
+      lang="py"
+      theme="chrome"
+      width="100%"
+      height="100%"
+    ></editor>
+  </div>
 </template>
 
 <script>
@@ -10,23 +17,27 @@
 
 export default {
   name: "Card",
-  components: {},
+  components: {
+    editor: require("vue2-ace-editor"),
+  },
   data: () => ({
-    name: "",
-    id: "",
+    content: "content it it",
   }),
-  props: ["card_info"],
+  props: { savedcode: { type: String } },
   methods: {
-    open_editor(event) {
-      window.open("/editor")
+    editorInit: function() {
+      require("brace/ext/language_tools") //language extension prerequsite...
+      require("brace/mode/html")
+      //require("brace/mode/javascript") //language
+      require("brace/mode/python") //language
+      require("brace/mode/less")
+      require("brace/theme/chrome")
+      require("brace/snippets/javascript") //snippet
     },
-    to_aboutCourse(event) {
-      this.$router.push("/mycourse/" + this.code)
-    },
-    get_position() {
-      var index = this.sendData.length - 1
-      this.position = this.sendData[index]
-      this.sendData.pop()
+  },
+  watch: {
+    content() {
+      console.log(this.content)
     },
   },
   created() {
@@ -37,6 +48,10 @@ export default {
 </script>
 
 <style scoped>
+.wrap {
+  width: 100%;
+  height: 100%;
+}
 .wrap-Mycourse-cards {
   float: left;
 }

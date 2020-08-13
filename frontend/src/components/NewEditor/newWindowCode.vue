@@ -1,53 +1,67 @@
 <template>
   <div class="wrap">
-    <div id="editor" ref="editor">default</div>
+    <editor
+      v-model="content"
+      @init="editorInit"
+      lang="python"
+      theme="chrome"
+      width="100%"
+      height="100%"
+    ></editor>
   </div>
 </template>
 
 <script>
-import "ace-builds";
-import "ace-builds/webpack-resolver";
+// @ is an alias to /src
 
 export default {
-  data() {
-    return {
-      code: null,
-      editor: null,
-    };
+  name: "Card",
+  components: {
+    editor: require("vue2-ace-editor"),
   },
-  props: { savedcode: { type: String } },
-  created() {
-    this.code = this.savedcode;
-  },
-  mounted() {
-    this.editor = ace.edit(this.$refs.editor, {
-      mode: "ace/mode/python",
-      theme: "ace/theme/chrome",
-      minLines: 1,
-      fontSize: 15,
-    });
-    this.editor.setValue(this.code);
-    this.editor.navigateLineEnd();
-  },
-  watch: {
-    code(val) {
-      this.editor.setValue(val);
-      this.editor.navigateLineEnd();
+  data: () => ({
+    content: "content it it",
+  }),
+  props: ["tabitem"],
+  methods: {
+    editorInit: function() {
+      require("brace/ext/language_tools") //language extension prerequsite...
+      require("brace/mode/html")
+      //require("brace/mode/javascript") //language
+      require("brace/mode/python") //language
+      require("brace/mode/less")
+      require("brace/theme/chrome")
+      require("brace/snippets/javascript") //snippet
     },
   },
-};
+  watch: {
+    content(val) {
+      console.log(val)
+
+      this.$store.commit("setTabCode", {
+        TabId: this.tabitem._id,
+        newcode: val,
+      })
+    },
+  },
+  created() {
+    console.log("here", this.tabitem)
+    this.content = this.tabitem.data
+  },
+}
 </script>
 
 <style scoped>
 .wrap {
   width: 100%;
   height: 500pt;
-  border: 1px solid #dddddd;
 }
-
-#editor {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.wrap-Mycourse-cards {
+  float: left;
+}
+.btn-nowlearn {
+  padding-right: 5%;
+  padding-bottom: 3%;
+  text-align: right;
 }
 </style>

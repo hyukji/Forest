@@ -73,9 +73,9 @@ export const store = new Vuex.Store({
       })
 
       if (!isTabExist) {
-        state.nowTab[0].push(newTab)
-        state.selectedTab[0] =
-          "tabs-L" + 0 + "-P" + (state.nowTab[0].length - 1)
+        state.nowTab[1].push(newTab)
+        state.selectedTab[1] =
+          "tabs-L" + 1 + "-P" + (state.nowTab[1].length - 1)
       }
 
       eventBus.$emit("selectedTab", state.selectedTab)

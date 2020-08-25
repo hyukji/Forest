@@ -40,15 +40,15 @@
                     v-if="el.complete == 0"
                     size="24"
                   >far fa-check-circle</v-icon>
-<<<<<<< HEAD
-                  <v-icon color="secondary" size="24" v-else>fas fa-check-circle</v-icon>
+
+                  <v-icon color="secondary" size="24">fas fa-check-circle</v-icon>
                   <p class="li-title">{{el.list_title}}</p>
                   <p class="li-title li-date">{{ printDatePast(el.date) }}</p>
-=======
-                  <v-icon color="primary" size="24" v-else>fas fa-check-circle</v-icon>
+
+                  <v-icon color="primary" size="24">fas fa-check-circle</v-icon>
                   <p class="li-title">{{el.title}}</p>
                   <p class="li-title li-date">{{ printDatePast(el.uploaded_date) }}</p>
->>>>>>> 661465920688e0f2baebadf5af6ba403615a08ce
+
                 </li>
               </ul>
             </v-card-text>

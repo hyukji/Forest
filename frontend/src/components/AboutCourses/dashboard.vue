@@ -10,11 +10,11 @@
                 <li v-for="el of class_list">
                   <v-row class="ml-1 mt-2" align="center" justify="start">
                     <v-icon
-                      color="primary"
+                      color="secondary"
                       size="25"
                       v-if="el.complete == 0"
                     >far fa-check-circle</v-icon>
-                    <v-icon color="primary" size="24" v-else>fas fa-check-circle</v-icon>
+                    <v-icon color="secondary" size="24" v-else>fas fa-check-circle</v-icon>
                     <p
                       font-size="2rem"
                       class="li-title text-justify font-weight-medium my-0 ml-1"
@@ -36,11 +36,11 @@
               <ul>
                 <li v-for="el of assignments">
                   <v-icon
-                    color="primary"
+                    color="secondary"
                     v-if="el.complete == 0"
                     size="24"
                   >far fa-check-circle</v-icon>
-                  <v-icon color="primary" size="24" v-else>fas fa-check-circle</v-icon>
+                  <v-icon color="secondary" size="24" v-else>fas fa-check-circle</v-icon>
                   <p class="li-title">{{el.list_title}}</p>
                   <p class="li-title li-date">{{ printDatePast(el.date) }}</p>
                 </li>
@@ -54,7 +54,7 @@
               <p class="card_title">공지사항</p>
               <ul>
                 <li v-for="el of notice">
-                  <i class="fad fa-bullhorn" style="--fa-secondary-opacity: 1.0; --fa-primary-color: #79b575; --fa-secondary-color: #d7e9d6;"></i>
+                  <i class="fad fa-bullhorn" style="--fa-secondary-opacity: 1.0; --fa-primary-color: #51844c; --fa-secondary-color: #d7e9d6;"></i>
                   <p class="li-title">{{el.list_title}}</p>
                   <p class="li-title li-date">{{ printDatePast(el.date) }}</p>
                 </li>
@@ -68,7 +68,7 @@
               <p class="card_title">최근질문</p>
               <ul>
                 <li v-for="el of question">
-                  <v-icon color="primary" size="24">far fa-question</v-icon>
+                  <v-icon color="secondary" size="24">far fa-question</v-icon>
                   <p class="li-title">{{el.list_title}}</p>
                   <p class="li-title li-date">{{ printDatePast(el.date) }}</p>
                 </li>

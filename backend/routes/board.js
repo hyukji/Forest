@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router()
-const Posting = require("../models/posting")
+const Posting = require("../models/board")
+const mongoose = require("mongoose");
+mongoose
 
 router.get("/:id", function(req, res, next) {
   Posting.findOne({ _id: req.params.id }, function(err, posting) {

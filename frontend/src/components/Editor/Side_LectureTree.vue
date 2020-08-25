@@ -12,11 +12,11 @@
     <template v-slot:prepend="{ item, open }">
       <v-row class="pl-2" @click="opentab(item)">
         <v-icon color="tabfont" size="19px" v-if="!item.file">
-          {{
-          open ? "mdi-folder-open" : "mdi-folder"
-          }}
+          {{ open ? "mdi-folder-open" : "mdi-folder" }}
         </v-icon>
-        <v-icon color="tabfont" v-else size="19px">{{ files[item.file] }}</v-icon>
+        <v-icon color="tabfont" v-else size="19px">{{
+          files[item.file]
+        }}</v-icon>
         <v-col>
           <div class="tabfont--text">{{ item.title }}</div>
         </v-col>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { eventBus } from "@/main.js";
+import { eventBus } from "@/main.js"
 export default {
   data: () => ({
     lecturedata: null,
@@ -46,52 +46,46 @@ export default {
     items: null,
   }),
   created() {
-    var openWindow_id = window.my_special_setting;
-    var openWindowTab = null;
+    console.log("create")
 
     // console.log("it is called ");
 
-    this.items = this.$store.state.lecture;
+    this.items = this.$store.state.lecture
     this.items.forEach((element) => {
       element.subitems.forEach((el) => {
-        el.title = el.subtitle;
-        el.file = "py";
-        delete el.subtitle;
-        if (openWindow_id == el._id) {
-          openWindowTab = el;
-        }
-      });
-      element.children = element.subitems;
-      delete element.subitems;
-    });
-    if (openWindow_id) {
-      this.opentab(openWindowTab);
-    }
+        el.title = el.subtitle
+        el.file = "py"
+        delete el.subtitle
+      })
+
+      element.children = element.subitems
+      delete element.subitems
+    })
   },
   methods: {
-    opentab: function (item) {
+    opentab: function(item) {
       if (item.file) {
         var newTab = {
           tab_title: item.title,
           data: "#" + item.title,
           _id: item._id,
           icon: "far fa-leaf",
-        };
-        this.$store.commit("setTabData", newTab);
+        }
+        this.$store.commit("setTabData", newTab)
       }
     },
-    ToDetail: function (item) {
+    ToDetail: function(item) {
       if (item.file) {
         var newTab = {
           tab_title: item.title,
           data: "#" + item.title,
           _id: item._id,
           icon: "far fa-leaf",
-        };
+        }
       }
     },
   },
-};
+}
 </script>
 
 <style scoped>

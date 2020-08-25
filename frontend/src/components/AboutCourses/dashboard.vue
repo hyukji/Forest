@@ -7,7 +7,7 @@
             <v-card-text>
               <p class="card_title">수업목록</p>
               <ul>
-                <li v-for="el of class_list">
+                <li v-for="el of this.lecture">
                   <v-row class="ml-1 mt-2" align="center" justify="start">
                     <v-icon
                       color="secondary"
@@ -18,9 +18,9 @@
                     <p
                       font-size="2rem"
                       class="li-title text-justify font-weight-medium my-0 ml-1"
-                    >{{el.list_title}}</p>
+                    >{{el.title}}</p>
                     <v-spacer></v-spacer>
-                    <p class="text-justify my-0 mr-3 text--disabled">{{ printDatePast(el.date) }}</p>
+                    <p class="text-justify my-0 mr-3 text--disabled">{{ printDatePast(el.created_date) }}</p>
                   </v-row>
                 </li>
               </ul>
@@ -34,15 +34,21 @@
             <v-card-text>
               <p class="card_title">과제목록</p>
               <ul>
-                <li v-for="el of assignments">
+                <li v-for="el of this.assignment">
                   <v-icon
                     color="secondary"
                     v-if="el.complete == 0"
                     size="24"
                   >far fa-check-circle</v-icon>
+<<<<<<< HEAD
                   <v-icon color="secondary" size="24" v-else>fas fa-check-circle</v-icon>
                   <p class="li-title">{{el.list_title}}</p>
                   <p class="li-title li-date">{{ printDatePast(el.date) }}</p>
+=======
+                  <v-icon color="primary" size="24" v-else>fas fa-check-circle</v-icon>
+                  <p class="li-title">{{el.title}}</p>
+                  <p class="li-title li-date">{{ printDatePast(el.uploaded_date) }}</p>
+>>>>>>> 661465920688e0f2baebadf5af6ba403615a08ce
                 </li>
               </ul>
             </v-card-text>
@@ -211,7 +217,12 @@ export default {
         return "오늘";
       }
     }
-  }
+  },
+  created() {
+    var course_code = this.$route.params.course_code;
+    this.lecture = JSON.parse(JSON.stringify(this.$store.state.lecture));
+    this.assignment = JSON.parse(JSON.stringify(this.$store.state.assignments));
+  },
 };
 </script>
 

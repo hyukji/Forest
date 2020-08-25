@@ -1,13 +1,15 @@
 <template>
-  <div class="pt-8 #252526 black--text">
-    <editor
-      dark
-      :initialValue="editorText"
-      :options="editorOptions"
-      previewStyle="tab"
-    />
+  <div class=" pt-8 black--text">
+    <div class="white">
+      <editor
+        dark
+        :initialValue="editorText"
+        :options="editorOptions"
+        previewStyle="tab"
+      />
+    </div>
     <div class="white pa-2 my-3">
-      <viewer :initialValue="editorText" height="500px" color="primary" />
+      <viewer :initialValue="editorText" height="500px" />
     </div>
   </div>
 </template>

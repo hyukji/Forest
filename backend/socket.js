@@ -8,10 +8,12 @@ module.exports = (server) => {
       console.log("Message from Client: " + data.code)
       require('./docker')(data.code, function(result) {
         io.emit('result', result)
+      }, function() {
+        io.emit('closeStdin')
       })
 
     socket.on('input', function(id, input) {
-      console.log('input', id, input)
+      //console.log('input', id, input)
       require('./dockerin')(id, input, function(result) {
         io.emit('result', result)
       })

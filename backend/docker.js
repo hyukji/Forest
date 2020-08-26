@@ -1,4 +1,4 @@
-module.exports = (code, lastCallBack) => {
+module.exports = (code, sendResult, closeStdin) => {
 
   var Docker = require('dockerode')
   var fs     = require('fs')
@@ -11,9 +11,9 @@ module.exports = (code, lastCallBack) => {
   }
 
 
-  fs.writeFile('script/script.py', code, function (err) {
-    if (err) console.log(err)
-  })
+  // fs.writeFile('script/script.py', code, function (err) {
+  //   if (err) console.log(err)
+  // })
 
   const { Transform, PassThrough } = require('stream');
   // class MyTransform extends Transform {
@@ -43,7 +43,7 @@ module.exports = (code, lastCallBack) => {
   // var input = new MyTransform({ objectMode: true })
 
   var out = new PassThrough();
-  // var inn = new PassThrough();
+  //var inn = new PassThrough();
   out.setEncoding('utf8')
 
 
@@ -57,16 +57,17 @@ module.exports = (code, lastCallBack) => {
     StdinOnce: false,
     // Cmd: ['/hello'],
     // Image: 'hello-world'
-    HostConfig: {
-      AutoRemove: true,
-      Binds: [
-        `${process.cwd()}/script:/usr/src/script`
-      ]
-    },
-    WorkingDir: '/usr/src/script',
-    Cmd: [ 'python3', 'script.py'],
+    // HostConfig: {
+    //   AutoRemove: true,
+    //   Binds: [
+    //     `${process.cwd()}/script:/usr/src/script`
+    //   ]
+    // },
+    // WorkingDir: '/usr/src/script',
+    // Cmd: [ `/bin/echo "${code}" > script.py`],
+    Cmd: [ 'python3', 'main.py', code ],
     // Cmd: [ `/bin/echo "${code}" > script.py`, 'python3 script.py'],
-    Image: 'python'
+    Image: 'pythonn'
   }
   var result = {
     id: null,
@@ -77,7 +78,13 @@ module.exports = (code, lastCallBack) => {
     function handler(err, container) {
       var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true};
       result.id = container.id
+      // container.attach({stream: true, stdin: true}, function handler(err, stream) {
+      //   inn.pipe(stream);
+      //   inn.write('python3 script.py')
+      // })
+
       container.attach(attach_opts, function handler(err, stream) {
+
         stream.pipe(out);
 
         out.on('readable', function() {
@@ -87,7 +94,7 @@ module.exports = (code, lastCallBack) => {
             }
             result.data = data
             process.stdout.write('@'+ data)
-            lastCallBack(result)
+            sendResult(result)
           }
         })
         out.on('pause', function() {
@@ -95,6 +102,7 @@ module.exports = (code, lastCallBack) => {
         })
         out.on('end', function() {
           console.log('end')
+          closeStdin()
           //lastCallBack(result)
         })
 

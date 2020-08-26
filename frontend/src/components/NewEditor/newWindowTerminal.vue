@@ -112,12 +112,14 @@ export default {
     run() {
       this.results = []
       var string = 'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)'
-      this.$socket.emit('code', {code: this.model.data })
+      this.$socket.emit('code', this.model.data )
     },
     submit(event) {
       //this.waiting = false
       //this.results.push(this.input)
-      this.$socket.emit('input', this.id, this.input)
+      let data = { id: this.id,
+                  input: this.input }
+      this.$socket.emit('input', data)
       this.input=""
     }
 
@@ -128,6 +130,9 @@ export default {
       console.log("result", result)
       this.results = this.results.concat(result.data.split('\n'))
       this.id = result.id
+    })
+    this.$socket.on('closeStdin', () => {
+      this.waiting = false
     })
   }
 }

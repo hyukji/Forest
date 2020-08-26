@@ -27,7 +27,8 @@
     <v-row>
       <v-col>
         <v-card v-if="!EditBool" class="cards">
-          <p class="card-title">개요</p>
+          <p class="card-title">개요
+          </p>
           <v-container>
             <v-row>
               <v-col class="wrap-total-list">
@@ -195,7 +196,11 @@ export default {
         }
       }],
     recommend: [ "코딩 입문자", "파이썬 개발자", "java 개발자"],
-    course: null,
+    course: {
+      language: null,
+      difficulty: null,
+      recommend: [],
+    },
 
     customFilter(item, queryText, itemText) {
       const hasValue = (val) => (val != null ? val : "");
@@ -218,11 +223,11 @@ export default {
       this.EditBool = true;
     },
     Editcancle() {
-      this.$store.state.introduction = JSON.parse(JSON.stringify(this.course));
+      this.$store.state.introduction = JSON.parse(JSON.stringify(this.showitem));
       this.EditBool = false;
     },
     EditIntro() {
-      this.$store.state.introduction = JSON.parse(JSON.stringify(this.showitem));
+      this.$store.state.introduction = JSON.parse(JSON.stringify(this.course));
       this.$http
         .put("/api/mycourse/" + this.$route.params.course_code + "/intro", {
           newIntro: this.course,
@@ -232,7 +237,6 @@ export default {
         .catch(function (error) {
           alert("error");
         });
-
       this.EditBool = false;
     },
 

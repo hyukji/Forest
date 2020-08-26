@@ -14,7 +14,7 @@
           ></v-text-field>
           <v-btn
             v-if="!EditBool"
-            class="ma-3"
+            class="button ma-3"
             outlined
             color="secondary"
             width="100"
@@ -148,4 +148,8 @@ export default {
 .table {
   background-color: "#f9fcfc";
 }
+.button{
+  font-weight: 600;
+}
+
 </style>

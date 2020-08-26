@@ -114,12 +114,13 @@
             outlined
             color="secondary"
             width="100"
+            class="button"
             >저 장</v-btn>
             <v-btn
             outlined
             color="secondary"
             width="100"
-            class="ma-3"
+            class="button ma-6"
             >취 소</v-btn>
           </v-col>
         </v-row>
@@ -177,5 +178,7 @@
   padding-bottom: 90px;
   padding-left: 20px;
 }
-
+.button{
+  font-weight: 600;
+}
 </style>

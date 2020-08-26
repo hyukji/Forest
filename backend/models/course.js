@@ -38,7 +38,7 @@ var assignSchema = new Schema({
   subitems: [subassign],
   totalscore: { type: Number, default: 0 },
   totalperfect: { type: Number, default: 0 },
-  uploaded_date: Date,
+  uploaded_date: { type: Date, default: Date.now },
 })
 
 var boardSchema = new Schema({

@@ -177,20 +177,8 @@ export const store = new Vuex.Store({
       state.course_management.push(newCM)
       console.log("storage add")
     },
-    /*
-    auth_request(state) {
-      state.status = "loading"
-    },
 
-    auth_success(state, user) {
-      state.status = "success"
-      state.user = user
-      state.isauth = 1
-    },
-    logout(state) {
-      state.status = ""
-      state.isauth = 0
-    },*/
+    ////////////////////////////////////////////////////////////////
   },
 
   //기본 접근방법 : this.$store.dispatch('경로명/함수명')

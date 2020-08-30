@@ -16,6 +16,7 @@ var introSchema = new Schema({
 
 var sublecture = new Schema({
   subtitle: String,
+  explanation: String,
   Updated_date: { type: Date, default: Date.now },
   iscomplete: Boolean,
 })
@@ -28,6 +29,7 @@ var lectureSchema = new Schema({
 
 var subassign = new Schema({
   subtitle: String,
+  explanation: String,
   score: { type: Number, default: 0 },
   perfect: { type: Number, default: 0 },
   Updated_date: { type: Date, default: Date.now },
@@ -60,6 +62,7 @@ var coursemanagementSchema = new Schema({
   uploaded_date: Date,
   iswatched: Boolean,
 })
+
 var courseSchema = new Schema({
   name: String,
   prof: [String],
@@ -69,8 +72,8 @@ var courseSchema = new Schema({
   introduction: {
     Updated_date: { type: Date, default: Date.now },
     recommend: [String],
-    difficulty: {title: String, icon: String},
-    language: {title: String, icon: String},
+    difficulty: { title: String, icon: String },
+    language: { title: String, icon: String },
     intro: String,
   },
   lecture: [lectureSchema],

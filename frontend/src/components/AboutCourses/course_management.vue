@@ -155,11 +155,11 @@ export default {
       this.EditBool = true;
     },
     Editcancle() {
-      this.$store.state.course_management = JSON.parse(JSON.stringify(this.course));
+      this.$store.state.course_management = JSON.parse(JSON.stringify(this.showitem));
       this.EditBool = false;
     },
     EditCM() {
-      this.$store.state.course_management = JSON.parse(JSON.stringify(this.showitem));
+      this.$store.state.course_management = JSON.parse(JSON.stringify(this.course));
       this.$http
         .put("/api/mycourse/" + this.$route.params.course_code + "/course_management", {
           newCM: this.course,

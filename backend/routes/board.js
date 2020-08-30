@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+const Posting = require("../models/board")
 const mongoose = require("mongoose");
 mongoose
 

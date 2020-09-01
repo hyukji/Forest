@@ -105,54 +105,31 @@ export default {
       this.items.push(this.$store.state.nowTab[1]);
     },
     run() {
-<<<<<<< HEAD
       this.results = [];
       var string =
         'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)';
-      this.$socket.emit("code", { code: this.model.data });
-=======
-      this.results = []
-      var string = 'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)'
-      this.$socket.emit('code', this.model.data )
->>>>>>> 572b3655cb1afdb95a535b7575dd50d528346a47
+      this.$socket.emit("code", this.model.data);
     },
     submit(event) {
       //this.waiting = false
       //this.results.push(this.input)
-<<<<<<< HEAD
-      this.$socket.emit("input", this.id, this.input);
+      let data = { id: this.id, input: this.input };
+      this.$socket.emit("input", data);
       this.input = "";
     },
-=======
-      let data = { id: this.id,
-                  input: this.input }
-      this.$socket.emit('input', data)
-      this.input=""
-    }
-
->>>>>>> 572b3655cb1afdb95a535b7575dd50d528346a47
   },
   created() {
     this.$socket.on("result", (result) => {
       //data format 다시 바꾸기
-<<<<<<< HEAD
       console.log("result", result);
       this.results = this.results.concat(result.data.split("\n"));
       this.id = result.id;
     });
+    this.$socket.on("closeStdin", () => {
+      this.waiting = false;
+    });
   },
 };
-=======
-      console.log("result", result)
-      this.results = this.results.concat(result.data.split('\n'))
-      this.id = result.id
-    })
-    this.$socket.on('closeStdin', () => {
-      this.waiting = false
-    })
-  }
-}
->>>>>>> 572b3655cb1afdb95a535b7575dd50d528346a47
 </script>
 
 <style scoped>

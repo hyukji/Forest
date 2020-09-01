@@ -72,7 +72,7 @@ export default {
     });
   },
   methods: {
-    OpenExplain: async function (item) {
+    OpenExplain: function (item) {
       eventBus.$emit("OpenExplain", item, 1);
       eventBus.$emit("EnterExplain", item, "lecture");
     },
@@ -84,6 +84,7 @@ export default {
           _id: item._id,
           icon: "far fa-leaf",
         };
+
         this.$store.commit("setTabData", newTab);
       }
     },

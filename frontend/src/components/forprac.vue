@@ -1,63 +1,145 @@
 <template>
   <div class="wrap">
-    <div>prac</div>
-    <editor
-      v-model="content"
-      @init="editorInit"
-      lang="py"
-      theme="chrome"
-      width="100%"
-      height="100%"
-    ></editor>
+    <v-row class="wrap" no-gutters>
+      <v-col>
+        <v-tabs
+          dark
+          grow
+          v-model="selectedtab"
+          class="wrap px-0"
+          background-color="#252526"
+          :hide-slider="false"
+        >
+          <draggable
+            tag="v-tab"
+            class="v-tab px-0 wrap tab_border tabBack px-0"
+            :clone="clone"
+            v-model="element"
+            group="tabgroup"
+            :move="checkMove"
+            v-for="(el, i) in element"
+            :key="el"
+            :href="'#tabs-L' + index + '-P' + i"
+            @click="doThat"
+            :ripple="false"
+          >
+            <v-row no-gutters justify="center" align="center">
+              <v-col class="pl-3" md="auto">
+                <v-btn icon>
+                  <v-icon small color="secondary">{{ el.icon }}</v-icon>
+                </v-btn>
+              </v-col>
+              <v-col>
+                <v-text>{{ el.tab_title }}</v-text>
+              </v-col>
+              <v-col class="pr-3" md="auto" @click="removeTab(i)">
+                <v-btn class="my-1" icon>
+                  <v-icon small color="tabfont">fal fa-times</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </draggable>
+
+          <v-tabs-items v-model="selectedtab" class="wrap">
+            <v-tab-item
+              class="wrap"
+              v-for="(el, i) in element"
+              :key="el"
+              :value="'tabs-L' + index + '-P' + i"
+            ></v-tab-item>
+          </v-tabs-items>
+        </v-tabs>
+      </v-col>
+      <v-col md="auto" class="extra_editor">
+        <v-tabs background-color="#252526" vertical>
+          <v-btn icon class="ma-1">
+            <v-icon size="16pt" color="tabfont">fal fa-columns</v-icon>
+          </v-btn>
+          <v-btn icon class="ma-1">
+            <v-icon size="16pt" color="tabfont">fal fa-align-slash</v-icon>
+          </v-btn>
+        </v-tabs>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import { Splitpanes, Pane } from "splitpanes";
+import draggable from "vuedraggable";
+import { eventBus } from "@/main.js";
 
 export default {
-  name: "Card",
   components: {
-    editor: require("vue2-ace-editor"),
+    draggable,
+    Splitpanes,
+    Pane,
+    Drawer: () => import("@/components/Editor/Drawer"),
+    SideTab: () => import("@/components/Editor/SideTab"),
+    SideContent: () => import("@/components/Editor/SideContent"),
   },
-  data: () => ({
-    content: "content it it",
-  }),
-  props: { savedcode: { type: String } },
-  methods: {
-    editorInit: function() {
-      require("brace/ext/language_tools") //language extension prerequsite...
-      require("brace/mode/html")
-      //require("brace/mode/javascript") //language
-      require("brace/mode/python") //language
-      require("brace/mode/less")
-      require("brace/theme/chrome")
-      require("brace/snippets/javascript") //snippet
+  data() {
+    return {
+      more: ["News", "Maps", "Books", "Flights", "Apps"],
+      allSelected: null,
+      selectedtab: null,
+      element: null,
+      index: 0,
+    };
+  },
+  computed: {
+    backcolor() {
+      return "tabBack";
     },
   },
   watch: {
-    content() {
-      console.log(this.content)
+    selectedtab(val) {
+      this.$store.commit("ChangeSelectedTab", {
+        selected: this.selectedtab,
+        idx: this.index,
+      });
+      // console.log("selectedtab", this.selectedtab);
+      //this.$store.state.selectedTab[this.index] = this.selectedtab
+    },
+    element(val) {
+      console.log("console nowtab", this.element);
+      this.$store.commit("ChangeNowTab", { el: this.element, idx: this.index });
+
+      //this.$store.state.nowTab[this.index] = this.element
+    },
+  },
+  methods: {
+    doThat: function (evt) {
+      //console.log("mouse", evt);
+    },
+    checkMove: function (evt) {
+      //console.log("move go", evt.to, evt.related);
+    },
+    removeTab(i) {
+      this.element.splice(i, 1);
+      console.log("it is stroe tab ", this.$store.state.nowTab[this.index]);
     },
   },
   created() {
-    this.name = this.card_info.name
-    this.id = this.card_info.id
+    this.element = this.$store.state.nowTab[this.index];
+    eventBus.$on("selectedTab", (selectedTab) => {
+      this.selectedtab = selectedTab[this.index];
+    });
   },
-}
+};
 </script>
 
 <style scoped>
-.wrap {
+.wrap-width {
   width: 100%;
+}
+.wrap {
   height: 100%;
 }
-.wrap-Mycourse-cards {
-  float: left;
+.tab_border {
+  margin-left: 1pt;
 }
-.btn-nowlearn {
-  padding-right: 5%;
-  padding-bottom: 3%;
-  text-align: right;
+.extra_editor {
+  background-color: #1d1f21;
 }
 </style>

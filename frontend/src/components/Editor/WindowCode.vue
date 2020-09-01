@@ -42,7 +42,6 @@ export default {
     this.editor = ace.edit(this.$refs.editor, {
       mode: "ace/mode/python",
       theme: "ace/theme/chrome",
-      minLines: 1,
       fontSize: 15,
     });
     this.editor.setValue(this.data);

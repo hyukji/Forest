@@ -73,9 +73,9 @@ export const store = new Vuex.Store({
       })
 
       if (!isTabExist) {
-        state.nowTab[0].push(newTab)
-        state.selectedTab[0] =
-          "tabs-L" + 0 + "-P" + (state.nowTab[0].length - 1)
+        state.nowTab[1].push(newTab)
+        state.selectedTab[1] =
+          "tabs-L" + 1 + "-P" + (state.nowTab[1].length - 1)
       }
 
       eventBus.$emit("selectedTab", state.selectedTab)
@@ -177,20 +177,8 @@ export const store = new Vuex.Store({
       state.course_management.push(newCM)
       console.log("storage add")
     },
-    /*
-    auth_request(state) {
-      state.status = "loading"
-    },
 
-    auth_success(state, user) {
-      state.status = "success"
-      state.user = user
-      state.isauth = 1
-    },
-    logout(state) {
-      state.status = ""
-      state.isauth = 0
-    },*/
+    ////////////////////////////////////////////////////////////////
   },
 
   //기본 접근방법 : this.$store.dispatch('경로명/함수명')

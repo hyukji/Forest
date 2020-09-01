@@ -1,17 +1,17 @@
 <template>
-  <div>
-    <v-row no-gutters align="center">
+  <div class="pl-4 pt-2">
+    <v-row align="center">
       <!-- <v-col cols="5"> <v-text-field v-model="label"></v-text-field></v-col> -->
-      <v-col class="">
+      <v-col class>
         <!-- <v-select v-model="model" :items="items" dense @click="getitmes">
         <template v-slot:selection="{ item, index }">
           <span class="grey--text">{{ item.tab_title }}</span>
         </template>
-      </v-select> -->
+        </v-select>-->
 
-        <v-menu close-on-click="true">
+        <v-menu close-on-click="true" disable-keys v-model="value" offset-y="true">
           <template v-slot:activator="{ on, attrs }">
-            <v-col cols="12">
+            <v-col class="pa-0" cols="12">
               <v-text-field
                 dense
                 outlined
@@ -20,16 +20,13 @@
                 v-on="on"
                 hide-details
                 append-icon="far fa-angle-down"
+                @click:append="value = !value"
               ></v-text-field>
             </v-col>
           </template>
 
           <v-list dense>
-            <v-list-item
-              v-for="(item, index) in items"
-              :key="index"
-              @click="model = item"
-            >
+            <v-list-item v-for="(item, index) in items" :key="index" @click="model = item">
               <v-list-item-icon>
                 <v-icon size="18" v-text="item.icon"></v-icon>
               </v-list-item-icon>
@@ -42,19 +39,21 @@
         </v-menu>
       </v-col>
 
-      <v-btn color="secondary" outlined class="ma-2" @click="run">
-        실행
-      </v-btn>
-      <v-btn color="secondary" outlined class="ma-2" @click>
-        제출
-      </v-btn>
+      <v-btn color="secondary" outlined class="ma-2" @click="run">실행</v-btn>
+      <v-btn color="secondary" outlined class="ma-2" @click>제출</v-btn>
       <v-spacer />
     </v-row>
+<<<<<<< HEAD
     <div>
       {{ model }}
     </div>
     <div v-for="i in results">{{ i }}</div>
     <input v-show="waiting" v-model="input" @keyup.enter="submit" />
+=======
+    <div>{{ model }}</div>
+    <div v-for="(i,index) in results" :key="index">{{ i }}</div>
+    <input v-if="waiting" v-model="input" @keyup.enter="submit" />
+>>>>>>> 65bd49a683e33ef4b73b27870623eeaea77ad7da
   </div>
 </template>
 
@@ -63,6 +62,7 @@ export default {
   components: {},
   data() {
     return {
+      value: false,
       model: { tab_title: "" },
       results: [],
       waiting: false,
@@ -71,7 +71,7 @@ export default {
   },
   computed: {
     items() {
-      var res = []
+      var res = [];
       this.$store.state.nowTab.forEach((OneEditor, idx) => {
         OneEditor.forEach((onetab, i) => {
           if (
@@ -79,11 +79,11 @@ export default {
               onetab.tab_title == "WindowTerminal" || onetab.tab_title == "Live"
             )
           ) {
-            res.push(onetab)
+            res.push(onetab);
           }
-        })
-      })
-      return res
+        });
+      });
+      return res;
     },
   },
   // watch: {
@@ -105,29 +105,53 @@ export default {
   //   },
   // },
   methods: {
+    showitem() {
+      console.log("it siadfsvdc");
+    },
     getitmes() {
-      this.items = this.$store.state.nowTab[0]
-      this.items.push(this.$store.state.nowTab[1])
+      this.items = this.$store.state.nowTab[0];
+      this.items.push(this.$store.state.nowTab[1]);
     },
     run() {
+<<<<<<< HEAD
+      this.results = [];
+      var string =
+        'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)';
+      this.$socket.emit("code", { code: this.model.data });
+=======
       this.results = []
       this.waiting = true
       var string = 'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)'
       this.$socket.emit('code', this.model.data )
+>>>>>>> 572b3655cb1afdb95a535b7575dd50d528346a47
     },
     submit(event) {
       //this.waiting = false
       //this.results.push(this.input)
+<<<<<<< HEAD
+      this.$socket.emit("input", this.id, this.input);
+      this.input = "";
+    },
+=======
       let data = { id: this.id,
                   input: this.input }
       this.$socket.emit('input', data)
       this.input=""
     }
 
+>>>>>>> 572b3655cb1afdb95a535b7575dd50d528346a47
   },
   created() {
-    this.$socket.on('result', (result) => {
+    this.$socket.on("result", (result) => {
       //data format 다시 바꾸기
+<<<<<<< HEAD
+      console.log("result", result);
+      this.results = this.results.concat(result.data.split("\n"));
+      this.id = result.id;
+    });
+  },
+};
+=======
       console.log("result", result)
       this.results = this.results.concat(result.data.split('\n'))
       this.id = result.id
@@ -137,6 +161,7 @@ export default {
     })
   }
 }
+>>>>>>> 572b3655cb1afdb95a535b7575dd50d528346a47
 </script>
 
 <style scoped>

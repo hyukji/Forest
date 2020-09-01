@@ -54,7 +54,7 @@
       {{ model }}
     </div>
     <div v-for="i in results">{{ i }}</div>
-    <input v-if="waiting" v-model="input" @keyup.enter="submit" />
+    <input v-show="waiting" v-model="input" @keyup.enter="submit" />
   </div>
 </template>
 
@@ -65,7 +65,7 @@ export default {
     return {
       model: { tab_title: "" },
       results: [],
-      waiting: true,
+      waiting: false,
       input: ""
     }
   },
@@ -111,6 +111,7 @@ export default {
     },
     run() {
       this.results = []
+      this.waiting = true
       var string = 'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)'
       this.$socket.emit('code', this.model.data )
     },

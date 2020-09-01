@@ -12,17 +12,16 @@ module.exports = (server) => {
         socket.emit('closeStdin')
       })
 
+    })
     socket.on('input', function(data) {
+      console.log('input socket on')
       //console.log('input', id, input)
       require('./dockerin')(data, function(result) {
         socket.emit('result', result)
       })
     })
-
-  })
   });
-}
-//
+}//
 // var io = require("socket.io")(server)
 // //pythonShell = require("./python.js")
 //

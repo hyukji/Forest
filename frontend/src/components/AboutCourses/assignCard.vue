@@ -33,7 +33,7 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item class="pb-3" v-for="(subItem, i) in item.subitems" :key="i" @click>
+          <v-list-item class="py-1" v-for="(subItem, i) in item.subitems" :key="i">
             <v-list-item-content>
               <v-row align="center">
                 <v-col cols="10" class>
@@ -42,7 +42,12 @@
                     v-model="subItem.subtitle"
                     class="title_font pl-16 py-0"
                   ></v-text-field>
-                  <v-list-subtitle v-else class="title_font pl-16 py-10" v-text="subItem.subtitle"></v-list-subtitle>
+                  <v-list-subtitle
+                    @click="open_editor(subItem._id)"
+                    v-else
+                    class="title_font pl-16 py-10"
+                    v-text="subItem.subtitle"
+                  ></v-list-subtitle>
                 </v-col>
 
                 <v-list-subtitle
@@ -66,6 +71,7 @@
                   ></v-list-item-title>
                 </v-col>-->
               </v-row>
+              <div v-if="i == item.subitems.length - 1" class="pb-3"></div>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -103,6 +109,10 @@ export default {
     },
   },
   methods: {
+    open_editor(itme_id) {
+      var newWindow = window.open("/newedit/" + this.$route.params.course_code);
+      newWindow.my_special_setting = [itme_id, 1];
+    },
     delAssign(type, numAssign, numSubAssign) {
       if (type == "title") {
         this.sendData.splice(numAssign, 1);

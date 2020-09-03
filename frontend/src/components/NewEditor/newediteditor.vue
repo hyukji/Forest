@@ -51,21 +51,24 @@
               :key="el"
               :value="'tabs-L' + index + '-P' + i"
             >
-              <WindowTerminal
-                v-if="el.tab_title == 'WindowTerminal' && el._id == 0"
-                :savedcode="el.data"
-              ></WindowTerminal>
-              <WindowCode v-else :tabitem="el"></WindowCode>
+              <div class="wrap">
+                <WindowTerminal
+                  v-if="el.tab_title == 'WindowTerminal' && el._id == 0"
+                  :savedcode="el.data"
+                  :user_data="user_data"
+                ></WindowTerminal>
+                <WindowCode v-else :tabitem="el" :user_data="user_data"></WindowCode>
+              </div>
             </v-tab-item>
           </v-tabs-items>
         </v-tabs>
       </v-col>
       <v-col md="auto" class="extra_editor">
         <v-tabs background-color="#252526" vertical>
-          <v-btn icon class="ma-1">
+          <v-btn icon class="ma-1" @click="SplitTab">
             <v-icon size="16pt" color="tabfont">fal fa-columns</v-icon>
           </v-btn>
-          <v-btn icon class="ma-1">
+          <v-btn icon class="ma-1" @click="DelTab">
             <v-icon size="16pt" color="tabfont">fal fa-align-slash</v-icon>
           </v-btn>
         </v-tabs>
@@ -91,20 +94,15 @@ export default {
 
     WindowTerminal: () => import("../NewEditor/newWindowTerminal"),
   },
-  props: ["index"],
+  props: ["index", "element", "user_data"],
   data() {
     return {
-      more: ["News", "Maps", "Books", "Flights", "Apps"],
       allSelected: null,
       selectedtab: null,
-      element: null,
+      isempty: false,
     };
   },
-  computed: {
-    backcolor() {
-      return "tabBack";
-    },
-  },
+  computed: {},
   watch: {
     selectedtab(val) {
       this.$store.commit("ChangeSelectedTab", {
@@ -122,6 +120,12 @@ export default {
     },
   },
   methods: {
+    SplitTab: function () {
+      this.$store.commit("SplitNowTab", {
+        el: this.element[0],
+        idx: this.index,
+      });
+    },
     doThat: function (evt) {
       //console.log("mouse", evt);
     },
@@ -132,9 +136,11 @@ export default {
       this.element.splice(i, 1);
       console.log("it is stroe tab ", this.$store.state.nowTab[this.index]);
     },
+    DelTab() {
+      this.element = [];
+    },
   },
   created() {
-    this.element = this.$store.state.nowTab[this.index];
     eventBus.$on("selectedTab", (selectedTab) => {
       this.selectedtab = selectedTab[this.index];
     });
@@ -154,5 +160,8 @@ export default {
 }
 .extra_editor {
   background-color: #1d1f21;
+}
+.emptydiv {
+  padding: 0 auto;
 }
 </style>

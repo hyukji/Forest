@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="wrap" @keyup.enter="clickEnter">
     <editor
       v-model="content"
       @init="editorInit"
@@ -20,13 +20,13 @@ export default {
   components: {
     editor: require("vue2-ace-editor"),
   },
+  props: ["tabitem", "user_data"],
   data: () => ({
-    content: "content it it",
+    content: null,
     settings: {
       fontsize: 17,
     },
   }),
-  props: ["tabitem"],
   methods: {
     editorInit: function () {
       require("brace/ext/language_tools"); //language extension prerequsite...
@@ -39,24 +39,61 @@ export default {
 
       require("brace/snippets/javascript"); //snippet
     },
+    clickEnter() {
+      this.$store.commit("setTabCode", {
+        icon: this.tabitem.icon,
+        TabId: this.tabitem._id,
+        newcode: this.content,
+      });
+
+      this.$http
+        .post("/api/editor/" + this.$route.params.course_code + "/UserCode", {
+          //axios 사용
+          Tabdata: this.tabitem,
+          user_data: this.user_data,
+        })
+        .then((res) => {})
+        .catch(function (error) {
+          alert("error to save code");
+        });
+    },
   },
   mounted() {
     this.editor = this.$refs.myEditor.editor;
     this.editor.setFontSize(this.settings.fontsize);
   },
-  watch: {
-    content(val) {
-      console.log(val);
-
-      this.$store.commit("setTabCode", {
-        TabId: this.tabitem._id,
-        newcode: val,
-      });
-    },
-  },
   created() {
     //console.log("here", this.tabitem);
-    this.content = this.tabitem.data;
+    this.content = "#" + this.tabitem.tab_title;
+
+    this.$http
+      .get(
+        "/api/editor/" +
+          this.$route.params.course_code +
+          "/" +
+          this.tabitem._id +
+          "/" +
+          this.user_data.email
+      )
+      .then((res) => {
+        //console.log("res.codedata", res.data.codedata);
+        if (res.data.codedata) {
+          this.content = res.data.codedata;
+        } else {
+          console.log("저장된 데이터강 없어유");
+        }
+
+        this.$store.commit("setTabCode", {
+          icon: this.tabitem.icon,
+          TabId: this.tabitem._id,
+          newcode: this.content,
+        });
+      })
+      .catch(function (error) {
+        alert("error to save code");
+      });
+
+    //console.log("user_data", this.user_data);
   },
 };
 </script>

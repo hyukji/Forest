@@ -1,37 +1,20 @@
 <template>
   <div class="wrap">
-    <v-card tile flat>
-      <v-toolbar flat dense color="#3B3B3C">
-        <v-app-bar-nav-icon color="primary">
-          <v-icon class="pl-1" size="15pt">fas fa-seedling</v-icon>
-        </v-app-bar-nav-icon>
-
-        <v-toolbar-title class="pl-0">
-          <div class="tabfont--text">Forest_Studio</div>
-        </v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-btn icon class="tabfont--text">
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon class="tabfont--text">
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-      </v-toolbar>
-    </v-card>
+    <EditToolbar />
 
     <v-row no-gutters class="wrap">
       <SideTab :drawer="drawer" />
 
-      <splitpanes vertical>
-        <pane v-if="drawer.open" size="20" min-size="15">
-          <side-content :selected="drawer.selected" />
+      <splitpanes vertical class="wrap_splitpanes">
+        <pane v-if="drawer.open" size="20" min-size="15" max-size="50">
+          <side-content :selected="drawer.selected" :user_data="user_data" />
         </pane>
-
-        <pane v-for="(element, index) in tabeditor" :key="element.id" min-size="15">
-          <newediteditor :index="index"></newediteditor>
+        <pane>
+          <splitpanes>
+            <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
+              <newediteditor :index="index" :element="element" :user_data="user_data"></newediteditor>
+            </pane>
+          </splitpanes>
         </pane>
       </splitpanes>
     </v-row>
@@ -39,6 +22,7 @@
 </template>
 
 <script>
+import { authentication } from "@/mixins/authentication";
 import { Splitpanes, Pane } from "splitpanes";
 import { eventBus } from "@/main.js";
 
@@ -46,6 +30,8 @@ export default {
   components: {
     Splitpanes,
     Pane,
+    EditToolbar: () => import("@/components/NewEditor/newEditToolbar"),
+
     newediteditor: () => import("@/components/NewEditor/newediteditor"),
     Drawer: () => import("@/components/Editor/Drawer"),
     SideTab: () => import("@/components/Editor/SideTab"),
@@ -61,14 +47,24 @@ export default {
         // live or sandbox
       },
       tabeditor: null,
+      panesize: 20,
     };
   },
-  method: {},
+  mixins: [authentication],
+  method: {
+    llog() {
+      console.log("added");
+    },
+  },
+  watch: {
+    tabeditor(val) {
+      console.log("tabeditor", val);
+    },
+  },
   created() {
-    var openWindow_id = window.my_special_setting;
-
-    if (openWindow_id) {
-      this.$store.commit("StartTab", openWindow_id);
+    this.check_isauth(true);
+    if (window.my_special_setting) {
+      this.$store.commit("StartTab", window.my_special_setting);
     }
 
     this.tabeditor = this.$store.state.nowTab;
@@ -87,7 +83,7 @@ export default {
 
 
 <style>
-.splitpanes {
+.wrap_splitpanes {
   position: absolute;
   left: 56px;
   padding-right: 56px;

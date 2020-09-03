@@ -37,6 +37,7 @@
 <script>
 import { eventBus } from "@/main.js";
 export default {
+  props: ["selected", "user_data"],
   data: () => ({
     lecturedata: null,
     open: [],
@@ -55,11 +56,9 @@ export default {
     items: null,
   }),
   created() {
-    console.log("create");
-
     // console.log("it is called ");
+    this.items = JSON.parse(JSON.stringify(this.$store.state.lecture));
 
-    this.items = this.$store.state.lecture;
     this.items.forEach((element) => {
       element.subitems.forEach((el) => {
         el.title = el.subtitle;
@@ -72,7 +71,7 @@ export default {
     });
   },
   methods: {
-    OpenExplain: async function (item) {
+    OpenExplain: function (item) {
       eventBus.$emit("OpenExplain", item, 1);
       eventBus.$emit("EnterExplain", item, "lecture");
     },
@@ -80,21 +79,12 @@ export default {
       if (item.file) {
         var newTab = {
           tab_title: item.title,
-          data: "#" + item.title,
+          data: null,
           _id: item._id,
           icon: "far fa-leaf",
         };
+        // console.log("newTab", newTab);
         this.$store.commit("setTabData", newTab);
-      }
-    },
-    ToDetail: function (item) {
-      if (item.file) {
-        var newTab = {
-          tab_title: item.title,
-          data: "#" + item.title,
-          _id: item._id,
-          icon: "far fa-leaf",
-        };
       }
     },
   },

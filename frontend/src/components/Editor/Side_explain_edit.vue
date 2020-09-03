@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-8 black--text">
+  <div class="pt-2 black--text">
     <div v-if="isEdit" class="white">
       <editor
         :initialValue="editorText"

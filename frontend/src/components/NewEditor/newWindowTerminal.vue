@@ -58,8 +58,8 @@ export default {
       model: { tab_title: "" },
       results: [],
       waiting: false,
-      input: ""
-    }
+      input: "",
+    };
   },
   computed: {
     items() {
@@ -138,6 +138,6 @@ export default {
 .wrap {
   width: 100%;
   height: 100%;
-  border: 1px solid #dddddd;
+  background-color: #1d1f21;
 }
 </style>

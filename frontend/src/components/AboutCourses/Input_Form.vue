@@ -124,6 +124,23 @@ export default {
 
       this.$store.commit("addLectureData", this.newObj);
       this.$http
+        .post("/api/mycourse/" + this.$route.params.course_code + "/assign", {
+          newAssign: this.newObj,
+        })
+        .then((res) => {
+          //  alert(res.data.message);
+          this.newObj = {
+            title: "",
+            subitems: [
+              { subtitle: "01. 새 항목" },
+              { subtitle: "02. 새 항목" },
+            ],
+          };
+        })
+        .catch(function (error) {
+          alert("New Assignment save error");
+        });
+      this.$http
         .post("/api/mycourse/" + this.$route.params.course_code + "/lecture", {
           newLecture: this.newObj,
         })

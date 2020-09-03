@@ -43,17 +43,9 @@
       <v-btn color="secondary" outlined class="ma-2" @click>제출</v-btn>
       <v-spacer />
     </v-row>
-<<<<<<< HEAD
-    <div>
-      {{ model }}
-    </div>
-    <div v-for="i in results">{{ i }}</div>
-    <input v-show="waiting" v-model="input" @keyup.enter="submit" />
-=======
     <div>{{ model }}</div>
     <div v-for="(i,index) in results" :key="index">{{ i }}</div>
     <input v-if="waiting" v-model="input" @keyup.enter="submit" />
->>>>>>> 65bd49a683e33ef4b73b27870623eeaea77ad7da
   </div>
 </template>
 
@@ -113,45 +105,24 @@ export default {
       this.items.push(this.$store.state.nowTab[1]);
     },
     run() {
-<<<<<<< HEAD
-      this.results = [];
-      var string =
-        'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)';
-      this.$socket.emit("code", { code: this.model.data });
-=======
       this.results = []
       this.waiting = true
       var string = 'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)'
       this.$socket.emit('code', this.model.data )
->>>>>>> 572b3655cb1afdb95a535b7575dd50d528346a47
     },
     submit(event) {
       //this.waiting = false
       //this.results.push(this.input)
-<<<<<<< HEAD
-      this.$socket.emit("input", this.id, this.input);
-      this.input = "";
-    },
-=======
       let data = { id: this.id,
                   input: this.input }
       this.$socket.emit('input', data)
       this.input=""
     }
 
->>>>>>> 572b3655cb1afdb95a535b7575dd50d528346a47
   },
   created() {
     this.$socket.on("result", (result) => {
       //data format 다시 바꾸기
-<<<<<<< HEAD
-      console.log("result", result);
-      this.results = this.results.concat(result.data.split("\n"));
-      this.id = result.id;
-    });
-  },
-};
-=======
       console.log("result", result)
       this.results = this.results.concat(result.data.split('\n'))
       this.id = result.id
@@ -161,7 +132,6 @@ export default {
     })
   }
 }
->>>>>>> 572b3655cb1afdb95a535b7575dd50d528346a47
 </script>
 
 <style scoped>

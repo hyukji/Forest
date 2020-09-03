@@ -9,7 +9,7 @@
           </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content color="#252526">
-          <component class="white--text" :is="item.componentName"></component>
+          <component class="white--text" :is="item.componentName" :user_data="user_data"></component>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -26,6 +26,7 @@ export default {
 
     LectureTree: () => import("@/components/Editor/Side_LectureTree"),
   },
+  props: ["user_data"],
   data: () => ({
     opendpanel: [0, 1, 2],
     panels: [

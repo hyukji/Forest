@@ -55,8 +55,9 @@
                 <WindowTerminal
                   v-if="el.tab_title == 'WindowTerminal' && el._id == 0"
                   :savedcode="el.data"
+                  :user_data="user_data"
                 ></WindowTerminal>
-                <WindowCode v-else :tabitem="el"></WindowCode>
+                <WindowCode v-else :tabitem="el" :user_data="user_data"></WindowCode>
               </div>
             </v-tab-item>
           </v-tabs-items>
@@ -93,11 +94,12 @@ export default {
 
     WindowTerminal: () => import("../NewEditor/newWindowTerminal"),
   },
-  props: ["index", "element"],
+  props: ["index", "element", "user_data"],
   data() {
     return {
       allSelected: null,
       selectedtab: null,
+      isempty: false,
     };
   },
   computed: {},
@@ -158,5 +160,8 @@ export default {
 }
 .extra_editor {
   background-color: #1d1f21;
+}
+.emptydiv {
+  padding: 0 auto;
 }
 </style>

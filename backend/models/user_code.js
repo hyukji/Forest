@@ -8,8 +8,7 @@ var CodeDataSchema = new Schema({
 
 var CourseDataSchema = new Schema({
   course_id: String,
-  UserCodeLecture: [CodeDataSchema],
-  UserCodeAssign: [CodeDataSchema],
+  CodeDataArray: [CodeDataSchema],
   UserCodeSandBox: String,
 })
 
@@ -37,5 +36,5 @@ var UserCodeSchema = new Schema({
 // 그리하여 Collection name은 users로 됩니다
 
 //module.exports = mongoose.model("user", userSchema)
-const model = mongoose.model("user", UserCodeSchema)
+const model = mongoose.model("usercode", UserCodeSchema)
 module.exports = model

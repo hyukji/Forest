@@ -7,12 +7,12 @@
 
       <splitpanes vertical class="wrap_splitpanes">
         <pane v-if="drawer.open" size="20" min-size="15" max-size="50">
-          <side-content :selected="drawer.selected" />
+          <side-content :selected="drawer.selected" :user_data="user_data" />
         </pane>
         <pane>
           <splitpanes>
             <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
-              <newediteditor :index="index" :element="element"></newediteditor>
+              <newediteditor :index="index" :element="element" :user_data="user_data"></newediteditor>
             </pane>
           </splitpanes>
         </pane>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { authentication } from "@/mixins/authentication";
 import { Splitpanes, Pane } from "splitpanes";
 import { eventBus } from "@/main.js";
 
@@ -49,6 +50,7 @@ export default {
       panesize: 20,
     };
   },
+  mixins: [authentication],
   method: {
     llog() {
       console.log("added");
@@ -60,34 +62,12 @@ export default {
     },
   },
   created() {
-    var openWindow_id = window.my_special_setting;
-    if (openWindow_id) {
-      this.$store.commit("StartTab", openWindow_id);
+    this.check_isauth(true);
+    if (window.my_special_setting) {
+      this.$store.commit("StartTab", window.my_special_setting);
     }
+
     this.tabeditor = this.$store.state.nowTab;
-
-    // this.$http
-    //     .get("/api/mycourse/" + this.courseData.code + "/coursedata")
-    //     .then((res) => {
-    //       if (res.data.result) {
-    //         this.courseData.name = res.data.db_course.name
-    //         this.courseData.code = res.data.db_course.code
-    //         this.courseData.language = res.data.db_course.language
-    //         this.courseData.prof = res.data.db_course.prof
-
-    //         this.user_isprof = res.data.isprof
-    //         this.$store.commit("setCourseData", res.data.db_course)
-    //       } else {
-    //         alert(res.data.message)
-    //         this.$router.push("/mycourse")
-    //       }
-    //     })
-    //     .then(() => {
-    //       this.loading = false
-    //     })
-    //     .catch(function(error) {
-    //       alert("error to getdata")
-    //     })
   },
 };
 </script>

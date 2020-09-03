@@ -16,7 +16,14 @@
 
           <div class="text-h5 pl-4 pr-10">{{item.title}}</div>
 
-          <v-btn class="mx-1" large icon color="secondary" @click="ClickPencil">
+          <v-btn
+            v-if="user_data.position"
+            class="mx-1"
+            large
+            icon
+            color="secondary"
+            @click="ClickPencil"
+          >
             <v-icon dark>far fa-edit</v-icon>
           </v-btn>
           <v-btn class="mx-1" large icon color="secondary" @click="opentab(item)">
@@ -46,6 +53,8 @@ export default {
   components: {
     SideEdit: () => import("@/components/Editor/Side_explain_edit"),
   },
+  props: ["user_data"],
+
   data() {
     return {
       showArrow: true,
@@ -61,6 +70,7 @@ export default {
       this.subitems = item.children;
       this.ExplainType = type;
     });
+    //console.log("user_data", this.user_data);
   },
   methods: {
     ClickPencil() {
@@ -73,7 +83,7 @@ export default {
 
       var newTab = {
         tab_title: item.title,
-        data: "#" + item.title,
+        data: null,
         _id: item._id,
         icon: tab_icon,
       };

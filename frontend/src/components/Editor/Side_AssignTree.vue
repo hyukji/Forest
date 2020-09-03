@@ -43,6 +43,7 @@
 <script>
 import { eventBus } from "@/main.js";
 export default {
+  props: ["selected", "user_data"],
   data: () => ({
     lecturedata: null,
     open: [],
@@ -65,23 +66,18 @@ export default {
     var openWindowTab = null;
 
     // console.log("it is called ");
+    this.items = JSON.parse(JSON.stringify(this.$store.state.assignments));
 
-    this.items = this.$store.state.assignments;
     this.items.forEach((element) => {
       element.subitems.forEach((el) => {
         el.title = el.subtitle;
         el.file = "py";
         delete el.subtitle;
-        if (openWindow_id == el._id) {
-          openWindowTab = el;
-        }
       });
+
       element.children = element.subitems;
       delete element.subitems;
     });
-    if (openWindow_id) {
-      this.opentab(openWindowTab);
-    }
   },
   methods: {
     OpenExplain: async function (item) {
@@ -92,21 +88,11 @@ export default {
       if (item.file) {
         var newTab = {
           tab_title: item.title,
-          data: "#" + item.title,
+          data: item.data ? item.data : null,
           _id: item._id,
           icon: "far fa-leaf-oak",
         };
         this.$store.commit("setTabData", newTab);
-      }
-    },
-    ToDetail: function (item) {
-      if (item.file) {
-        var newTab = {
-          tab_title: item.title,
-          data: "#" + item.title,
-          _id: item._id,
-          icon: "far fa-leaf-oak",
-        };
       }
     },
   },

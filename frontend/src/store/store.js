@@ -102,15 +102,22 @@ export const store = new Vuex.Store({
       state.selectedTab[TabData.idx] = TabData.selected
     },
 
-    StartTab(state, TabId) {
+    StartTab(state, Tabdata) {
+      console.log("starttab", Tabdata)
+
       //console.log("Starttab ", TabId, state.nowTab)
       state.nowTab = [[], []]
 
       //console.log(state.nowTab)
       var openWindowTab = null
-      state.lecture.forEach((element) => {
+      var items = state.lecture
+      if (Tabdata[1] == 1) {
+        items = state.assignments
+      }
+
+      items.forEach((element) => {
         element.subitems.forEach((el) => {
-          if (el._id == TabId) {
+          if (el._id == Tabdata[0]) {
             openWindowTab = el
           }
         })
@@ -120,9 +127,9 @@ export const store = new Vuex.Store({
 
       var tabdata = {
         tab_title: openWindowTab.subtitle,
-        data: "#" + openWindowTab.subtitle,
+        data: openWindowTab.data ? openWindowTab.data : null,
         _id: openWindowTab._id,
-        icon: "far fa-leaf",
+        icon: Tabdata[1] ? "far fa-leaf-oak" : "far fa-leaf",
       }
       if (state.nowTab[0] == null) {
         state.nowTab[0] = [tabdata]
@@ -177,6 +184,20 @@ export const store = new Vuex.Store({
           }
         })
       })
+      console.log("state.nowTab", state.nowTab)
+
+      // var items =
+      //   NewTabData.icon == "far fa-leaf" ? state.lecture : state.assignments
+      // //console.log(items)
+      // items.forEach((element, idx) => {
+      //   // console.log("element", element)
+      //   element.subitems.forEach((el, i) => {
+      //     if (el._id == NewTabData.TabId) {
+      //       //같은 게 존재!
+      //       el.data = NewTabData.newcode
+      //     }
+      //   })
+      // })
     },
 
     addIntroData(state) {

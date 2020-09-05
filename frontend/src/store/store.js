@@ -163,7 +163,7 @@ export const store = new Vuex.Store({
         })
       })
 
-      if (!isTabExist) {
+      if (!isTabExist || tabdata.icon == "fas fa-tree-alt") {
         state.nowTab[0].push(tabdata)
         state.selectedTab[0] =
           "tabs-L" + 0 + "-P" + (state.nowTab[0].length - 1)

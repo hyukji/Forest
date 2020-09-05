@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 
 const UserCode = require("../models/user_code")
+const Course = require("../models/course")
 
 router.post("/:course_code/UserCode", function (req, res, next) {
   var course_code = req.params.course_code
@@ -77,11 +78,54 @@ router.get("/:course_code/:TabId/:User_id", function (req, res, next) {
         })
       }
     })
-    console.log("returndata", returndata)
+    //console.log("returndata", returndata)
 
     res.json({
       result: 1,
       message: "수업코드저장완료",
+      codedata: returndata,
+    })
+  })
+})
+
+router.get("/:course_code/:TabId/:type/score", function (req, res, next) {
+  var course_code = req.params.course_code
+  var TabId = req.params.TabId.substr(0, 24)
+  var type = req.params.type
+
+  // console.log("course_code, TabId, type", course_code, TabId, type)
+  Course.findOne({ code: course_code }, function (err, db_course) {
+    if (db_course == null) {
+      res.json({
+        result: 0,
+        message: "해당 수업db가 존재 하지 않음",
+      })
+      return
+    }
+
+    var returndata = null
+    var items = type == "0" ? db_course.lecture : db_course.assignment
+
+    items.forEach((element) => {
+      element.subitems.forEach((el) => {
+        //console.log("el._id", el, TabId)
+        if (el._id == TabId) {
+          if (!el.scoring) {
+            el.scoring = "# " + el.subtitle + " scoring"
+
+            //console.log("element", element)
+            db_course.save()
+          }
+          returndata = el.scoring
+        }
+      })
+    })
+
+    //console.log("returndata", returndata)
+
+    res.json({
+      result: 1,
+      message: "scoring db",
       codedata: returndata,
     })
   })

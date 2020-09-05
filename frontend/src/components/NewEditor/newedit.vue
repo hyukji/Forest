@@ -2,7 +2,7 @@
   <div class="wrap">
     <EditToolbar />
 
-    <v-row no-gutters class="wrap">
+    <v-row no-gutters class="wrap_pane">
       <SideTab :drawer="drawer" />
 
       <splitpanes vertical class="wrap_splitpanes">
@@ -74,6 +74,12 @@ export default {
 
 <style scoped>
 .wrap {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.wrap_pane {
   width: 100%;
   height: 100%;
   margin: 0;

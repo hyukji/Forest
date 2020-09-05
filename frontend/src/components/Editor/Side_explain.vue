@@ -17,17 +17,27 @@
           <div class="text-h5 pl-4 pr-10">{{item.title}}</div>
 
           <v-btn
-            v-if="user_data.position"
+            v-if="user_data.position == 'prof'"
             class="mx-1"
-            large
+            x-small
             icon
             color="secondary"
-            @click="ClickPencil"
+            @click="Edit_explanation"
           >
             <v-icon dark>far fa-edit</v-icon>
           </v-btn>
-          <v-btn class="mx-1" large icon color="secondary" @click="opentab(item)">
-            <v-icon dark>far fa-external-link-square</v-icon>
+          <v-btn
+            v-if="user_data.position == 'prof'"
+            class="mx-1"
+            x-small
+            icon
+            color="secondary"
+            @click="open_scoretab(item)"
+          >
+            <v-icon dark>far fa-browser</v-icon>
+          </v-btn>
+          <v-btn class="mx-1" x-small icon color="secondary" @click="opentab(item)">
+            <v-icon dark>far fa-code</v-icon>
           </v-btn>
         </v-row>
         <!-- <div class="pt-6">{{ item.Text }}</div> -->
@@ -73,9 +83,20 @@ export default {
     //console.log("user_data", this.user_data);
   },
   methods: {
-    ClickPencil() {
+    Edit_explanation() {
       this.isEdit = !this.isEdit;
       this.showArrow = !this.showArrow;
+    },
+    open_scoretab: function (item) {
+      var newTab = {
+        tab_title: "score_ " + item.title,
+        data: null,
+        _id: item._id + "score",
+        icon: "fas fa-tree-alt",
+        type: this.ExplainType == "lecture" ? "0" : "1",
+      };
+
+      this.$store.commit("setTabData", newTab);
     },
     opentab: function (item) {
       var tab_icon =
@@ -83,7 +104,6 @@ export default {
 
       var newTab = {
         tab_title: item.title,
-        data: null,
         _id: item._id,
         icon: tab_icon,
       };
@@ -96,6 +116,6 @@ export default {
 
 <style scoped>
 .wrap {
-  width: 10%;
+  height: 100pt;
 }
 </style>

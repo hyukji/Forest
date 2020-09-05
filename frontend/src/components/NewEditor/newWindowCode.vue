@@ -54,9 +54,10 @@ export default {
         })
         .then((res) => {})
         .catch(function (error) {
-          alert("error to save code");
+          alert("error to save code", err);
         });
     },
+    createtab(res) {},
   },
   mounted() {
     this.editor = this.$refs.myEditor.editor;
@@ -65,33 +66,62 @@ export default {
   created() {
     //console.log("here", this.tabitem);
     this.content = "#" + this.tabitem.tab_title;
+    if (this.tabitem.icon == "fas fa-tree-alt") {
+      this.$http
+        .get(
+          "/api/editor/" +
+            this.$route.params.course_code +
+            "/" +
+            this.tabitem._id +
+            "/" +
+            this.tabitem.type +
+            "/score"
+        )
+        .then((res) => {
+          //console.log("res.codedata", res.data.codedata);
+          if (res.data.codedata) {
+            this.content = res.data.codedata;
+          } else {
+            console.log("저장된 데이터강 없어유");
+          }
 
-    this.$http
-      .get(
-        "/api/editor/" +
-          this.$route.params.course_code +
-          "/" +
-          this.tabitem._id +
-          "/" +
-          this.user_data.email
-      )
-      .then((res) => {
-        //console.log("res.codedata", res.data.codedata);
-        if (res.data.codedata) {
-          this.content = res.data.codedata;
-        } else {
-          console.log("저장된 데이터강 없어유");
-        }
-
-        this.$store.commit("setTabCode", {
-          icon: this.tabitem.icon,
-          TabId: this.tabitem._id,
-          newcode: this.content,
+          this.$store.commit("setTabCode", {
+            icon: this.tabitem.icon,
+            TabId: this.tabitem._id,
+            newcode: this.content,
+          });
+        })
+        .catch(function (error) {
+          alert("error to create scoring", err);
         });
-      })
-      .catch(function (error) {
-        alert("error to save code");
-      });
+    } else {
+      this.$http
+        .get(
+          "/api/editor/" +
+            this.$route.params.course_code +
+            "/" +
+            this.tabitem._id +
+            "/" +
+            this.user_data.email
+        )
+        .then((res) => {
+          //console.log("res.codedata", res.data.codedata);
+          if (res.data.codedata) {
+            this.content = res.data.codedata;
+          } else {
+            console.log("저장된 데이터강 없어유");
+          }
+
+          this.$store.commit("setTabCode", {
+            icon: this.tabitem.icon,
+            TabId: this.tabitem._id,
+            newcode: this.content,
+          });
+        })
+        .catch(function (error) {
+          alert("error to create code", err);
+        });
+    }
 
     //console.log("user_data", this.user_data);
   },

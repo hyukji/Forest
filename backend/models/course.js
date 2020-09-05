@@ -19,6 +19,7 @@ var sublecture = new Schema({
   explanation: String,
   Updated_date: { type: Date, default: Date.now },
   iscomplete: Boolean,
+  scoring: String,
 })
 
 var lectureSchema = new Schema({
@@ -30,6 +31,7 @@ var lectureSchema = new Schema({
 var subassign = new Schema({
   subtitle: String,
   explanation: String,
+  scoring: String,
   score: { type: Number, default: 0 },
   perfect: { type: Number, default: 0 },
   Updated_date: { type: Date, default: Date.now },

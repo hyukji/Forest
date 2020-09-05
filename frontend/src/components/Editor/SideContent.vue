@@ -3,7 +3,9 @@
   <!-- <div v-if="loading" class="loading">
     <img src="@/assets/loading.gif" />
   </div>-->
-  <component :is="selected" :user_data="user_data" class="content"></component>
+  <v-card class="wrap overflow-y-auto" tile>
+    <component :is="selected" :user_data="user_data" class="content"></component>
+  </v-card>
 
   <!-- </v-navigation-drawer> -->
 </template>
@@ -43,9 +45,14 @@ export default {
 </script>
 
 <style scoped>
-.content {
+.wrap {
   width: 100%;
   height: 100%;
   background-color: #252526;
+}
+
+.content {
+  width: 100%;
+  height: 95%;
 }
 </style>

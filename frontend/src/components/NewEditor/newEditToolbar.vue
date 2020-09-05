@@ -1,6 +1,6 @@
 <template>
-  <v-card tile flat>
-    <v-toolbar flat dense color="#3B3B3C">
+  <v-card tile>
+    <v-toolbar dense color="#3B3B3C">
       <v-app-bar-nav-icon color="primary">
         <v-icon class="pl-1" size="15pt">fas fa-seedling</v-icon>
       </v-app-bar-nav-icon>
@@ -40,8 +40,6 @@ export default {
 .wrap {
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
 }
 </style>
 

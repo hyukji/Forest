@@ -105,33 +105,32 @@ export default {
       this.items.push(this.$store.state.nowTab[1]);
     },
     run() {
-      this.results = []
-      this.waiting = true
-      var string = 'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)'
-      this.$socket.emit('code', this.model.data )
+      this.results = [];
+      this.waiting = true;
+      var string =
+        'print("hello")\nfor i in [1, 2, 3]:\n\tprint(i)\na = input("enter the input")\nprint("input:", a)';
+      this.$socket.emit("code", this.model.data);
     },
     submit(event) {
       //this.waiting = false
       //this.results.push(this.input)
-      let data = { id: this.id,
-                  input: this.input }
-      this.$socket.emit('input', data)
-      this.input=""
-    }
-
+      let data = { id: this.id, input: this.input };
+      this.$socket.emit("input", data);
+      this.input = "";
+    },
   },
   created() {
     this.$socket.on("result", (result) => {
       //data format 다시 바꾸기
-      console.log("result", result)
-      this.results = this.results.concat(result.data.split('\n'))
-      this.id = result.id
-    })
-    this.$socket.on('closeStdin', () => {
-      this.waiting = false
-    })
-  }
-}
+      console.log("result", result);
+      this.results = this.results.concat(result.data.split("\n"));
+      this.id = result.id;
+    });
+    this.$socket.on("closeStdin", () => {
+      this.waiting = false;
+    });
+  },
+};
 </script>
 
 <style scoped>

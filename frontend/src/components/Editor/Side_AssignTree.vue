@@ -100,9 +100,6 @@ export default {
 </script>
 
 <style scoped>
-v-treeview {
-  treeview-node-padding: 0px !default;
-}
 v-text {
   font-size: 10pt;
 }

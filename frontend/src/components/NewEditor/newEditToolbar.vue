@@ -1,24 +1,27 @@
 <template>
-  <v-card tile>
-    <v-toolbar dense color="#3B3B3C">
-      <v-app-bar-nav-icon color="primary">
-        <v-icon class="pl-1" size="15pt">fas fa-seedling</v-icon>
-      </v-app-bar-nav-icon>
-
-      <v-toolbar-title class="pl-0">
-        <div class="tabfont--text">Forest_Studio</div>
-      </v-toolbar-title>
+  <v-card tile class="wrap">
+    <v-row color="#3B3B3C" no-gutters class="wrap" align="center">
+      <v-col>
+        <v-row no-gutters>
+          <v-icon class="pl-4" size="16pt" color="primary">fas fa-seedling</v-icon>
+          <div class="tabfont--text pl-2 bar_title">Forest_Studio</div>
+        </v-row>
+      </v-col>
 
       <v-spacer></v-spacer>
 
-      <v-btn icon class="tabfont--text">
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <v-col>
+        <v-row no-gutters justify="end" class="pr-3">
+          <v-btn icon class="tabfont--text">
+            <v-icon>mdi-magnify</v-icon>
+          </v-btn>
 
-      <v-btn icon class="tabfont--text">
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-    </v-toolbar>
+          <v-btn icon class="tabfont--text">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </v-row>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 
@@ -40,6 +43,10 @@ export default {
 .wrap {
   width: 100%;
   height: 100%;
+  background-color: #3b3b3c;
+}
+.bar_title {
+  font-size: 1.2rem;
 }
 </style>
 

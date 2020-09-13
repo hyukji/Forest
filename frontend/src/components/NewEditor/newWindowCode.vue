@@ -8,7 +8,9 @@
       width="100%"
       height="100%"
       ref="myEditor"
-    ></editor>
+    >
+      <ScrollBar class="ace_scrollbar"></ScrollBar>
+    </editor>
   </div>
 </template>
 
@@ -114,7 +116,8 @@ export default {
 <style scoped>
 .wrap {
   width: 100%;
-  height: 100%;
+  height: 95%;
+  /* margin: 1% 0; */
 }
 .wrap-Mycourse-cards {
   float: left;
@@ -123,5 +126,17 @@ export default {
   padding-right: 5%;
   padding-bottom: 3%;
   text-align: right;
+}
+</style>
+
+<style>
+.ace_scrollbar::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+  background-color: transparent;
+}
+
+.ace_scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 140, 140, 0.479);
 }
 </style>

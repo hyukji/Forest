@@ -1,101 +1,82 @@
+
 <template>
-  <Layout :edit="state.edit" :resize="state.resize" :splits="state.splits">
-    <div class="nopane">
-      <div>
-        Also drag me on the gray area<button>random button</button>
-        <ul>
-          <li>Random</li>
-          <li>list</li>
-        </ul>
-        <div>{{ state.edit }}</div>
-      </div>
-    </div>
-    <Pane title="Drag me">testing</Pane>
-    <Pane title="Drag me too">Stuff<MyInput /></Pane>
-    <Pane title="Third">Testing dynamic split</Pane>
-    <div class="custom-drag">
-      <div class="container">
-        testing a drag handle
-        <div class="drag-handle" pane-drag>DRAG HERE</div>
-        test
-      </div>
-    </div>
-  </Layout>
+  <div>
+    <splitpanes horizontal class="wrap_splitpanes">
+      <v-card v-for="(item, num) in panels" :key="num">
+        <v-list :flat="settings.flat" class="py-0">
+          <v-list-group :value="settings.value" :ripple="settings.ripple" :disabled="listDisable">
+            <template v-slot:activator>
+              <v-list-item-content class="pl-5 py-3" justify="center" align="start">
+                <v-row align="center" no-gutters>
+                  <v-icon small>fas fa-book</v-icon>
+                  <v-col class="ml-5" cols="3">
+                    <v-list-item-title v-text="item.panelTitle" class="title_font"></v-list-item-title>
+                  </v-col>
+
+                  <v-spacer></v-spacer>
+                </v-row>
+              </v-list-item-content>
+            </template>
+
+            <v-list-item class="py-1">
+              <pane>
+                <component class="white--text" :is="item.componentName" :user_data="user_data"></component>
+              </pane>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </v-card>
+    </splitpanes>
+  </div>
 </template>
 
 <script>
-import Vue from "vue"
-import { Layout, Pane } from "vue-split-layout"
-var MyInput = Vue.component("MyInput", {
-  data() {
-    return {
-      value: "",
-    }
-  },
-  template: `<div><div>{{value}}</div><input type='text' v-model='value'></div>`,
-})
-const layouts = [
-  {
-    dir: "horizontal",
-    first: {
-      dir: "vertical",
-      first: 0,
-      second: 2,
-    },
-    second: {
-      dir: "horizontal",
-      first: 4,
-      second: 1,
-    },
-  },
-  // Second layout
-  {
-    dir: "horizontal",
-    first: {
-      dir: "vertical",
-      first: { dir: "horizontal", first: 0, second: 3, split: "20%" },
-      second: 2,
-    },
-    second: 1,
-  },
-]
+import { eventBus } from "@/main.js";
+import { Splitpanes, Pane } from "splitpanes";
 
 export default {
-  name: "App",
-  components: { Layout, Pane, MyInput },
-  data() {
-    return {
-      state: {
-        extraStyle: false,
-        edit: true,
-        resize: true,
-        splits: layouts[0],
-        layoutN: 0,
-      },
-      hi: "world",
-    }
+  components: {
+    Splitpanes,
+    Pane,
+    AssignTree: () => import("@/components/Editor/Side_AssignTree"),
+    Explain: () => import("@/components/Editor/Side_explain"),
+
+    LectureTree: () => import("@/components/Editor/Side_LectureTree"),
   },
-  methods: {
-    changeSplits() {
-      this.state.layoutN = (this.state.layoutN + 1) % layouts.length
-      this.state.splits = layouts[this.state.layoutN]
+  props: ["user_data"],
+  data: () => ({
+    listDisable: false,
+    settings: {
+      value: null,
+      flat: true,
+      ripple: true,
     },
-    toggleEdit() {
-      this.state.edit = !this.state.edit
-    },
-    toggleResize() {
-      this.state.resize = !this.state.resize
-    },
-    toggleBoth() {
-      if (this.state.edit || this.state.resize) {
-        this.state.edit = this.state.resize = false
-        return
+
+    opendpanel: [0, 1, 2],
+    panels: [
+      { panelTitle: "Lectures", componentName: "LectureTree" },
+      { panelTitle: "Assignments", componentName: "AssignTree" },
+      { panelTitle: "Explanation", componentName: "Explain" },
+    ],
+  }),
+
+  created() {
+    eventBus.$on("OpenExplain", (item, type) => {
+      // if (this.opendpanel.find((num) => num == 2) == null) {
+      //   this.opendpanel.push(2);
+      // }
+      if (!this.opendpanel.some((el) => el == 2)) {
+        this.opendpanel.push(2);
       }
-      this.state.edit = this.state.resize = true
-    },
-    toggleStyle() {
-      this.state.extraStyle = !this.state.extraStyle
-    },
+      const idx = this.opendpanel.indexOf(type);
+      if (idx > -1) this.opendpanel.splice(idx, 1);
+    });
   },
-}
+};
 </script>
+
+<style scoped>
+v-expansion-panel {
+  color: white;
+}
+</style>

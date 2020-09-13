@@ -1,22 +1,25 @@
 <template>
   <div class="wrap">
-    <EditToolbar />
+    <div class="wrap_toolbar">
+      <EditToolbar />
+    </div>
 
     <v-row no-gutters class="wrap_pane">
       <SideTab :drawer="drawer" />
-
-      <splitpanes vertical class="wrap_splitpanes">
-        <pane v-if="drawer.open" size="20" min-size="15" max-size="50">
-          <side-content :selected="drawer.selected" :user_data="user_data" />
-        </pane>
-        <pane>
-          <splitpanes>
-            <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
-              <newediteditor :index="index" :element="element" :user_data="user_data"></newediteditor>
-            </pane>
-          </splitpanes>
-        </pane>
-      </splitpanes>
+      <v-col>
+        <splitpanes vertical class="wrap_splitpanes">
+          <pane v-if="drawer.open" size="25" min-size="15" max-size="50">
+            <side-content :selected="drawer.selected" :user_data="user_data" />
+          </pane>
+          <pane>
+            <splitpanes>
+              <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
+                <newediteditor :index="index" :element="element" :user_data="user_data"></newediteditor>
+              </pane>
+            </splitpanes>
+          </pane>
+        </splitpanes>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -47,7 +50,6 @@ export default {
         // live or sandbox
       },
       tabeditor: null,
-      panesize: 20,
     };
   },
   mixins: [authentication],
@@ -79,20 +81,20 @@ export default {
   margin: 0;
   padding: 0;
 }
+.wrap_toolbar {
+  width: 100%;
+  height: 4%;
+}
 .wrap_pane {
   width: 100%;
-  height: 100%;
+  height: 96%;
   margin: 0;
   padding: 0;
 }
 </style>
 
-
 <style>
 .wrap_splitpanes {
-  position: absolute;
-  left: 56px;
-  padding-right: 56px;
   height: 100%;
 }
 
@@ -120,8 +122,8 @@ export default {
   opacity: 0;
 }
 .splitpanes--vertical > .splitpanes__splitter:before {
-  left: -6px;
-  right: -6px;
+  left: -3px;
+  right: -7px;
   height: 100%;
 }
 </style>

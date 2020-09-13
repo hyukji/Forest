@@ -8,6 +8,7 @@
             <v-icon color="white" size="13pt">$expand</v-icon>
           </template>
         </v-expansion-panel-header>
+
         <v-expansion-panel-content color="#252526">
           <component class="white--text" :is="item.componentName" :user_data="user_data"></component>
         </v-expansion-panel-content>
@@ -18,9 +19,12 @@
 
 <script>
 import { eventBus } from "@/main.js";
+import { Splitpanes, Pane } from "splitpanes";
 
 export default {
   components: {
+    Splitpanes,
+    Pane,
     AssignTree: () => import("@/components/Editor/Side_AssignTree"),
     Explain: () => import("@/components/Editor/Side_explain"),
 

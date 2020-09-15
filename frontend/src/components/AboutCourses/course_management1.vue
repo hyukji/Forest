@@ -1,6 +1,5 @@
-<template>
+title<template>
   <div>
-
     <v-row  justify="end" class="mb-3">
       <v-dialog  persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
@@ -24,24 +23,25 @@
         <inoutform ></inoutform>
       </v-dialog>
     </v-row>
-
     <v-row>
-      <v-col sm="2">
-        <p class="card-title">강좌 제목</p>
-      </v-col>
-      <v-col v-show="!EditBool" cols="12" sm="6">
-        <p>{{course.title}}</p>
-      </v-col>
-      <v-col v-show="EditBool">
-          <v-text-field v-model="course.title" single-line></v-text-field>
-      </v-col>
+      <div>
+        <p class="card-title"> 강좌 제목 </p>
+        <v-col v-show="!EditBool">
+          <p>{{course.title}}</p>
+        </v-col>
+        <v-col v-show="EditBool">
+          <v-form>
+              <v-text-field
+                v-model="course.title"
+                label="강좌 제목"
+              ></v-text-field>
+            </v-form>
+        </v-col>
+      </div>
     </v-row>
-
-    <v-row>
-      <v-col sm="2">
-        <p class="card-title"> 이미지 관리 </p>
-      </v-col>
-      <v-col v-show="!EditBool">
+    <div>
+      <p class="card-title"> 이미지 관리 </p>
+      <div v-show="!EditBool">
         <v-img
           class="portrait"
           :src="course.image"
@@ -49,51 +49,44 @@
           v-bind="attrs"
           v-on="on"
         ></v-img>
-      </v-col>
-      <v-col v-show="EditBool">
+      </div>
+      <v-row v-show="EditBool">
+        <v-img
+          class="portrait"
+          :src="course.image"
+          width="300"
+          v-bind="attrs"
+          v-on="on"
+        ></v-img>
         <v-row>
-          <v-col sm="5">
-            <v-img
-              class="portrait"
-              :src="course.image"
-              width="300"
-              v-bind="attrs"
-              v-on="on"
-            ></v-img>
-          </v-col>
-          <v-col>
-          </v-col>
-          <v-col sm="6">
+          <v-col cols="12" sm="6" offset-sm="3">
             <v-card>
-                  <v-container>
-                    <v-row>
-                      <v-col
-                        v-for="image in images"
-                        :key="image.title"
-                        class="d-flex child-flex"
-                        cols="4"
+              <v-container fluid>
+                <v-row>
+                  <v-col
+                    v-for="image in images"
+                    :key="image.title"
+                    class="d-flex child-flex"
+                    cols="4"
+                  >
+                    <v-card flat tile class="d-flex" @click="chooseimg(image)">
+                      <v-img
+                        :src="image.img"
+                        aspect-ratio="1"
+                        class="grey lighten-2"
                       >
-                        <v-card flat tile class="d-flex" @click="chooseimg(image)">
-                          <v-img
-                            :src="image.img"
-                            aspect-ratio="1"
-                            class="grey lighten-2"
-                          >
-                          </v-img>
-                        </v-card>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-              </v-card>
+                      </v-img>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>
           </v-col>
         </v-row>
-      </v-col>
-    </v-row>
-
-    <v-row>
-      <v-col sm="2">
-        <p class="card-title"> 교수(조교) 목록</p>
-      </v-col>
+      </v-row>
+    </div>
+    <div>
+      <p class="card-title"> 교수 목록 </p>
       <v-col v-show="!EditBool" class="wrap-total-list" v-for="item in course.prof" :key="item.title">
         <v-list-item-title class="toal-list-title" v-text="item"></v-list-item-title>
       </v-col>
@@ -108,8 +101,7 @@
             ></v-autocomplete>
         </v-form>
       </v-col>
-    </v-row>
-
+    </div>
     <div class="save">
       <v-btn
         v-if="EditBool"
@@ -121,7 +113,6 @@
       >저 장</v-btn>
     </div>
   </div>
-
 
 </template>
 
@@ -202,7 +193,7 @@ export default {
   padding-top: 3%;
   padding-left: 6%;
   padding-bottom: 3%;
-  border-right: 2px solid #d3d1d1;
+  border-bottom: 1px solid #d3d1d1;
 }
 .save{
   padding-right: 5%;

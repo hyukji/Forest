@@ -2,9 +2,55 @@ const express = require("express")
 const router = express.Router()
 const Course = require("../models/course")
 const User = require("../models/user")
+const UserCode = require("../models/user_code")
+
 const { db } = require("../models/course")
 
 router.get("/", function (req, res, next) {})
+
+function FindAndEdit(newItem, ItemID, Content) {
+  newItem.forEach((element) => {
+    element.subitems.forEach((subitem) => {
+      if (subitem._id == ItemID) {
+        subitem.explanation = Content
+      }
+    })
+  })
+  return newItem
+}
+
+router.put("/:course_code/explanation", function (req, res, next) {
+  var ExplainType = req.body.ExplainType
+  var ItemID = req.body.ItemId
+  var Content = req.body.content
+  var code = req.params.course_code
+
+  Course.findOne({ code: code }, function (err, db_course) {
+    if (db_course == null) {
+      res.json({ result: 0, message: "존재하지 않는 강의입니다." })
+      return
+    }
+
+    if (ExplainType == "lecture") {
+      db_course.lecture = FindAndEdit(db_course.lecture, ItemID, Content)
+    } else {
+      db_course.assignment = FindAndEdit(db_course.assignment, ItemID, Content)
+    }
+
+    db_course.save(function (err) {
+      if (err) {
+        console.error(err)
+        res.json({ result: 0, message: "Failed to save explanation" })
+        return
+      }
+
+      res.json({
+        result: 1,
+        message: "explanation 저장 성공",
+      })
+    })
+  })
+})
 
 router.put("/:course_code/intro", function (req, res, next) {
   var code = req.params.course_code
@@ -274,6 +320,5 @@ router.post("/newcourse", function (req, res, next) {
     }
   })
 })
-
 
 module.exports = router

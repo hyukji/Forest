@@ -17,6 +17,8 @@ export default new Vuetify({
         primary: "#79b575",
         secondary: "#51844c",
         tabfont: "#E0E0E0",
+
+        tabBack: "#333333",
         accent: colors.shades.black,
         error: colors.red.accent3,
       },

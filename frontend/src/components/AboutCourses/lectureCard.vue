@@ -44,12 +44,7 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item
-            class="pb-3"
-            v-for="(subItem, i) in item.subitems"
-            :key="i"
-            @click="open_editor(subItem._id)"
-          >
+          <v-list-item class="py-1" v-for="(subItem, i) in item.subitems" :key="i" @click>
             <v-list-item-content>
               <v-row align="center">
                 <v-col cols="10" class="py-0">
@@ -58,7 +53,12 @@
                     v-model="subItem.subtitle"
                     class="title_font pl-16 py-2"
                   ></v-text-field>
-                  <v-list-item-title v-else v-text="subItem.subtitle" class="title_font pl-16 py-2"></v-list-item-title>
+                  <v-list-item-title
+                    v-else
+                    v-text="subItem.subtitle"
+                    class="title_font pl-16 py-2"
+                    @click="open_editor(subItem._id)"
+                  ></v-list-item-title>
                 </v-col>
                 <v-icon v-if="EditBool" class="ml-7" v-on:click="addSubLecture(num, i)">fas fa-plus</v-icon>
                 <v-icon
@@ -67,6 +67,7 @@
                   v-on:click="delLecture('subtitle', num, i)"
                 >fas fa-trash-alt</v-icon>
               </v-row>
+              <div v-if="i == item.subitems.length - 1" class="pb-3"></div>
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
@@ -99,14 +100,13 @@ export default {
       this.settings.ripple = false;
 
       this.listDisable = this.EditBool ? true : false;
-
       this.settings.value = this.EditBool ? true : null;
     },
   },
   methods: {
     open_editor(itme_id) {
       var newWindow = window.open("/newedit/" + this.$route.params.course_code);
-      newWindow.my_special_setting = itme_id;
+      newWindow.my_special_setting = [itme_id, 0];
     },
     delLecture(type, numLecture, numSubLecture) {
       if (type == "title") {
@@ -124,7 +124,7 @@ export default {
     },
   },
   created() {
-    console.log("senddata is ", this.sendData);
+    //console.log("senddata is ", this.sendData);
   },
 };
 </script>

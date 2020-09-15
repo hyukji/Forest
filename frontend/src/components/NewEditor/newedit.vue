@@ -1,40 +1,31 @@
 <template>
   <div class="wrap">
-    <v-card>
-      <v-toolbar flat>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+    <div class="wrap_toolbar">
+      <EditToolbar />
+    </div>
 
-        <v-toolbar-title>Contact Database</v-toolbar-title>
-
-        <v-spacer></v-spacer>
-
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-      </v-toolbar>
-    </v-card>
-
-    <v-row no-gutters class="wrap">
+    <v-row no-gutters class="wrap_pane">
       <SideTab :drawer="drawer" />
-
-      <splitpanes id="splitpane" class="default-theme">
-        <pane v-if="drawer.open" size="20" min-size="15">
-          <side-content :selected="drawer.selected" />
-        </pane>
-
-        <pane v-for="(element, index) in tabeditor" :key="element.id" min-size="15">
-          <newediteditor :index="index"></newediteditor>
-        </pane>
-      </splitpanes>
+      <v-col>
+        <splitpanes vertical class="wrap_splitpanes">
+          <pane v-if="drawer.open" size="25" min-size="15" max-size="50">
+            <side-content :selected="drawer.selected" :user_data="user_data" />
+          </pane>
+          <pane>
+            <splitpanes>
+              <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
+                <newediteditor :index="index" :element="element" :user_data="user_data"></newediteditor>
+              </pane>
+            </splitpanes>
+          </pane>
+        </splitpanes>
+      </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
+import { authentication } from "@/mixins/authentication";
 import { Splitpanes, Pane } from "splitpanes";
 import { eventBus } from "@/main.js";
 
@@ -42,6 +33,8 @@ export default {
   components: {
     Splitpanes,
     Pane,
+    EditToolbar: () => import("@/components/NewEditor/newEditToolbar"),
+
     newediteditor: () => import("@/components/NewEditor/newediteditor"),
     Drawer: () => import("@/components/Editor/Drawer"),
     SideTab: () => import("@/components/Editor/SideTab"),
@@ -59,12 +52,21 @@ export default {
       tabeditor: null,
     };
   },
-  method: {},
+  mixins: [authentication],
+  method: {
+    llog() {
+      console.log("added");
+    },
+  },
+  watch: {
+    tabeditor(val) {
+      console.log("tabeditor", val);
+    },
+  },
   created() {
-    var openWindow_id = window.my_special_setting;
-
-    if (openWindow_id) {
-      this.$store.commit("StartTab", openWindow_id);
+    this.check_isauth(true);
+    if (window.my_special_setting) {
+      this.$store.commit("StartTab", window.my_special_setting);
     }
 
     this.tabeditor = this.$store.state.nowTab;
@@ -79,21 +81,49 @@ export default {
   margin: 0;
   padding: 0;
 }
+.wrap_toolbar {
+  width: 100%;
+  height: 4%;
+}
+.wrap_pane {
+  width: 100%;
+  height: 96%;
+  margin: 0;
+  padding: 0;
+}
+</style>
 
-#splitpane {
-  position: absolute;
-  left: 56px;
-  padding-right: 56px;
+<style>
+.wrap_splitpanes {
   height: 100%;
 }
 
-.pane {
+.splitpanes__pane {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.tab {
-  display: block;
+.splitpanes__splitter {
+  background-color: #333333;
+  position: relative;
+}
+.splitpanes__splitter:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: opacity 0.4s;
+  background-color: rgba(195, 195, 195, 0.9);
+  opacity: 0;
+  z-index: 1;
+}
+.splitpanes__splitter:hover:before {
+  opacity: 0;
+}
+.splitpanes--vertical > .splitpanes__splitter:before {
+  left: -3px;
+  right: -7px;
+  height: 100%;
 }
 </style>

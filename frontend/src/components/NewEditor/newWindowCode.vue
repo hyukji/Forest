@@ -1,13 +1,16 @@
 <template>
-  <div class="wrap">
+  <div class="wrap" @keyup.enter="clickEnter">
     <editor
       v-model="content"
       @init="editorInit"
       lang="python"
-      theme="chrome"
+      theme="tomorrow_night"
       width="100%"
       height="100%"
-    ></editor>
+      ref="myEditor"
+    >
+      <ScrollBar class="ace_scrollbar"></ScrollBar>
+    </editor>
   </div>
 </template>
 
@@ -19,42 +22,102 @@ export default {
   components: {
     editor: require("vue2-ace-editor"),
   },
+  props: ["tabitem", "user_data"],
   data: () => ({
-    content: "content it it",
+    addr: null,
+    content: null,
+    settings: {
+      fontsize: 17,
+    },
   }),
-  props: ["tabitem"],
   methods: {
-    editorInit: function() {
-      require("brace/ext/language_tools") //language extension prerequsite...
-      require("brace/mode/html")
+    editorInit: function () {
+      require("brace/ext/language_tools"); //language extension prerequsite...
+      require("brace/mode/html");
       //require("brace/mode/javascript") //language
-      require("brace/mode/python") //language
-      require("brace/mode/less")
-      require("brace/theme/chrome")
-      require("brace/snippets/javascript") //snippet
-    },
-  },
-  watch: {
-    content(val) {
-      console.log(val)
+      require("brace/mode/python"); //language
+      require("brace/mode/less");
+      require("brace/theme/tomorrow_night");
+      require("brace/theme/tomorrow_night_bright");
 
-      this.$store.commit("setTabCode", {
-        TabId: this.tabitem._id,
-        newcode: val,
-      })
+      require("brace/snippets/javascript"); //snippet
     },
+    clickEnter() {
+      this.$store.commit("setTabCode", {
+        icon: this.tabitem.icon,
+        TabId: this.tabitem._id,
+        newcode: this.content,
+      });
+
+      this.$http
+        .post(this.addr, {
+          //axios 사용
+          Tabdata: this.tabitem,
+          user_data: this.user_data,
+        })
+        .then((res) => {})
+        .catch(function (err) {
+          alert("error to save code", err);
+        });
+    },
+    createtab(res) {},
+  },
+  mounted() {
+    this.editor = this.$refs.myEditor.editor;
+    this.editor.setFontSize(this.settings.fontsize);
   },
   created() {
-    console.log("here", this.tabitem)
-    this.content = this.tabitem.data
+    //console.log("here", this.tabitem);
+    this.content = "#" + this.tabitem.tab_title;
+
+    if (this.tabitem.icon == "fas fa-tree-alt") {
+      this.addr =
+        "/api/editor/" +
+        this.$route.params.course_code +
+        "/" +
+        this.tabitem._id +
+        "/" +
+        this.tabitem.type +
+        "/score";
+    } else {
+      this.addr =
+        "/api/editor/" +
+        this.$route.params.course_code +
+        "/" +
+        this.tabitem._id +
+        "/" +
+        this.user_data.email;
+    }
+
+    this.$http
+      .get(this.addr)
+      .then((res) => {
+        //console.log("res.codedata", res.data.codedata);
+        if (res.data.codedata) {
+          this.content = res.data.codedata;
+        } else {
+          console.log("저장된 데이터강 없어유");
+        }
+
+        this.$store.commit("setTabCode", {
+          icon: this.tabitem.icon,
+          TabId: this.tabitem._id,
+          newcode: this.content,
+        });
+      })
+      .catch(function (error) {
+        alert("error to create scoring", err);
+      });
+    //console.log("user_data", this.user_data);
   },
-}
+};
 </script>
 
 <style scoped>
 .wrap {
   width: 100%;
-  height: 500pt;
+  height: 95%;
+  /* margin: 1% 0; */
 }
 .wrap-Mycourse-cards {
   float: left;
@@ -63,5 +126,17 @@ export default {
   padding-right: 5%;
   padding-bottom: 3%;
   text-align: right;
+}
+</style>
+
+<style>
+.ace_scrollbar::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+  background-color: transparent;
+}
+
+.ace_scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 140, 140, 0.479);
 }
 </style>

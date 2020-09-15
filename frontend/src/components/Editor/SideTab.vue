@@ -127,6 +127,4 @@ export default {
 .menu {
   height: 100%;
 }
-.content {
-}
 </style>

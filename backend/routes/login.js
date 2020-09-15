@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const User = require("../models/user")
 const SessionLog = require("../models/session_log")
+const UserCode = require("../models/user_code")
 
 var passport = require("passport")
 
@@ -64,6 +65,27 @@ router.post("/signUp", async function (req, res, next) {
 
       nw_session_log.save()
 
+      const nw_usercode = new UserCode()
+
+      nw_usercode.name = req.body.user.name
+      nw_usercode.student_id = req.body.user.student_id
+      nw_usercode.email = req.body.user.email + "@dgist.ac.kr"
+      nw_usercode.organization = req.body.user.organization
+      nw_usercode.position = "stud"
+
+      nw_usercode.editor_setting = {
+        isdark: true,
+        editor_theme: "tomorrow_night",
+        terminal_position: "tab",
+      }
+
+      nw_usercode.UserCodeData = {
+        course_id: "SE906",
+        CodeDataArray: [],
+        UserCodeSandBox: "",
+      }
+
+      nw_usercode.save()
       res.json({ result: 1, message: "Forest에 오신 걸 환영합니다!" })
     } else {
       res.json({ result: 0, message: "이미 존재하는 Email입니다." })

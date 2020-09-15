@@ -1,30 +1,32 @@
 
 <template>
   <div>
-    <v-card v-for="(item, num) in panels" :key="num">
-      <v-list :flat="settings.flat" class="py-0">
-        <v-list-group :value="settings.value" :ripple="settings.ripple" :disabled="listDisable">
-          <template v-slot:activator>
-            <v-list-item-content class="pl-5 py-3" justify="center" align="start">
-              <v-row align="center" no-gutters>
-                <v-icon small>fas fa-book</v-icon>
-                <v-col class="ml-5" cols="3">
-                  <v-list-item-title v-text="item.panelTitle" class="title_font"></v-list-item-title>
-                </v-col>
+    <splitpanes horizontal class="wrap_splitpanes">
+      <v-card v-for="(item, num) in panels" :key="num">
+        <v-list :flat="settings.flat" class="py-0">
+          <v-list-group :value="settings.value" :ripple="settings.ripple" :disabled="listDisable">
+            <template v-slot:activator>
+              <v-list-item-content class="pl-5 py-3" justify="center" align="start">
+                <v-row align="center" no-gutters>
+                  <v-icon small>fas fa-book</v-icon>
+                  <v-col class="ml-5" cols="3">
+                    <v-list-item-title v-text="item.panelTitle" class="title_font"></v-list-item-title>
+                  </v-col>
 
-                <v-spacer></v-spacer>
-              </v-row>
-            </v-list-item-content>
-          </template>
+                  <v-spacer></v-spacer>
+                </v-row>
+              </v-list-item-content>
+            </template>
 
-          <v-list-item class="py-1">
-            <pane>
-              <component class="white--text" :is="item.componentName" :user_data="user_data"></component>
-            </pane>
-          </v-list-item>
-        </v-list-group>
-      </v-list>
-    </v-card>
+            <v-list-item class="py-1">
+              <pane>
+                <component class="white--text" :is="item.componentName" :user_data="user_data"></component>
+              </pane>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </v-card>
+    </splitpanes>
   </div>
 </template>
 

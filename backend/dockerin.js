@@ -1,5 +1,5 @@
 
-module.exports = (id, input, lastCallBack) => {
+module.exports = (input_data, lastCallBack) => {
 
   var Docker = require('dockerode')
   var fs     = require('fs')
@@ -12,23 +12,22 @@ module.exports = (id, input, lastCallBack) => {
   }
 
 
-  var result = {
+  var data = {
     id: null,
-    data: ""
+    result: ""
   }
   var { PassThrough } = require('stream')
   var inn = new PassThrough();
-  var out = new PassThrough();
   var docker = new Docker({ socketPath: socket });
-  var container = docker.getContainer(id);
+  var container = docker.getContainer(input_data.id);
 
 
       var attach_opts = {stream: true, stdin: true, stdout: true, stderr: true};
-      result.id = container.id
+      data.id = container.id
       container.attach(attach_opts, function handler(err, stream) {
         inn.pipe(stream)
 
-        inn.write(input+"\n")
+        inn.write(input_data.input+"\n")
       })
 
 

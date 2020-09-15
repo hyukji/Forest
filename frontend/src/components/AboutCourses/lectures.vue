@@ -8,7 +8,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="ma-3" v-bind="attrs" v-on="on" outlined color="secondary" width="100">생 성</v-btn>
         </template>
-        <inoutform v-model="NewLectureSend"></inoutform>
+        <inputform v-model="NewLectureSend"></inputform>
       </v-dialog>
       <v-btn
         v-if="!EditBool"
@@ -50,7 +50,7 @@
 export default {
   name: "Dashboard",
   components: {
-    inoutform: () => import("../AboutCourses/Input_Form"),
+    inputform: () => import("../AboutCourses/Input_Form"),
     LectureCard: () => import("../AboutCourses/lectureCard"),
   },
   props: ["isprof"],

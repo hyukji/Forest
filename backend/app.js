@@ -13,10 +13,12 @@ const MongoStore = require("connect-mongo")
 const Store = MongoStore(session)
 
 var indexRouter = require("./routes/index")
+var editorRouter = require("./routes/editor")
 var loginRouter = require("./routes/login")
 var postingRouter = require("./routes/posting")
 var mycourseRouter = require("./routes/course")
 var mailRouter = require("./routes/mail")
+
 var passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy
 var User = require("../backend/models/user")
@@ -68,10 +70,12 @@ app.use(passport.session())
 passportConfig()
 
 app.use("/api/login", loginRouter)
+app.use("/api/editor", editorRouter)
 app.use("/api/posting", postingRouter)
 app.use("/api/home", indexRouter)
 app.use("/api/mycourse", mycourseRouter)
 app.use("/api/mail", mailRouter)
+
 //app.use("/api/mail", mailRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

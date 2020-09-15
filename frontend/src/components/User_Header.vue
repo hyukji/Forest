@@ -76,80 +76,80 @@ import { authentication } from "../mixins/authentication";
 
 export default {
   name: "header",
-  data: function() {
+  data: function () {
     return {
       bell_menus: [
         {
           main: "게시판/공지사항",
           title: "새로운 공지가 올라왔습니다.",
           date: "2020.3.8",
-          route: "공지사항"
+          route: "공지사항",
         },
         {
           main: "게시판/QnA",
           title: "새로운 질문이 올라왔습니다.",
           date: "2020.3.8",
-          route: "QnA"
+          route: "QnA",
         },
         {
           main: "게시판/자유게시판",
           title: "새로운 댓글이 달렸습니다.",
           date: "2020.3.8",
-          route: "자유게시판"
+          route: "자유게시판",
         },
         {
           main: "수업목록",
           title: "과제가 새로 올라왔습니다.",
           date: "2020.3.8",
-          route: "수업목록"
-        }
+          route: "수업목록",
+        },
       ],
       user_menus: [
         { title: "계정 관리", route: "/account", icon: "fas fa-user-cog" },
         { title: "로그아웃", route: "/logout", icon: "fas fa-sign-out-alt" },
         { title: "FAQ", route: "/managing/FAQ", icon: "fas fa-question" },
-        { title: "QnA", route: "/managing/FAQ", icon: "fas fa-comments" }
-      ]
+        { title: "QnA", route: "/managing/FAQ", icon: "fas fa-comments" },
+      ],
     };
   },
   mixins: [authentication],
   methods: {
-    menu_user_func: function(route) {
+    menu_user_func: function (route) {
       if (route == "/logout") {
         this.$http
           .get("/api/login/logOut", {
             //axios 사용
           })
-          .then(res => {
+          .then((res) => {
             console.log("페이지 이동");
             alert(res.data.message);
             this.$router.push("/");
           })
-          .catch(function(error) {
+          .catch(function (error) {
             alert("로그아웃 에러");
           });
       } else {
         this.$router.push({
           path: route,
           params: { user: "username" },
-          query: { group: "member" }
+          query: { group: "member" },
         });
       }
     },
-    menu_bell_func: function(route) {
+    menu_bell_func: function (route) {
       eventBus.bell_route(route);
       if (location.pathname == "/mycourse/courseid") {
       } else {
         this.$router.push({
           path: "/mycourse/courseid",
-          query: { tab: route }
+          query: { tab: route },
         });
       }
-    }
+    },
   },
   created() {
     this.check_isauth(true);
-  }
+  },
 };
 </script>
 

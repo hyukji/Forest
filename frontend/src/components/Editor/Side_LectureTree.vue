@@ -10,15 +10,24 @@
     expand-icon="mdi-chevron-down tabfont--text"
   >
     <template v-slot:prepend="{ item, open }">
-      <v-row class="pl-2" @click="opentab(item)">
-        <v-icon color="tabfont" size="19px" v-if="!item.file">
-          {{ open ? "mdi-folder-open" : "mdi-folder" }}
-        </v-icon>
-        <v-icon color="tabfont" v-else size="19px">{{
+      <v-row class="pl-2" align="center" @click="opentab(item)" no-gutters>
+        <v-icon
+          color="tabfont"
+          size="19px"
+          v-if="!item.file"
+        >{{ open ? "mdi-folder-open" : "mdi-folder" }}</v-icon>
+        <v-icon color="tabfont" v-else size="19px">
+          {{
           files[item.file]
-        }}</v-icon>
+          }}
+        </v-icon>
         <v-col>
-          <div class="tabfont--text">{{ item.title }}</div>
+          <v-text class="tabfont--text ml-2">{{ item.title }}</v-text>
+        </v-col>
+        <v-col v-if="!item.file" cols="auto">
+          <v-btn class="ml-12 tabfont--text" icon x-small>
+            <v-icon class="fal fa-desktop" size="14px" @click="OpenExplain(item)"></v-icon>
+          </v-btn>
         </v-col>
       </v-row>
     </template>
@@ -26,8 +35,9 @@
 </template>
 
 <script>
-import { eventBus } from "@/main.js"
+import { eventBus } from "@/main.js";
 export default {
+  props: ["selected", "user_data"],
   data: () => ({
     lecturedata: null,
     open: [],
@@ -46,50 +56,43 @@ export default {
     items: null,
   }),
   created() {
-    console.log("create")
-
     // console.log("it is called ");
+    this.items = JSON.parse(JSON.stringify(this.$store.state.lecture));
 
-    this.items = this.$store.state.lecture
     this.items.forEach((element) => {
       element.subitems.forEach((el) => {
-        el.title = el.subtitle
-        el.file = "py"
-        delete el.subtitle
-      })
+        el.title = el.subtitle;
+        el.file = "py";
+        delete el.subtitle;
+      });
 
-      element.children = element.subitems
-      delete element.subitems
-    })
+      element.children = element.subitems;
+      delete element.subitems;
+    });
   },
   methods: {
-    opentab: function(item) {
-      if (item.file) {
-        var newTab = {
-          tab_title: item.title,
-          data: "#" + item.title,
-          _id: item._id,
-          icon: "far fa-leaf",
-        }
-        this.$store.commit("setTabData", newTab)
-      }
+    OpenExplain: function (item) {
+      eventBus.$emit("OpenExplain", item, 1);
+      eventBus.$emit("EnterExplain", item, "lecture");
     },
-    ToDetail: function(item) {
+    opentab: function (item) {
       if (item.file) {
         var newTab = {
           tab_title: item.title,
-          data: "#" + item.title,
+          data: null,
           _id: item._id,
           icon: "far fa-leaf",
-        }
+        };
+        // console.log("newTab", newTab);
+        this.$store.commit("setTabData", newTab);
       }
     },
   },
-}
+};
 </script>
 
 <style scoped>
-.label {
-  font-size: 13px;
+v-text {
+  font-size: 10pt;
 }
 </style>

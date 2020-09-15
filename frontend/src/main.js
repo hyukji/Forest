@@ -4,6 +4,7 @@ import App from "./App.vue"
 import router from "./router"
 import vuetify from "./plugins/vuetify"
 import { store } from "./store/store"
+import vuescroll from "vuescroll"
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
@@ -14,8 +15,8 @@ Vue.config.productionTip = false
 import axios from "axios"
 Vue.prototype.$http = axios
 
-import SocketIO from 'socket.io-client';
-const socket = SocketIO('http://localhost:3030') //SocketIO('http://3.35.3.214:3030')
+import SocketIO from "socket.io-client"
+const socket = SocketIO("http://localhost:3030") //SocketIO('http://3.35.3.214:3030')
 Vue.prototype.$socket = socket
 // import VueSocketIO from "vue-socket.io"
 // Vue.use(new VueSocketIO({
@@ -40,6 +41,8 @@ new Vue({
   vuetify,
   render: (h) => h(App),
 }).$mount("#app")
+
+Vue.use(vuescroll)
 
 const ignoreWarnMessage =
   "The .native modifier for v-on is only valid on components but it was used on <div>."

@@ -164,4 +164,8 @@ export default {
 .emptydiv {
   padding: 0 auto;
 }
+.scollbar_style {
+  overflow-y: auto;
+  overflow-x: auto;
+}
 </style>

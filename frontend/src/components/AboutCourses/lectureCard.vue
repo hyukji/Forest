@@ -44,7 +44,7 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item class="py-1" v-for="(subItem, i) in item.subitems" :key="i">
+          <v-list-item class="py-1" v-for="(subItem, i) in item.subitems" :key="i" @click>
             <v-list-item-content>
               <v-row align="center">
                 <v-col cols="10" class="py-0">
@@ -54,10 +54,10 @@
                     class="title_font pl-16 py-2"
                   ></v-text-field>
                   <v-list-item-title
-                    @click="open_editor(subItem._id)"
                     v-else
                     v-text="subItem.subtitle"
                     class="title_font pl-16 py-2"
+                    @click="open_editor(subItem._id)"
                   ></v-list-item-title>
                 </v-col>
                 <v-icon v-if="EditBool" class="ml-7" v-on:click="addSubLecture(num, i)">fas fa-plus</v-icon>
@@ -124,7 +124,7 @@ export default {
     },
   },
   created() {
-    console.log("senddata is ", this.sendData);
+    //console.log("senddata is ", this.sendData);
   },
 };
 </script>

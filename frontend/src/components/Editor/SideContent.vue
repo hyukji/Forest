@@ -3,7 +3,7 @@
   <!-- <div v-if="loading" class="loading">
     <img src="@/assets/loading.gif" />
   </div>-->
-  <v-card class="wrap overflow-y-auto" tile>
+  <v-card class="wrap scollbar_style" tile>
     <component :is="selected" :user_data="user_data" class="content"></component>
   </v-card>
 
@@ -47,12 +47,24 @@ export default {
 <style scoped>
 .wrap {
   width: 100%;
-  height: 100%;
   background-color: #252526;
 }
 
 .content {
   width: 100%;
-  height: 95%;
+}
+
+.scollbar_style {
+  overflow-y: auto;
+}
+
+.scollbar_style::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+
+.scollbar_style::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 140, 140, 0.479);
+  height: 200px;
 }
 </style>

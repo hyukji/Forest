@@ -45,10 +45,31 @@ var assignSchema = new Schema({
   uploaded_date: { type: Date, default: Date.now },
 })
 
+var noticeSchema = new Schema({
+  writer: { type: String, required: true },
+  title: { type: String, required: true },
+  body: { type: String, required: true },
+  hits: { type: Number, required: true, default: 0 },
+  password: {type: Number, require: true},
+  createdAt: { type: Date, default: Date.now }, // 2
+  showdate: { type: String, default: Date.now }, // 2
+  attachment:{type:mongoose.Schema.Types.ObjectId, ref:'file'},
+})
+
+var qnaSchema = new Schema({
+  writer: { type: String, required: true },
+  title: { type: String, required: true },
+  body: { type: String, required: true },
+  hits: { type: Number, required: true, default: 0 },
+  password: {type: Number, require: true},
+  createdAt: { type: Date, default: Date.now }, // 2
+  showdate: { type: String, default: Date.now }, // 2
+  attachment:{type:mongoose.Schema.Types.ObjectId, ref:'file'},
+})
+
 var boardSchema = new Schema({
-  text: String,
-  uploaded_date: Date,
-  iswatched: Boolean,
+  notice: [noticeSchema],
+  Qna: [qnaSchema],
 })
 
 var studCareSchema = new Schema({

@@ -123,7 +123,11 @@ export default {
       let changeData = this.sendData + 30
       this.$emit('eventData', changeData)
     }
-  }
+  },
+  created() {
+    var course_code = this.$route.params.course_code;
+    this.notice = JSON.parse(JSON.stringify(this.$store.state.board));
+  },
 };
 </script>
 

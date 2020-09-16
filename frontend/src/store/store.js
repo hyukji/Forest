@@ -19,7 +19,6 @@ export const store = new Vuex.Store({
     board: [null],
     stud_management: null,
     course_management: null,
-
     nowTab: [[], []],
     selectedTab: [null, null],
   },

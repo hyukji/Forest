@@ -1,6 +1,4 @@
 # parser.py
-
-
 def getText(user_url, num):
     # user_url은 검색한 후 주소.
     # num은 가로로 몇번째인지 (첫번째면 1)

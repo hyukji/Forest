@@ -59,6 +59,17 @@ class Player:
     def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
+<<<<<<< HEAD
+=======
+
+<<<<<<< HEAD
+
+if(aa == 0):
+    print()
+
+aa = 70
+=======
+>>>>>>> 15247c338d6bdce36137c02741a8dcd61a2d3c88
     def move(self, dir):
         if dir =='up':
             self.y += 1
@@ -78,6 +89,7 @@ class MazeGame:
         self.player = Player()
         self.path = []
 
+<<<<<<< HEAD
     def play(self):
         a = len(self.map)
         D = ['up', 'right', 'down', 'left']
@@ -125,3 +137,36 @@ if __name__ == "__main__" :
     game1.play()
     print(game1.get_map())
     print(game1.get_path())
+=======
+>>>>>>> b779ec0e505d54833943bbad38f85984952db2c4
+
+bb = 1 if (aa <= 0) else aa
+print(f'{aa} {bb}')  # aa=0 bb=1
+
+
+class ILoveMusic:
+    return 1
+
+
+class iLovemusic:
+    def _music:
+        return 0
+    _math = 0
+    math = 1
+
+
+class i_love_music3:
+    return 1
+
+
+def ILoveMath:
+    return 1
+
+
+def iLovemath:
+    return 1
+
+
+def i_love_math:
+    return 1
+>>>>>>> 15247c338d6bdce36137c02741a8dcd61a2d3c88

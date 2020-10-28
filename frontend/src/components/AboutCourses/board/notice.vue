@@ -122,7 +122,7 @@ export default {
       console.log('child 데이터 수정 후 전달')
       let changeData = this.sendData + 30
       this.$emit('eventData', changeData)
-    }
+    },
   },
   created() {
     var course_code = this.$route.params.course_code;

@@ -3,8 +3,8 @@
   <!-- <div v-if="loading" class="loading">
     <img src="@/assets/loading.gif" />
   </div>-->
-  <v-card class="wrap scollbar_style" tile>
-    <component :is="selected" :user_data="user_data" class="content"></component>
+  <v-card class="wrap" tile>
+    <component :is="selected" :user_data="user_data"></component>
   </v-card>
 
   <!-- </v-navigation-drawer> -->
@@ -53,10 +53,12 @@ export default {
 .content {
   width: 100%;
 }
+</style>
 
-.scollbar_style {
-  overflow-y: auto;
-}
+<style>
+/* .scollbar_style {
+  overflow: auto;
+} */
 
 .scollbar_style::-webkit-scrollbar {
   width: 8px;

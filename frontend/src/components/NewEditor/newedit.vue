@@ -7,7 +7,7 @@
     <v-row no-gutters class="wrap_pane">
       <SideTab :drawer="drawer" />
       <v-col>
-        <splitpanes vertical class="wrap_splitpanes">
+        <splitpanes vertical class="wrap_splitpanes overflow-y-auto">
           <pane v-if="drawer.open" size="25" min-size="15" max-size="50">
             <side-content :selected="drawer.selected" :user_data="user_data" />
           </pane>
@@ -84,6 +84,8 @@ export default {
 .wrap_toolbar {
   width: 100%;
   height: 4%;
+  margin: 0;
+  padding: 0;
 }
 .wrap_pane {
   width: 100%;
@@ -94,10 +96,6 @@ export default {
 </style>
 
 <style>
-.wrap_splitpanes {
-  height: 100%;
-}
-
 .splitpanes__pane {
   display: flex;
   flex-direction: column;

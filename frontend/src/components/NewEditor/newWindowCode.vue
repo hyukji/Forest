@@ -130,13 +130,17 @@ export default {
 </style>
 
 <style>
+.ace_scrollbar {
+  overflow-y: auto;
+}
+
 .ace_scrollbar::-webkit-scrollbar {
-  height: 10px;
-  width: 10px;
+  height: 12px;
+  width: 12px;
   background-color: transparent;
 }
 
 .ace_scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(148, 140, 140, 0.479);
+  background-color: rgba(196, 188, 188, 0.445);
 }
 </style>

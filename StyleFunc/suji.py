@@ -118,7 +118,7 @@ def CalculationOperatorBlank(tokens):
     return result
 
 def ComparisonOperatorBlank(tokens):
-    #계산연산자 앞뒤의 공백
+    #비교연산자 앞뒤의 공백
     #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
     result= [0, 0, 0, 0, 0]
     calculation = ["==", "!=", "<", ">", "<=", ">="]
@@ -155,7 +155,7 @@ def ComparisonOperatorBlank(tokens):
     return result
 
 def AssignmentOperatorBlank(tokens):
-    #계산연산자 앞뒤의 공백
+    #할당연산자 앞뒤의 공백
     #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
     result= [0, 0, 0, 0, 0]
     calculation = ["+=", "-=", "*=", "/=", "//=", "%="]

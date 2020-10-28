@@ -11,7 +11,7 @@ def Spared_Line(tokens):
 
 
 def Total_Line(tokens):
-    #빈줄을 제외한 코드줄 개수
+    #빈줄과 주석을 제외한 코드줄 개수
     num=0
     for tok in tokens:
         if(tokenize.tok_name[tok.type] == "NEWLINE"):

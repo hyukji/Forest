@@ -23,6 +23,7 @@ def Quote_Preference(tokens):
                 # print(tok.string)
             else:
                 result[2] -= 1
+
     return result
 
 
@@ -140,17 +141,14 @@ def TrinomialOP_Preference(tokens):
     # 삼항 연산자 선호도. if else	Caliskan-Islam et al, (2015) (c++을 기준으로 함.)
     # parameter : tokenize된 값
     # return: 삼항연산자 사용한 횟수
-    result = 0
+    result = [0]
     for tok in tokens:
         if(tokenize.tok_name[tok.type] == "NAME" and tok.string == "if"):
-            result += 1
+            result[0] += 1
             if(":" in tok.line):
-                result -= 1
+                result[0] -= 1
 
     return result
-
-
-# is, == 선호도 pep8(boolean시 작성X>is>None 순으로 권장)
 
 
 def C_codingstyle_Preference(tokens):
@@ -158,24 +156,24 @@ def C_codingstyle_Preference(tokens):
     # parameter : tokenize된 값
     # return: Array( Array(2) *2 ) => [if,elif ()개수 , 총개수], [while ()개수 , 총개수]
 
-    result = [[0, 0], [0, 0]]
+    result = [0, 0, 0, 0]
     conditionalOp = ["if", "elif"]
     isconditional = 0
     for tok in tokens:
         if(isconditional == 1):
             if(tokenize.tok_name[tok.exact_type] == "LPAR" and tok.string == '('):
-                result[0][0] += 1
+                result[0] += 1
             isconditional = 0
         elif(isconditional == 2):
             if(tokenize.tok_name[tok.exact_type] == "LPAR" and tok.string == '('):
-                result[1][0] += 1
+                result[2] += 1
             isconditional = 0
         else:
             if(tokenize.tok_name[tok.exact_type] == "NAME" and tok.string in conditionalOp):
                 isconditional = 1
-                result[0][1] += 1
+                result[1] += 1
             elif(tokenize.tok_name[tok.exact_type] == "NAME" and tok.string == "while"):
                 isconditional = 2
-                result[1][1] += 1
+                result[3] += 1
 
     return result

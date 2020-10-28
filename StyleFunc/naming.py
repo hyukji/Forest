@@ -92,6 +92,16 @@ def numbering(tokens):
         if variance[l-1].isdigit()==True:
             num+=1
     return (num, total_v)
+
+def len_variance(tokens):
+    total_len=0
+    variances=find_variance(tokens)
+    total_v=len(variances[3])
+    for variance in variances[3]:
+        total_len+=len(variance)
+    avg_len=total_len//total_v
+    return avg_len
+
 '''
 def local_naming(tokens):
     #local 변수의 시작 '_' 여부
@@ -115,10 +125,8 @@ def local_naming(tokens):
                         result[0]+=1
             if (num_i==num_d):
                 in_class=False
-
     return result
 '''
-
 def find_variance(tokens):
     classes=[]
     functions=[]

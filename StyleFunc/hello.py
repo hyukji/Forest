@@ -1,97 +1,87 @@
-message\
-=\
-'This \
-back slash \
-acts \
-like \
-enter'
-print(\
-message)
-
-y = 3; x = 5; print(x+y);
-
-from itertools import product
+import timeit
+import random
 
 
-def findPassword(chars, function, show=50, format_="%s"):
-
-    password = None
-    attempts = 0
-    size = 1
-    stop = False
-
-    while not stop:
-
-        # Obtém todas as combinações possíveis com os dígitos do parâmetro "chars".
-        for pw in product(chars, repeat=size):
-
-            password = "".join(pw)
-
-            # Imprime a senha que será tentada.
-            if attempts % show == 0:
-                print(format_ % password)
-
-            # Verifica se a senha é a correta.
-            if function(password):
-                stop = True
-                break
-            else:
-                attempts += 1
-        size += 1
-
-    return password, attempts
+def selection_sort(t):
+    pass
 
 
-def getChars():
-    """
-    Método para obter uma lista contendo todas as
-    letras do alfabeto e números.
-    """
-    chars = []
-
-    # Acrescenta à lista todas as letras maiúsculas
-    for id_ in range(ord("A"), ord("Z") + 1):
-        chars.append(chr(id_))
-
-    # Acrescenta à lista todas as letras minúsculas
-    for id_ in range(ord("a"), ord("z") + 1):
-        chars.append(chr(id_))
-
-    # Acrescenta à lista todos os números
-    for number in range(10):
-        chars.append(str(number))
-
-    return chars
+def merge_sort(t, l=None, r=None):
+    if l==None: l = 0
+    if r==None: r = len(t)-1
+    pass
 
 
-# Se este módulo não for importado, o programa será testado.
-# Para realizar o teste, o usuário deverá inserir uma senha para ser encontrada.
+def quick_sort(t, l=None, r=None):
+    if l==None: l = 0
+    if r==None: r = len(t)-1
+    pass
 
-if __name__ == "__main__":
-
-    import datetime
-    import time
-
-    # Pede ao usuário uma senha
-    pw = input("\n Type a password: ")
-    print("\n")
-
-
-    def testFunction(password):
-        global pw
-        if password == pw:
-            return True
+def timeit_sort(func, n, data='random', repetition=100):
+    # generate n random numbers
+    t = list(range(n))
+    duration = 0
+    for i in range(repetition):
+        if data == 'random':
+            t1 = t.copy()
+            random.shuffle(t)
+        elif data == 'reverse':
+            t1 = t[::-1]
         else:
-            return False
+            t1 = t.copy()
+        duration += timeit.timeit('func(t1)', globals=locals(), number=1)
+    return duration
 
+if __name__ == '__main__':
+    # 1) Understand how sorting algorithms work in detail
+    n = 10
 
-    # Obtém os dígitos que uma senha pode ter
-    chars = getChars()
+    t = list(range(n))
+    random.shuffle(t)  # make a random list
+    print('* Selection Sort')
+    t1 = t.copy()
+    selection_sort(t1)
+    print('* Merge Sort')
+    t2 = t.copy()
+    merge_sort(t2, 0, len(t2) - 1)
+    print('* Quick Sort')
+    t3 = t.copy()
+    quick_sort(t3, 0, len(t3) - 1)
 
-    t = time.process_time()
+    # 2) Set up test cases for sorting algorithms
+    t = []
+    selection_sort(t)
+    t = [1]
+    selection_sort(t)
+    t = [1, 2]
+    selection_sort(t)
+    t = [1, 1]
+    selection_sort(t)
+    t = [2, 1]
+    selection_sort(t)
+    t = [1, 2, 3]
+    selection_sort(t)
+    t = [1, 3, 2]
+    selection_sort(t)
+    t = [1, 2, 3, 4]
+    selection_sort(t)
+    t = [4, 3, 2, 1]
+    selection_sort(t)
+    t = [2, 4, 1, 3]
+    selection_sort(t)
 
-    # Obtém a senha encontrada e o múmero de tentativas
-    password, attempts = findPassword(chars, testFunction, show=1000, format_=" Trying %s")
+    # 3) Measure execution time of sorting algoritms with varying n
+    problem_sizes = [1, 10, 20, 50, 100]
+    rep = 100
+    data = 'random'
+    print('Selection sort...')
+    for n in problem_sizes:
+        print(f'{n:5d}:', timeit_sort(selection_sort, n, data, rep))
 
-    t = datetime.timedelta(seconds=int(time.process_time() - t))
-    input("\n\n Password found: {}\n Attempts: {}\n Time: {}\n".format(password, attempts, t))
+    print('Merge sort...')
+    for n in problem_sizes:
+        print(f'{n:5d}:', timeit_sort(merge_sort, n, data, rep))
+
+    print('Quick sort...')
+    for n in problem_sizes:
+        print(f'{n:5d}:', timeit_sort(quick_sort, n, data, rep))

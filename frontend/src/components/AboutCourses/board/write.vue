@@ -115,12 +115,14 @@
             color="secondary"
             width="100"
             class="button"
+            @click="save"
             >저 장</v-btn>
             <v-btn
             outlined
             color="secondary"
             width="100"
             class="button ma-6"
+            @click="cancle"
             >취 소</v-btn>
           </v-col>
         </v-row>
@@ -136,11 +138,27 @@
   export default{
     name: 'Write',
     data: ()=> ({
+      EditBool: null,
+      post: null,
     }),
     methods: {
       moment: function () {
         return moment();
+      },
+      save: function(){
+        alert("저장되었습니다.")
+      },
+      cancle: function(){
+        alert("취소")
+        this.$store.state.board = JSON.parse(JSON.stringify(this.showitem));
+        this.EditBool = false;
       }
+    },
+    created() {
+      var course_code = this.$route.params.course_code;
+      this.post = JSON.parse(JSON.stringify(this.$store.board));
+      this.EditBool = false;
+
     }
   }
 

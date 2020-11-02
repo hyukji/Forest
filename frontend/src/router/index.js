@@ -10,7 +10,6 @@ import hello from "../components/HelloWorld.vue"
 import prac from "../components/forprac.vue"
 
 import E404 from "../views/E404.vue"
-import Editor from "../views/Editor.vue"
 
 import User_Header from "../components/User_Header.vue"
 import Main_Header from "../components/Main_Header.vue"
@@ -84,14 +83,7 @@ const routes = [
       body: AboutCourse,
     },
   },
-  {
-    path: "/editor",
-    name: "Editor",
-    components: {
-      header: Editor_Header,
-      body: Editor,
-    },
-  },
+  
 ]
 
 const router = new VueRouter({

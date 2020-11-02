@@ -27,6 +27,7 @@
 <script>
 import { authentication } from "@/mixins/authentication";
 import { Splitpanes, Pane } from "splitpanes";
+import "splitpanes/dist/splitpanes.css"
 import { eventBus } from "@/main.js";
 
 export default {

@@ -27,7 +27,6 @@ export default {
     Pane,
     AssignTree: () => import("@/components/Editor/Side_AssignTree"),
     Explain: () => import("@/components/Editor/Side_explain"),
-
     LectureTree: () => import("@/components/Editor/Side_LectureTree"),
   },
   props: ["user_data"],

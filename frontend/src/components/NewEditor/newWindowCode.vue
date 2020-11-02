@@ -43,12 +43,14 @@ export default {
       require("brace/snippets/javascript"); //snippet
     },
     clickEnter() {
+      // console.log("before save tabitem:", this.tabitem.data)
       this.$store.commit("setTabCode", {
         icon: this.tabitem.icon,
         TabId: this.tabitem._id,
         newcode: this.content,
       });
 
+      // console.log("after save tabitem:", this.tabitem)
       this.$http
         .post(this.addr, {
           //axios 사용
@@ -104,6 +106,7 @@ export default {
           TabId: this.tabitem._id,
           newcode: this.content,
         });
+
       })
       .catch(function (error) {
         alert("error to create scoring", err);

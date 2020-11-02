@@ -6,8 +6,8 @@
   <v-card class="wrap" tile >
     <component 
       :is="selected" :user_data="user_data" 
-      class = "scrollbar_style"
-      style="overflow-y:auto; overflow-x:hidden; width:100%; height: 94vh;"></component>
+      class = "scrollbar_style">
+    </component>
   </v-card>
 
   <!-- </v-navigation-drawer> -->
@@ -56,6 +56,13 @@ export default {
 .content {
   width: 100%;
 }
+
+.scrollbar_style{ 
+  width:100%; 
+  height: 94vh;
+  overflow-y:auto; 
+  overflow-x:hidden;
+}
 </style>
 
 <style>
@@ -67,7 +74,7 @@ export default {
 
 .scrollbar_style::-webkit-scrollbar-thumb {
   background-color: rgba(196, 188, 188, 0.445);
-    height: 20px;
+  height: 20px;
 }
 </style>
 

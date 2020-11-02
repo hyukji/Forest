@@ -1,7 +1,7 @@
 <template>
-  <div >
+  <div>
     <v-expansion-panels v-model="opendpanel" multiple accordion tile class="wrap">
-      <v-expansion-panel v-for="(item, i) in panels" :key="i">
+      <v-expansion-panel v-for="(item, i) in panels" :key="i" >
         <v-expansion-panel-header color="#252526" class="white--text">
           {{ item.panelTitle }}
           <template v-slot:actions>
@@ -58,5 +58,16 @@ export default {
 <style scoped>
 v-expansion-panel {
   color: white;
+}
+
+</style>
+
+<style>
+
+.panel_text{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
 }
 </style>

@@ -10,8 +10,8 @@
     expand-icon="mdi-chevron-down tabfont--text"
   >
     <template v-slot:prepend="{ item, open }">
-      <v-row align="center" @click="opentab(item)" no-gutters>
-        <v-col cols="auto">
+      <v-row class="pl-2 panel_text" align="center" @click="opentab(item)" no-gutters>
+        
           <v-icon
             color="tabfont"
             size="19px"
@@ -23,18 +23,12 @@
             }}
           </v-icon>
           <v-text class="tabfont--text ml-2">{{ item.title }}</v-text>
-        </v-col>
+          
+          <v-text v-if="item.file" size="0.5rem" class="primary--text font-weight-medium ml-6">100</v-text>
 
-        <v-spacer></v-spacer>
-
-        <v-col v-if="item.file" cols="auto" class="ml-6">
-          <div size="0.5rem" class="primary--text font-weight-medium ml-2">100</div>
-        </v-col>
-        <v-col v-else cols="auto">
-          <v-btn class="ml-12 tabfont--text" icon x-small>
+          <v-btn v-else class="ml-12 tabfont--text" icon x-small>
             <v-icon class="fal fa-desktop" size="14px" @click="OpenExplain(item)"></v-icon>
           </v-btn>
-        </v-col>
       </v-row>
     </template>
   </v-treeview>
@@ -100,6 +94,9 @@ export default {
 </script>
 
 <style scoped>
+.panel_text {
+  display: inline;
+}
 v-text {
   font-size: 10pt;
 }

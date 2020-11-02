@@ -91,7 +91,6 @@ export default {
     SideTab: () => import("@/components/Editor/SideTab"),
     SideContent: () => import("@/components/Editor/SideContent"),
     WindowCode: () => import("../NewEditor/newWindowCode"),
-
     WindowTerminal: () => import("../NewEditor/newWindowTerminal"),
   },
   props: ["index", "element", "user_data"],
@@ -164,8 +163,8 @@ export default {
 .emptydiv {
   padding: 0 auto;
 }
-.scollbar_style {
+/* .scollbar_style {
   overflow-y: auto;
   overflow-x: auto;
-}
+} */
 </style>

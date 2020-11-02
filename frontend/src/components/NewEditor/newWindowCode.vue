@@ -9,7 +9,7 @@
       height="100%"
       ref="myEditor"
     >
-      <ScrollBar class="ace_scrollbar"></ScrollBar>
+      <!-- <ScrollBar class="ace_scrollbar"></ScrollBar> -->
     </editor>
   </div>
 </template>
@@ -133,14 +133,14 @@ export default {
 .ace_scrollbar {
   overflow-y: auto;
 }
-
+  
 .ace_scrollbar::-webkit-scrollbar {
-  height: 12px;
-  width: 12px;
+  width: 10px;
   background-color: transparent;
 }
 
 .ace_scrollbar::-webkit-scrollbar-thumb {
+  height: 12px;
   background-color: rgba(196, 188, 188, 0.445);
 }
 </style>

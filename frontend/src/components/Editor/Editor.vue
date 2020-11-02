@@ -14,7 +14,7 @@
           <pane>
             <splitpanes>
               <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
-                <newediteditor :index="index" :element="element" :user_data="user_data"></newediteditor>
+                <EditorWindow :index="index" :element="element" :user_data="user_data"></EditorWindow>
               </pane>
             </splitpanes>
           </pane>
@@ -34,12 +34,11 @@ export default {
   components: {
     Splitpanes,
     Pane,
-    EditToolbar: () => import("@/components/NewEditor/newEditToolbar"),
+    EditToolbar: () => import("@/components/Editor/EditorHeader"),
 
-    newediteditor: () => import("@/components/NewEditor/newediteditor"),
-    Drawer: () => import("@/components/Editor/Drawer"),
-    SideTab: () => import("@/components/Editor/SideTab"),
-    SideContent: () => import("@/components/Editor/SideContent"),
+    EditorWindow: () => import("@/components/Editor/EditorWindow"),
+    SideTab: () => import("@/components/Editor/Editor_Side/SideTab"),
+    SideContent: () => import("@/components/Editor/Editor_Side/SideContent"),
   },
   data() {
     return {

@@ -61,7 +61,7 @@
 import { eventBus } from "@/main.js";
 export default {
   components: {
-    SideEdit: () => import("@/components/Editor/Side_explain_edit"),
+    SideEdit: () => import("@/components/Editor/Editor_Side/Side_explain_edit"),
   },
   props: ["user_data"],
 

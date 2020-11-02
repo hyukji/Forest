@@ -25,9 +25,9 @@ export default {
   components: {
     Splitpanes,
     Pane,
-    AssignTree: () => import("@/components/Editor/Side_AssignTree"),
-    Explain: () => import("@/components/Editor/Side_explain"),
-    LectureTree: () => import("@/components/Editor/Side_LectureTree"),
+    AssignTree: () => import("@/components/Editor/Editor_Side/Side_AssignTree"),
+    Explain: () => import("@/components/Editor/Editor_Side/Side_explain"),
+    LectureTree: () => import("@/components/Editor/Editor_Side/Side_LectureTree"),
   },
   props: ["user_data"],
   data: () => ({

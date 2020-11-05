@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-expansion-panels v-model="opendpanel" multiple accordion tile class="wrap">
-      <v-expansion-panel v-for="(item, i) in panels" :key="i">
+      <v-expansion-panel v-for="(item, i) in panels" :key="i" >
         <v-expansion-panel-header color="#252526" class="white--text">
           {{ item.panelTitle }}
           <template v-slot:actions>
@@ -25,10 +25,9 @@ export default {
   components: {
     Splitpanes,
     Pane,
-    AssignTree: () => import("@/components/Editor/Side_AssignTree"),
-    Explain: () => import("@/components/Editor/Side_explain"),
-
-    LectureTree: () => import("@/components/Editor/Side_LectureTree"),
+    AssignTree: () => import("@/components/Editor/Editor_Side/Side_AssignTree"),
+    Explain: () => import("@/components/Editor/Editor_Side/Side_explain"),
+    LectureTree: () => import("@/components/Editor/Editor_Side/Side_LectureTree"),
   },
   props: ["user_data"],
   data: () => ({
@@ -58,5 +57,16 @@ export default {
 <style scoped>
 v-expansion-panel {
   color: white;
+}
+
+</style>
+
+<style>
+
+.panel_text{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
 }
 </style>

@@ -7,14 +7,14 @@
     <v-row no-gutters class="wrap_pane">
       <SideTab :drawer="drawer" />
       <v-col>
-        <splitpanes vertical class="wrap_splitpanes overflow-y-auto">
-          <pane v-if="drawer.open" size="25" min-size="15" max-size="50">
+        <splitpanes vertical class="wrap_splitpanes">
+          <pane  v-if="drawer.open" size="25" min-size="15" max-size="50">
             <side-content :selected="drawer.selected" :user_data="user_data" />
           </pane>
           <pane>
             <splitpanes>
               <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
-                <newediteditor :index="index" :element="element" :user_data="user_data"></newediteditor>
+                <EditorWindow :index="index" :element="element" :user_data="user_data"></EditorWindow>
               </pane>
             </splitpanes>
           </pane>
@@ -27,21 +27,22 @@
 <script>
 import { authentication } from "@/mixins/authentication";
 import { Splitpanes, Pane } from "splitpanes";
+import "splitpanes/dist/splitpanes.css"
 import { eventBus } from "@/main.js";
 
 export default {
   components: {
     Splitpanes,
     Pane,
-    EditToolbar: () => import("@/components/NewEditor/newEditToolbar"),
+    EditToolbar: () => import("@/components/Editor/EditorHeader"),
 
-    newediteditor: () => import("@/components/NewEditor/newediteditor"),
-    Drawer: () => import("@/components/Editor/Drawer"),
-    SideTab: () => import("@/components/Editor/SideTab"),
-    SideContent: () => import("@/components/Editor/SideContent"),
+    EditorWindow: () => import("@/components/Editor/EditorWindow"),
+    SideTab: () => import("@/components/Editor/Editor_Side/SideTab"),
+    SideContent: () => import("@/components/Editor/Editor_Side/SideContent"),
   },
   data() {
     return {
+      // height: calc(height),
       loading: true,
       drawer: {
         open: true,
@@ -83,13 +84,13 @@ export default {
 }
 .wrap_toolbar {
   width: 100%;
-  height: 4%;
+  height: 5%;
   margin: 0;
   padding: 0;
 }
 .wrap_pane {
   width: 100%;
-  height: 96%;
+  height: 95%;
   margin: 0;
   padding: 0;
 }
@@ -106,6 +107,7 @@ export default {
   background-color: #333333;
   position: relative;
 }
+
 .splitpanes__splitter:before {
   content: "";
   position: absolute;
@@ -124,4 +126,5 @@ export default {
   right: -7px;
   height: 100%;
 }
+
 </style>

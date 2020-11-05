@@ -1,9 +1,9 @@
 <template>
-  <v-card tile class="wrap">
+  <v-card tile class="wrap" >
     <v-row color="#3B3B3C" no-gutters class="wrap" align="center">
       <v-col>
         <v-row no-gutters>
-          <v-icon class="pl-4" size="16pt" color="primary">fas fa-seedling</v-icon>
+          <v-icon class="pl-4" size="12pt" color="primary">fas fa-seedling</v-icon>
           <div class="tabfont--text pl-2 bar_title">Forest_Studio</div>
         </v-row>
       </v-col>
@@ -13,11 +13,11 @@
       <v-col>
         <v-row no-gutters justify="end" class="pr-3">
           <v-btn icon class="tabfont--text">
-            <v-icon>mdi-magnify</v-icon>
+            <v-icon size="15pt">mdi-magnify</v-icon>
           </v-btn>
 
           <v-btn icon class="tabfont--text">
-            <v-icon>mdi-dots-vertical</v-icon>
+            <v-icon size="15pt">mdi-dots-vertical</v-icon>
           </v-btn>
         </v-row>
       </v-col>
@@ -46,7 +46,7 @@ export default {
   background-color: #3b3b3c;
 }
 .bar_title {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 </style>
 

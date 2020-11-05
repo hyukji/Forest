@@ -5,79 +5,66 @@ def naming_class(tokens):
     # 클래스에서 명명법
     # parameter : tokenize된 값
     # return: Array(5) => 0: Pascal, 1: Camel 2: Snake 3: 그 외 4: 합계
-    result = [0, 0, 0, 0, 0, 0, 0]
+    result = [0, 0, 0, 0, 0]
     i=0
     for tok in tokens:
         if(tok.string == 'class'):
-            result[6] += 1
+            result[4] += 1
             i=1
         elif(i==1):
             n=len(tok.string)
+            if (tok.string[0].isupper()==True):
+                result[0]+=1
+            elif (tok.string.islower()==False):
+                result[1]+=1
             if (tok.string.find("_")!=-1):
-                if(tok.string[0].isupper()==True):
-                    result[0]+=1
-                elif(tok.string.islower()==False):
-                    result[1]+=1
-                else:
-                    result[4]+=1
+                result[2]+=1
             else:
-                if(tok.string[0].isupper()==True):
-                    result[2]+=1
-                elif(tok.string.islower()==False):
-                    result[3]+=1
-                else:
-                    result[5]+=1
+                result[3]+=1
             i=0
     return result
 
 def naming_function(tokens):
     # 함수에서 명명법
     # parameter : tokenize된 값
-    # return: Array(5) => 0: Pascal&Snake, 1: Camel&Snake 2: Pascal&noSnake 3: Camel&noSnake 4: only Snake 5: etc 6: 합계
-    result = [0, 0, 0, 0, 0, 0, 0]
+    # return: Array(5) => 0: Pascal, 1: Camel 2: Snake 3: 그 외 4: 합계
+    result = [0, 0, 0, 0, 0]
     i=0
     for tok in tokens:
         if(tok.string == 'def'):
-            result[6] += 1
+            result[4] += 1
             i=1
         elif(i==1):
             n=len(tok.string)
+            if (tok.string[0].isupper()==True):
+                result[0]+=1
+            elif (tok.string.islower()==False):
+                result[1]+=1
             if (tok.string.find("_")!=-1):
-                if(tok.string[0].isupper()==True):
-                    result[0]+=1
-                elif(tok.string.islower()==False):
-                    result[1]+=1
-                else:
-                    result[4]+=1
+                result[2]+=1
             else:
-                if(tok.string[0].isupper()==True):
-                    result[2]+=1
-                elif(tok.string.islower()==False):
-                    result[3]+=1
-                else:
-                    result[5]+=1
+                result[3]+=1
             i=0
     return result
 
 def naming_variances(tokens):
-    result = [0, 0, 0, 0, 0, 0, 0]
+    result = [0, 0, 0, 0, 0]
     i=0
     variances=find_variance(tokens)
     for variance in variances[2]:
-        if (variance.find("_")!=-1):
-            if(variance[0].isupper()==True):
+        result[4] += 1
+        i=1
+        if i==1:
+            n=len(variance)
+            if (variance[0].isupper()==True):
                 result[0]+=1
-            elif(variance.islower()==False):
+            elif (variance[0].islower()==False):
                 result[1]+=1
-            else:
-                result[4]+=1
-        else:
-            if(variance[0].isupper()==True):
+            if (variance[0].find("_")!=-1):
                 result[2]+=1
-            elif(variance.islower()==False):
-                result[3]+=1
             else:
-                result[5]+=1
+                result[3]+=1
+            i=0
     return result
 
 def numbering(tokens):
@@ -162,8 +149,8 @@ def num_naming_function(problems):
     # 클래스에서 명명법
     #parameter: problems
     # return: Array(5) => 0: Pascal% 1: Camel% 2: Snake% 3: etc% 4: 최다 네이밍
-    proportion = [0, 0, 0, 0, 0, 0, 0]
-    proportion2 = [0, 0, 0, 0, 0, 0]
+    proportion = [0, 0, 0, 0, 0]
+    proportion2 = [0, 0, 0, 0]
     results=[]
     num=0
     for title in problems:
@@ -175,15 +162,15 @@ def num_naming_function(problems):
             # tokens = tokenize.generate_tokens(f.readline)
             # pf.check_token(tokens)
             try:
-                results.append(naming.naming_function(tokens))
+                results.append(naming_function(tokens))
             except:    # 예외가 발생했을 때 실행됨
                 pass
         num+=1
     for result in results:
 #         print(result)
-        for i in range(7):
+        for i in range(5):
             proportion[i]+=result[i]
-    for i in range(6):
+    for i in range(4):
         proportion2[i]=proportion[i]
     return (proportion, proportion2.index(max(proportion2)))
 
@@ -191,8 +178,8 @@ def num_naming_class(problems):
     # 클래스에서 명명법
     #parameter: problems
     # return: Array(5) => 0: Pascal% 1: Camel% 2: Snake% 3: etc% 4: 최다 네이밍
-    proportion = [0, 0, 0, 0, 0, 0, 0]
-    proportion2 = [0, 0, 0, 0, 0, 0]
+    proportion = [0, 0, 0, 0, 0]
+    proportion2 = [0, 0, 0, 0]
     results=[]
     num=0
     for title in problems:
@@ -204,15 +191,15 @@ def num_naming_class(problems):
             # tokens = tokenize.generate_tokens(f.readline)
             # pf.check_token(tokens)
             try:
-                results.append(naming.naming_class(tokens))
+                results.append(naming_class(tokens))
             except:    # 예외가 발생했을 때 실행됨
                 pass
         num+=1
     for result in results:
 #         print(result)
-        for i in range(7):
+        for i in range(5):
             proportion[i]+=result[i]
-    for i in range(6):
+    for i in range(4):
         proportion2[i]=proportion[i]
     return (proportion, proportion2.index(max(proportion2)))
 
@@ -220,8 +207,8 @@ def num_naming_variances(problems):
     # 클래스에서 명명법
     #parameter: problems
     # return: Array(5) => 0: Pascal% 1: Camel% 2: Snake% 3: etc% 4: 최다 네이밍
-    proportion = [0, 0, 0, 0, 0, 0, 0]
-    proportion2 = [0, 0, 0, 0, 0, 0]
+    proportion = [0, 0, 0, 0, 0]
+    proportion2 = [0, 0, 0, 0]
     results=[]
     num=0
     for title in problems:
@@ -233,15 +220,14 @@ def num_naming_variances(problems):
             # tokens = tokenize.generate_tokens(f.readline)
             # pf.check_token(tokens)
             try:
-                results.append(naming.naming_variances(tokens))
+                results.append(naming_variances(tokens))
             except:    # 예외가 발생했을 때 실행됨
                 pass
         num+=1
     for result in results:
-#         print(result)
-        for i in range(7):
+        for i in range(5):
             proportion[i]+=result[i]
-    for i in range(6):
+    for i in range(4):
         proportion2[i]=proportion[i]
     return (proportion, proportion2.index(max(proportion2)))
 
@@ -260,7 +246,7 @@ def num_numbering(problems):
             # tokens = tokenize.generate_tokens(f.readline)
             # pf.check_token(tokens)
             try:
-                (n, t) =naming.numbering(tokens)
+                (n, t) =numbering(tokens)
                 num+=n
                 total_v+=t
             except:    # 예외가 발생했을 때 실행됨

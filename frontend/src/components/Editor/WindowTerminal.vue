@@ -1,20 +1,21 @@
 <template>
-  <div class="pl-4 pt-2">
+  <div class="pl-4 pt-2 wrap">
     <v-row align="center">
       <!-- <v-col cols="5"> <v-text-field v-model="label"></v-text-field></v-col> -->
-      <v-col class>
+      <v-col class="white--text">
         <!-- <v-select v-model="model" :items="items" dense @click="getitmes">
         <template v-slot:selection="{ item, index }">
           <span class="grey--text">{{ item.tab_title }}</span>
         </template>
         </v-select>-->
 
-        <v-menu close-on-click="true" disable-keys v-model="value" offset-y="true">
+        <v-menu close-on-click="true" dark disable-keys v-model="value" offset-y="true">
           <template v-slot:activator="{ on, attrs }">
-            <v-col class="pa-0" cols="12">
+            <v-col class="pa-0 " cols="12">
               <v-text-field
                 dense
                 outlined
+                dark
                 v-model="model.tab_title"
                 v-bind="attrs"
                 v-on="on"
@@ -43,9 +44,10 @@
       <v-btn color="secondary" outlined class="ma-2" @click>제출</v-btn>
       <v-spacer />
     </v-row>
-    <div>{{ model }}</div>
-    <div v-for="(i,index) in results" :key="index">{{ i }}</div>
+    <div class="tabfont--text">{{ model }}</div>
+    <div class="tabfont--text" v-for="(i,index) in results" :key="index">{{ i }}</div>
     <input v-if="waiting" v-model="input" @keyup.enter="submit" />
+
   </div>
 </template>
 

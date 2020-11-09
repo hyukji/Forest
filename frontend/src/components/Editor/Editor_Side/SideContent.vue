@@ -3,8 +3,11 @@
   <!-- <div v-if="loading" class="loading">
     <img src="@/assets/loading.gif" />
   </div>-->
-  <v-card class="wrap overflow-y-auto" tile>
-    <component :is="selected" :user_data="user_data"></component>
+  <v-card class="wrap" tile >
+    <component 
+      :is="selected" :user_data="user_data" 
+      class = "scrollbar_style">
+    </component>
   </v-card>
 
   <!-- </v-navigation-drawer> -->
@@ -14,7 +17,9 @@
 export default {
   props: ["selected", "user_data"],
   components: {
-    MainList: () => import("@/components/Editor/Side_MainList"),
+    MainList: () => import("@/components/Editor/Editor_Side/Side_MainList"),
+    Search: () => import("@/components/Editor/Editor_Side/Side_search"),
+    Setting: () => import("@/components/Editor/Editor_Side/Side_setting"),
   },
   data() {
     return {};
@@ -51,20 +56,25 @@ export default {
 .content {
   width: 100%;
 }
+
+.scrollbar_style{ 
+  width:100%; 
+  height: 94vh;
+  overflow-y:auto; 
+  overflow-x:hidden;
+}
 </style>
 
 <style>
-/* .scollbar_style {
-  overflow: auto;
-} */
-
-.scollbar_style::-webkit-scrollbar {
-  width: 8px;
+  
+.scrollbar_style::-webkit-scrollbar {
+  width: 10px;
   background-color: transparent;
 }
 
-.scollbar_style::-webkit-scrollbar-thumb {
-  background-color: rgba(148, 140, 140, 0.479);
-  height: 200px;
+.scrollbar_style::-webkit-scrollbar-thumb {
+  background-color: rgba(196, 188, 188, 0.445);
+  height: 20px;
 }
 </style>
+

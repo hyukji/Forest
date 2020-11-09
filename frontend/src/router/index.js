@@ -10,13 +10,11 @@ import hello from "../components/HelloWorld.vue"
 import prac from "../components/forprac.vue"
 
 import E404 from "../views/E404.vue"
-import Editor from "../views/Editor.vue"
 
 import User_Header from "../components/User_Header.vue"
 import Main_Header from "../components/Main_Header.vue"
-import Editor_Header from "../components/Editor_Header.vue"
 
-import newedit from "../components/NewEditor/newedit"
+import Editor from "../components/Editor/Editor.vue"
 
 Vue.use(VueRouter)
 
@@ -29,9 +27,9 @@ const routes = [
     },
   },
   {
-    path: "/newedit/:course_code",
+    path: "/editor/:course_code",
     components: {
-      body: newedit,
+      body: Editor,
     },
   },
   {
@@ -84,14 +82,7 @@ const routes = [
       body: AboutCourse,
     },
   },
-  {
-    path: "/editor",
-    name: "Editor",
-    components: {
-      header: Editor_Header,
-      body: Editor,
-    },
-  },
+  
 ]
 
 const router = new VueRouter({

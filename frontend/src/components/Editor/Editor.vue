@@ -12,9 +12,16 @@
             <side-content :selected="drawer.selected" :user_data="user_data" />
           </pane>
           <pane>
-            <splitpanes>
-              <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
-                <newediteditor :index="index" :element="element" :user_data="user_data"></newediteditor>
+            <splitpanes horizontal>
+              <pane>
+                <splitpanes>
+                  <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
+                    <NewEditorWindow :index="index" :element="element" :user_data="user_data"></NewEditorWindow>
+                  </pane>
+                </splitpanes>
+              </pane>
+              <pane>
+                <WindowTerminal></WindowTerminal>
               </pane>
             </splitpanes>
           </pane>
@@ -27,18 +34,22 @@
 <script>
 import { authentication } from "@/mixins/authentication";
 import { Splitpanes, Pane } from "splitpanes";
+import "splitpanes/dist/splitpanes.css"
 import { eventBus } from "@/main.js";
 
 export default {
   components: {
     Splitpanes,
     Pane,
-    EditToolbar: () => import("@/components/NewEditor/newEditToolbar"),
+    EditToolbar: () => import("@/components/Editor/EditorHeader"),
 
-    newediteditor: () => import("@/components/NewEditor/newediteditor"),
-    Drawer: () => import("@/components/Editor/Drawer"),
-    SideTab: () => import("@/components/Editor/SideTab"),
-    SideContent: () => import("@/components/Editor/SideContent"),
+    NewEditorWindow: () => import("@/components/Editor/NewEditorWindow"),
+    EditorWindow: () => import("@/components/Editor/EditorWindow"),
+
+    SideTab: () => import("@/components/Editor/Editor_Side/SideTab"),
+    SideContent: () => import("@/components/Editor/Editor_Side/SideContent"),
+
+    WindowTerminal: () => import("../Editor/WindowTerminal"),
   },
   data() {
     return {

@@ -1,71 +1,117 @@
 <template>
-  <div class="wrap">
-    <div id="editor" ref="editor">default</div>
+  <div class="wrap" @keyup.enter="clickEnter">
+    <editor
+      v-model="content"
+      @init="editorInit"
+      lang="python"
+      theme="tomorrow_night"
+      width="100%"
+      height="100%"
+      ref="myEditor"
+    >
+      <!-- <ScrollBar class="ace_scrollbar"></ScrollBar> -->
+    </editor>
   </div>
 </template>
 
 <script>
-import "ace-builds";
-import "ace-builds/webpack-resolver";
-import { eventBus } from "../../main.js";
+// @ is an alias to /src
 
 export default {
-  components: {},
-  data() {
-    return {
-      editor: null,
-    };
+  name: "Card",
+  components: {
+    editor: require("vue2-ace-editor"),
   },
-  props: {
-    data: {
-      type: String,
+  props: ["tabitem", "user_data"],
+  data: () => ({
+    addr: null,
+    content: null,
+    settings: {
+      fontsize: 17,
     },
-    selected: null,
-  },
+  }),
   methods: {
-    getCode() {
-      return this.editor.getValue();
+    editorInit: function () {
+      require("brace/ext/language_tools"); //language extension prerequsite...
+      require("brace/mode/html");
+      //require("brace/mode/javascript") //language
+      require("brace/mode/python"); //language
+      require("brace/mode/less");
+      require("brace/theme/tomorrow_night");
+      require("brace/theme/tomorrow_night_bright");
+
+      require("brace/snippets/javascript"); //snippet
     },
-  },
-  created() {
-    eventBus.$on("exeCode", (selected) => {
-      if (
-        this.selected.lecture == selected.lecture &&
-        this.selected.problem == selected.problem
-      ) {
-        //eventBus.$emit('sendCode', this.getCode())
-        this.$socket.emit("code", { code: this.getCode() });
-      }
-    });
+    clickEnter() {
+      // console.log("before save tabitem:", this.tabitem.data)
+      this.$store.commit("setTabCode", {
+        icon: this.tabitem.icon,
+        TabId: this.tabitem._id,
+        newcode: this.content,
+      });
+
+      // console.log("after save tabitem:", this.tabitem)
+      this.$http
+        .post(this.addr, {
+          //axios 사용
+          Tabdata: this.tabitem,
+          user_data: this.user_data,
+        })
+        .then((res) => {})
+        .catch(function (err) {
+          alert("error to save code", err);
+        });
+    },
+    createtab(res) {},
   },
   mounted() {
-    this.editor = ace.edit(this.$refs.editor, {
-      mode: "ace/mode/python",
-      theme: "ace/theme/chrome",
-      fontSize: 15,
-    });
-    this.editor.setValue(this.data);
-    this.editor.navigateLineEnd();
-    // $('.editor').each(function (index) {
-    //   this.editor = ace.edit(this)
-    //   editor.getSession().setMonde('ace/mode/python')
-    //   // {
-    //   //   mode: "ace/mode/python",
-    //   //   theme: "ace/theme/chrome",
-    //   //   minLines: 1,
-    //   //   fontSize: 18
-    //   // }
-    // })
+    this.editor = this.$refs.myEditor.editor;
+    this.editor.setFontSize(this.settings.fontsize);
   },
-  watch: {
-    data(val) {
-      this.editor.setValue(val);
-      this.editor.navigateLineEnd();
-      console.log(val);
-    },
-  },
-  beforeDestroy() {
-    eventBus.$off("exeCode");
+  created() {
+    //console.log("here", this.tabitem);
+    this.content = "#" + this.tabitem.tab_title;
+
+    if (this.tabitem.icon == "fas fa-tree-alt") {
+      this.addr =
+        "/api/editor/" +
+        this.$route.params.course_code +
+        "/" +
+        this.tabitem._id +
+        "/" +
+        this.tabitem.type +
+        "/score";
+    } else {
+      this.addr =
+        "/api/editor/" +
+        this.$route.params.course_code +
+        "/" +
+        this.tabitem._id +
+        "/" +
+        this.user_data.email;
+    }
+
+    this.$http
+      .get(this.addr)
+      .then((res) => {
+        //console.log("res.codedata", res.data.codedata);
+        if (res.data.codedata) {
+          this.content = res.data.codedata;
+        } else {
+          console.log("저장된 데이터강 없어유");
+        }
+
+        this.$store.commit("setTabCode", {
+          icon: this.tabitem.icon,
+          TabId: this.tabitem._id,
+          newcode: this.content,
+        });
+
+      })
+      .catch(function (error) {
+        alert("error to create scoring", err);
+      });
+    //console.log("user_data", this.user_data);
   },
 };
 </script>
@@ -73,13 +119,31 @@ export default {
 <style scoped>
 .wrap {
   width: 100%;
-  height: 100%;
-  border: 1px solid #dddddd;
+  height: 92%;
+  /* margin: 1% 0; */
+}
+.wrap-Mycourse-cards {
+  float: left;
+}
+.btn-nowlearn {
+  padding-right: 5%;
+  padding-bottom: 3%;
+  text-align: right;
+}
+</style>
+
+<style>
+.ace_scrollbar {
+  overflow-y: auto;
+}
+  
+.ace_scrollbar::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
 }
 
-#editor {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.ace_scrollbar::-webkit-scrollbar-thumb {
+  height: 12px;
+  background-color: rgba(196, 188, 188, 0.445);
 }
 </style>

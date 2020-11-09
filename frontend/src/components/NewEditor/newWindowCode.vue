@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap" @keyup.enter="clickEnter">
+  <div class="wrap" @keyup.enter="save">
     <editor
       v-model="content"
       @init="editorInit"
@@ -42,13 +42,7 @@ export default {
 
       require("brace/snippets/javascript"); //snippet
     },
-    clickEnter() {
-      this.$store.commit("setTabCode", {
-        icon: this.tabitem.icon,
-        TabId: this.tabitem._id,
-        newcode: this.content,
-      });
-
+    saveDB() {
       this.$http
         .post(this.addr, {
           //axios 사용
@@ -60,11 +54,40 @@ export default {
           alert("error to save code", err);
         });
     },
+    saveVuex() {
+      this.$store.commit("setTabCode", {
+        icon: this.tabitem.icon,
+        TabId: this.tabitem._id,
+        newcode: this.content,
+      });
+    },
+    save() {
+      console.log('tabitem', this.tabitem)
+      this.$store.commit("setTabCode", {
+        icon: this.tabitem.icon,
+        TabId: this.tabitem._id,
+        newcode: this.content,
+      });
+      this.$http
+        .post(this.addr, {
+          //axios 사용
+          Tabdata: this.tabitem,
+          user_data: this.user_data,
+        })
+        .then((res) => {})
+        .catch(function (err) {
+          console.log(err)
+          alert("error to save code", err);
+        });
+    },
     createtab(res) {},
   },
   mounted() {
     this.editor = this.$refs.myEditor.editor;
     this.editor.setFontSize(this.settings.fontsize);
+    this.editor.on('change', function(e) {
+      // this.saveVuex()
+    })
   },
   created() {
     //console.log("here", this.tabitem);
@@ -133,7 +156,7 @@ export default {
 .ace_scrollbar {
   overflow-y: auto;
 }
-  
+
 .ace_scrollbar::-webkit-scrollbar {
   width: 10px;
   background-color: transparent;

@@ -228,6 +228,3 @@ def OperatorBlank(tokens):
     result[0]=n-result[1]-result[2]-result[3]
     return result
 
-with open('bye.py', 'rb') as f:
-    tokens = tokenize.tokenize(f.readline)
-    print(CalculationOperatorBlank(tokens))

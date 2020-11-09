@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     open_editor(itme_id) {
-      var newWindow = window.open("/newedit/" + this.$route.params.course_code);
+      var newWindow = window.open("/editor/" + this.$route.params.course_code);
       newWindow.my_special_setting = [itme_id, 0];
     },
     delLecture(type, numLecture, numSubLecture) {

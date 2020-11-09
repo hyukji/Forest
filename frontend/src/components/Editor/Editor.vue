@@ -12,9 +12,16 @@
             <side-content :selected="drawer.selected" :user_data="user_data" />
           </pane>
           <pane>
-            <splitpanes>
-              <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
-                <EditorWindow :index="index" :element="element" :user_data="user_data"></EditorWindow>
+            <splitpanes horizontal>
+              <pane>
+                <splitpanes>
+                  <pane v-for="(element, index) in tabeditor" :key="index" min-size="15">
+                    <NewEditorWindow :index="index" :element="element" :user_data="user_data"></NewEditorWindow>
+                  </pane>
+                </splitpanes>
+              </pane>
+              <pane>
+                <WindowTerminal></WindowTerminal>
               </pane>
             </splitpanes>
           </pane>
@@ -36,9 +43,13 @@ export default {
     Pane,
     EditToolbar: () => import("@/components/Editor/EditorHeader"),
 
+    NewEditorWindow: () => import("@/components/Editor/NewEditorWindow"),
     EditorWindow: () => import("@/components/Editor/EditorWindow"),
+
     SideTab: () => import("@/components/Editor/Editor_Side/SideTab"),
     SideContent: () => import("@/components/Editor/Editor_Side/SideContent"),
+
+    WindowTerminal: () => import("../Editor/WindowTerminal"),
   },
   data() {
     return {

@@ -1,87 +1,149 @@
-import timeit
-import random
+map = [[0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+       [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+       [1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1],
+       [1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1],
+       [1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+       [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+       [1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1],
+       [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
+       [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
+       [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1],
+       [1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+       [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+       [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+       [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]]
+m1=[ [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+          [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1 ],
+          [ 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ],
+          [ 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 ],
+          [ 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1 ],
+          [ 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1 ],
+          [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1 ],
+          [ 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 ],
+          [ 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+          [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+          [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ] ]
+m2= [[ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
+          [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1 ],
+          [ 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ],
+          [ 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 ],
+          [ 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1 ],
+          [ 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1 ],
+          [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1 ],
+          [ 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 ],
+          [ 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 ],
+          [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ],
+          [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ] ]
+m3=[ [ 0, 1, 1, 1, 1, 1],
+          [ 0, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 0, 0, 0, 1 ],
+          [ 1, 1, 1, 1, 0, 0 ],]
+
+m4=[ [ 0, 1, 1, 1, 1, 1],
+          [ 0, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 1, 1, 1, 1 ],
+          [ 1, 0, 0, 0, 0, 1 ],
+          [ 1, 0, 1, 1, 0, 1 ],
+          [ 1, 1, 1, 1, 0, 0 ],]
+
+class Player:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+    def move(self, dir):
+        if dir == 'up':
+            self.y += 1
+        elif dir == 'down':
+            self.y -= 1
+        elif dir == 'left':
+            self.x -= 1
+        elif dir == 'right':
+            self.x += 1
+        pass
+
+    def get_position(self):
+        return (self.x, self.y)
 
 
-def selection_sort(t):
-    pass
+class MazeGame:
+    def __init__(self, map=None):
+        self.map = map
+        self.player = Player()
+        self.path = []
+
+    def play(self):
+        self.path.append(self.player.get_position())
+        visited_place = set()
+        stack = []
+
+        visited_place.add(self.player.get_position())
+        stack.append(self.player.get_position())
+
+        dx = [1,0,0,-1]
+        dy = [0,-1,1,0]
+        map_size = len(self.map)
+
+        while True:
+            a,b = self.player.get_position()
+            if (a,b) == (map_size-1, map_size-1):
+                break
+
+            check = 0
+            for i in range(4):
+                ax = a + dx[i]
+                by = b + dy[i]
+                if ax >= 0 and ax < map_size and by >= 0 and by < map_size:
+                    if self.map[by][ax] == 0:
+                        if (ax, by) not in visited_place:
+                            if i == 0:
+                                self.player.move('right')
+                                break
+                            elif i == 1:
+                                self.player.move('down')
+                                break
+                            elif i == 2:
+                                self.player.move('up')
+                                break
+                            elif i == 3:
+                                self.player.move('left')
+                                break
+                        else:
+                            check += 1
+                    else:
+                        check += 1
+                else:
+                    check += 1
 
 
-def merge_sort(t, l=None, r=None):
-    if l==None: l = 0
-    if r==None: r = len(t)-1
-    pass
+            # 더 이상 갈 곳이 없는 경우
+            if check == 4:
+                p,q = stack.pop(-1)
+                self.player = Player(p,q)
+                self.path.append(self.player.get_position())
+            else:
+                self.path.append(self.player.get_position())
+                visited_place.add(self.player.get_position())
+                stack.append(self.player.get_position())
 
 
-def quick_sort(t, l=None, r=None):
-    if l==None: l = 0
-    if r==None: r = len(t)-1
-    pass
+    def get_map(self):
+        return self.map
 
-def timeit_sort(func, n, data='random', repetition=100):
-    # generate n random numbers
-    t = list(range(n))
-    duration = 0
-    for i in range(repetition):
-        if data == 'random':
-            t1 = t.copy()
-            random.shuffle(t)
-        elif data == 'reverse':
-            t1 = t[::-1]
-        else:
-            t1 = t.copy()
-        duration += timeit.timeit('func(t1)', globals=locals(), number=1)
-    return duration
+    def get_path(self):
+        return self.path
 
-if __name__ == '__main__':
-    # 1) Understand how sorting algorithms work in detail
-    n = 10
 
-    t = list(range(n))
-    random.shuffle(t)  # make a random list
-    print('* Selection Sort')
-    t1 = t.copy()
-    selection_sort(t1)
-    print('* Merge Sort')
-    t2 = t.copy()
-    merge_sort(t2, 0, len(t2) - 1)
-    print('* Quick Sort')
-    t3 = t.copy()
-    quick_sort(t3, 0, len(t3) - 1)
-
-    # 2) Set up test cases for sorting algorithms
-    t = []
-    selection_sort(t)
-    t = [1]
-    selection_sort(t)
-    t = [1, 2]
-    selection_sort(t)
-    t = [1, 1]
-    selection_sort(t)
-    t = [2, 1]
-    selection_sort(t)
-    t = [1, 2, 3]
-    selection_sort(t)
-    t = [1, 3, 2]
-    selection_sort(t)
-    t = [1, 2, 3, 4]
-    selection_sort(t)
-    t = [4, 3, 2, 1]
-    selection_sort(t)
-    t = [2, 4, 1, 3]
-    selection_sort(t)
-
-    # 3) Measure execution time of sorting algoritms with varying n
-    problem_sizes = [1, 10, 20, 50, 100]
-    rep = 100
-    data = 'random'
-    print('Selection sort...')
-    for n in problem_sizes:
-        print(f'{n:5d}:', timeit_sort(selection_sort, n, data, rep))
-
-    print('Merge sort...')
-    for n in problem_sizes:
-        print(f'{n:5d}:', timeit_sort(merge_sort, n, data, rep))
-
-    print('Quick sort...')
-    for n in problem_sizes:
-        print(f'{n:5d}:', timeit_sort(quick_sort, n, data, rep))
+if __name__ == "__main__":
+    game1 = MazeGame(map)
+    game1.play()
+    print(game1.get_map())
+    print(game1.get_path())

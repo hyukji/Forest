@@ -19,7 +19,7 @@ def Total_Line(tokens):
     return num
 
 def Annotation(tokens):
-    #주석의 개수
+    #"#"주석의 개수
     num=0
     for tok in tokens:
         if(tokenize.tok_name[tok.type] == "COMMENT"):
@@ -43,11 +43,12 @@ def OperatorBlank_Preference(tokens):
     result[2]=result[0]+result[1]
     return result
 
-def ParenthesisOperatorBlank(tokens):
-    #괄호 앞뒤의 공백
+def OpenParOpBl(tokens):
+    #여는 괄호 앞뒤의 공백
     #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
     result= [0, 0, 0, 0, 0]
-    parenthesis = ["(", ")", "{", "}", "[", "]"]
+    open_parenthesis = ["(", "{", "["]
+    close_parenthesis = [")", "}", "]"]
     n=0
     i=(0,0)
     a=[0,0]
@@ -67,7 +68,50 @@ def ParenthesisOperatorBlank(tokens):
             result[3]+=1
         a=[0,0]
         if (tokenize.tok_name[tok.type]=="OP"):
-            if (tok.string not in parenthesis):
+            if (tok.string not in open_parenthesis):
+                i=tok.end
+                pre_token = tok.end
+                continue
+            i=tok.end
+            n+=1
+            if (tok.start[0] != pre_token[0]):
+                a[0]=0
+            else:
+                if (tok.start == pre_token):
+                    a[0]=0
+                if (tok.start != pre_token):
+                    a[0]=1
+        pre_token = tok.end
+    result[4]=n
+    result[0]=n-result[1]-result[2]-result[3]
+    return result
+
+def CloseParOpBl(tokens):
+    #닫는 괄호 앞뒤의 공백
+    #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
+    result= [0, 0, 0, 0, 0]
+    open_parenthesis = ["(", "{", "["]
+    close_parenthesis = [")", "}", "]"]
+    n=0
+    i=(0,0)
+    a=[0,0]
+    for tok in tokens:
+        if (i!=(0,0)):
+            if (i==tok.start):
+                a[1]=0
+                i = (0,0)
+            else:
+                a[1]=1
+                i=(0,0)
+        if (a==[1,0]):
+            result[1]+=1
+        if (a==[0,1]):
+            result[2]+=1
+        if (a==[1,1]):
+            result[3]+=1
+        a=[0,0]
+        if (tokenize.tok_name[tok.type]=="OP"):
+            if (tok.string not in close_parenthesis):
                 continue
             n+=1
             i=tok.end
@@ -80,11 +124,11 @@ def ParenthesisOperatorBlank(tokens):
     result[0]=n-result[1]-result[2]-result[3]
     return result
 
-def CalculationOperatorBlank(tokens):
-    #계산연산자 앞뒤의 공백
+def EquOpBl(tokens):
+    #등호연산자 앞뒤의 공백
     #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
     result= [0, 0, 0, 0, 0]
-    calculation = ["+", "-", "*", "/", "//", "%", "="]
+    calculation = ["="]
     n=0
     i=(0,0)
     a=[0,0]
@@ -117,8 +161,82 @@ def CalculationOperatorBlank(tokens):
     result[0]=n-result[1]-result[2]-result[3]
     return result
 
-def ComparisonOperatorBlank(tokens):
+def MajOpBl(tokens):
+    #주요계산연산자 앞뒤의 공백
+    #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
+    result= [0, 0, 0, 0, 0]
+    calculation = ["+", "-"]
+    n=0
+    i=(0,0)
+    a=[0,0]
+    for tok in tokens:
+        if (i!=(0,0)):
+            if (i==tok.start):
+                a[1]=0
+                i = (0,0)
+            else:
+                a[1]=1
+                i=(0,0)
+        if (a==[1,0]):
+            result[1]+=1
+        if (a==[0,1]):
+            result[2]+=1
+        if (a==[1,1]):
+            result[3]+=1
+        a=[0,0]
+        if (tokenize.tok_name[tok.type]=="OP"):
+            if (tok.string not in calculation):
+                continue
+            n+=1
+            i=tok.end
+            if (tok.start == pre_token):
+                a[0]=0
+            if (tok.start != pre_token):
+                a[0]=1
+        pre_token = tok.end
+    result[4]=n
+    result[0]=n-result[1]-result[2]-result[3]
+    return result
+
+def CalOpBl(tokens):
     #계산연산자 앞뒤의 공백
+    #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
+    result= [0, 0, 0, 0, 0]
+    calculation = ["*", "/", "//", "%"]
+    n=0
+    i=(0,0)
+    a=[0,0]
+    for tok in tokens:
+        if (i!=(0,0)):
+            if (i==tok.start):
+                a[1]=0
+                i = (0,0)
+            else:
+                a[1]=1
+                i=(0,0)
+        if (a==[1,0]):
+            result[1]+=1
+        if (a==[0,1]):
+            result[2]+=1
+        if (a==[1,1]):
+            result[3]+=1
+        a=[0,0]
+        if (tokenize.tok_name[tok.type]=="OP"):
+            if (tok.string not in calculation):
+                continue
+            n+=1
+            i=tok.end
+            if (tok.start == pre_token):
+                a[0]=0
+            if (tok.start != pre_token):
+                a[0]=1
+        pre_token = tok.end
+    result[4]=n
+    result[0]=n-result[1]-result[2]-result[3]
+    return result
+
+def ComOpBl(tokens):
+    #비교연산자 앞뒤의 공백
     #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
     result= [0, 0, 0, 0, 0]
     calculation = ["==", "!=", "<", ">", "<=", ">="]
@@ -154,8 +272,8 @@ def ComparisonOperatorBlank(tokens):
     result[0]=n-result[1]-result[2]-result[3]
     return result
 
-def AssignmentOperatorBlank(tokens):
-    #계산연산자 앞뒤의 공백
+def AssOpBl(tokens):
+    #할당연산자 앞뒤의 공백
     #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
     result= [0, 0, 0, 0, 0]
     calculation = ["+=", "-=", "*=", "/=", "//=", "%="]
@@ -191,11 +309,11 @@ def AssignmentOperatorBlank(tokens):
     result[0]=n-result[1]-result[2]-result[3]
     return result
 
-def OperatorBlank(tokens):
+def OpBl(tokens):
     #연산자 앞뒤의 공백
     #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
     result= [0, 0, 0, 0, 0]
-    etc = [",", ".", ":"]
+    etc = [",", ":"]
     n=0
     i=(0,0)
     a=[0,0]
@@ -228,6 +346,6 @@ def OperatorBlank(tokens):
     result[0]=n-result[1]-result[2]-result[3]
     return result
 
-with open('bye.py', 'rb') as f:
-    tokens = tokenize.tokenize(f.readline)
-    print(CalculationOperatorBlank(tokens))
+#with open('bye.py', 'rb') as f:
+    #tokens = tokenize.tokenize(f.readline)
+    #print(CalculationOperatorBlank(tokens))

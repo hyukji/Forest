@@ -87,12 +87,10 @@ export default {
     draggable,
     Splitpanes,
     Pane,
-    Drawer: () => import("@/components/Editor/Drawer"),
-    SideTab: () => import("@/components/Editor/SideTab"),
-    SideContent: () => import("@/components/Editor/SideContent"),
-    WindowCode: () => import("../NewEditor/newWindowCode"),
-
-    WindowTerminal: () => import("../NewEditor/newWindowTerminal"),
+    SideTab: () => import("@/components/Editor/Editor_Side/SideTab"),
+    SideContent: () => import("@/components/Editor/Editor_Side/SideContent"),
+    WindowCode: () => import("../Editor/WindowCode"),
+    WindowTerminal: () => import("../Editor/WindowTerminal"),
   },
   props: ["index", "element", "user_data"],
   data() {
@@ -164,8 +162,8 @@ export default {
 .emptydiv {
   padding: 0 auto;
 }
-.scollbar_style {
+/* .scollbar_style {
   overflow-y: auto;
   overflow-x: auto;
-}
+} */
 </style>

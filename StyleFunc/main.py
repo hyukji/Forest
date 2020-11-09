@@ -49,11 +49,11 @@ def preference_total(problems):
                        pf.String_Preference, pf.TrinomialOP_Preference, pf.C_codingstyle_Preference]
 
     num = 0
-    for title in problems:
+    for code_data in problems:
         res = [[], [], [], [], [], []]
         num += 1
         with open('hello.py', 'wb+') as fw:
-            fw.write(title.encode('utf-8'))
+            fw.write(code_data.encode('utf-8'))
 
         with open('hello.py', 'rb') as fr:
             try:

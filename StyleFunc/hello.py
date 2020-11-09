@@ -1,172 +1,22 @@
-# map=[[0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-#           [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 ],
-#           [ 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1 ],
-#           [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 ],
-#           [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-#           [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ] ]
-# m1=[ [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-#           [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 ],
-#           [ 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1 ],
-#           [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-#           [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-#           [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ] ]
-# m2= [[ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],
-#           [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 ],
-#           [ 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1 ],
-#           [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1 ],
-#           [ 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1 ],
-#           [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ],
-#           [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ] ]
-# m3=[ [ 0, 1, 1, 1, 1, 1],
-#           [ 0, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 1, 1, 1, 0, 0 ],]
+import requests
+from bs4 import BeautifulSoup
 
-# m4=[ [ 0, 1, 1, 1, 1, 1],
-#           [ 0, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 1, 1, 1 ],
-#           [ 1, 0, 0, 0, 0, 1 ],
-#           [ 1, 0, 1, 1, 0, 1 ],
-#           [ 1, 1, 1, 1, 0, 0 ],]
+# 문자열을 받아와 영어 단어로 분리, 웹사전으로 부터 단어의 뜻을 가져와 key:단어, value:듯으로 구성된 사전을 만드시오.
+def make_dictionary(document):
+    document = document.replace(",", "") 
+    document = document.replace(".", "") 
+    list = document.split(" ") 
 
-# class Player:
-#     def __init__(self, x=0, y=0):
-#         self.x = x
-#         self.y = y
-#     def move(self, dir):
-#         if dir =='up':
-#             self.y += 1
-#         elif dir =='down':
-#             self.y -= 1
-#         elif dir =='left':
-#             self.x -= 1
-#         elif dir =='right':
-#             self.x += 1
-#         pass
-#     def get_position(self):
-#         return (self.x, self.y)
+    dic = {}
+    for word in list:
+        #res = requests.get('http://10.180.2.80/dict.html?query=' + word)
+        res = requests.get('http://114.71.103.80/dict.html?query='+word)
+        soup = BeautifulSoup(res.content, 'html.parser')
 
-# class MazeGame:
-#     def __init__(self, map=None):
-#         self.map = map
-#         self.player = Player()
-#         self.path = []
-#         self.plz = []
-#         self.plz2 = []
+        dic[word] = str(soup)[str(soup).find('', 432)+4: str(soup).find('<', 453)]
 
-#     def play(self):
-#         a = 0
-#         self.path.append(0)
-#         self.path.append(1)
-#         x, y = self.player.get_position()
-#         self.path.append((x,y))
-#         while (x != len(self.map)-1) or (y != len(self.map)-1): #무조건 오른쪽 벽 짚고 간다.
-#             for i in range(4):
-#                 if (i+a)%4 == 0:
-#                     if self.path[-2] == (x+1,y):
-#                         continue
-#                     if (x+1 > len(self.map)-1) or (y > len(self.map)-1):
-#                         break
-#                     if self.plz2.count([x+1,y])>=2:
-#                         continue
-#                     if (x == len(self.map) - 1) and (y == len(self.map) - 1):
-#                         break
-#                     if (x+1<=(len(self.map)-1) and self.map[y][x+1] == 0):
-#                         x, y = self.player.get_position()
-#                         if y > len(self.map)-1:
-#                             if (self.map[y + 1][x] == 1 and self.map[y - 1][x] == 1):
-#                                 self.plz2.append([x, y])
-#                         self.player.move("right")
-#                         a += 3
-#                         x, y = self.player.get_position()
-#                         self.path.append((x, y))
-#                 elif (i+a)%4 == 1:
-#                     if self.path[-2] == (x,y+1):
-#                         continue
-#                     if self.plz.count([x,y+1])>=2:
-#                         continue
-#                     if (x > len(self.map)-1) or (y+1 > len(self.map)-1):
-#                         break
-#                     if (x == len(self.map) - 1) and (y == len(self.map) - 1):
-#                         break
-#                     if x < len(self.map)-1:
-#                         if (self.map[y][x + 1] == 0 and self.map[y][x] == 0):
-#                             if (self.map[y + 1][x] == 0 and self.map[y + 1][x + 1] == 0):
-#                                 continue
-#                     if (y+1<=(len(self.map)-1) and self.map[y+1][x] == 0):
-#                         x, y = self.player.get_position()
-#                         if x < len(self.map)-1:
-#                             if (self.map[y][x + 1] == 1 and self.map[y][x - 1] == 1):
-#                                 self.plz.append([x, y])
-#                         self.player.move("up")
-#                         a += 2
-#                         x, y = self.player.get_position()
-#                         self.path.append((x, y))
-#                 elif (i+a)%4 == 2:
-#                     if self.plz.count([x,y-1])>=2:
-#                         continue
-#                     if (x == len(self.map) - 1) and (y == len(self.map) - 1):
-#                         break
-#                     if (0<=y-1 and self.map[y-1][x] == 0):
-#                         x, y = self.player.get_position()
-#                         if (self.map[y][x + 1] == 1 and self.map[y][x - 1] == 1):
-#                             self.plz.append([x, y])
-#                         self.player.move("down")
-#                         a += 1
-#                         x, y = self.player.get_position()
-#                         self.path.append((x, y))
-#                 elif (i+a)%4 == 3:
-#                     if (x == len(self.map)-1) and (y == len(self.map)-1):
-#                         break
-#                     if (0<=x-1 and self.map[y][x-1] == 0):
-#                         x, y = self.player.get_position()
-#                         if (self.map[y + 1][x] == 1 and self.map[y-1][x] == 1):
-#                             self.plz2.append([x, y])
-#                         self.player.move("left")
-#                         x, y = self.player.get_position()
-#                         self.path.append((x, y))
-#         self.path.remove(0)
-#         self.path.remove(1)
-#         return self.path
+    return dic
 
 
-#     def get_map(self):
-#         return self.map
-#     def get_path(self):
-#         return self.path
-
-# if __name__ == "__main__" :
-#     game1 = MazeGame(map)
-#     game1.play()
-#     print(game1.get_map())
-#     print(game1.get_path())
-
-""" aaaa
-    sss
-
-"""
+data = "first, solve the problem. then, write the code."
+print(make_dictionary(data))

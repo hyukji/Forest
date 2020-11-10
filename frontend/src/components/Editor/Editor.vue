@@ -20,7 +20,7 @@
                   </pane>
                 </splitpanes>
               </pane>
-              <pane>
+              <pane size="25" min-size="15">
                 <WindowTerminal></WindowTerminal>
               </pane>
             </splitpanes>

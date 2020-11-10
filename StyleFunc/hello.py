@@ -1,19 +1,11 @@
-<<<<<<< HEAD
-def find_max(t, l, r):
-    """Retuan the max number in t[l:r-1]"""
-    rtn=t[0]
-    for i in range(l,r+1):
-        if rtn < t[i]:
-            rtn = t[i]
-    return rtn
-        
 
-if __name__ == '__main__':
-    t = [1, 2]
-    print(find_max(t, 0, len(t) - 1))
-    t = [36, 43, 70, 76, 32, 7, 8, 21, 69, 78]
-    print(find_max(t, 0, len(t) - 1))
-=======
+
+
+def run():
+#     a = [i for i in range(3)]
+#     30 if True else -30
+    if True: print('print')
+
 import timeit
 import random
 
@@ -101,4 +93,3 @@ if __name__ == '__main__':
     print('Quick sort...')
     for n in problem_sizes:
         print(f'{n:5d}:', timeit_sort(quick_sort, n, data, rep))
->>>>>>> 106f67be4771f613e11608f4917e0dc6f765cbee

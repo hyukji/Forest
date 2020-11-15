@@ -1,3 +1,11 @@
+
+
+
+def run():
+#     a = [i for i in range(3)]
+#     30 if True else -30
+    if True: print('print')
+
 import timeit
 import random
 

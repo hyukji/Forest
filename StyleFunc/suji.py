@@ -27,6 +27,7 @@ def Annotation(tokens):
     return num
 
 def OperatorBlank_Preference(tokens):
+    #이 함수 무시해주세요
     #연산자 다음 공백의 유무
     #return: Array(3) => 0: 공백없음, 1: 공백있음, 2: 총 개수
     result = [0, 0, 0]
@@ -69,18 +70,13 @@ def OpenParOpBl(tokens):
         a=[0,0]
         if (tokenize.tok_name[tok.type]=="OP"):
             if (tok.string not in open_parenthesis):
-                i=tok.end
-                pre_token = tok.end
                 continue
-            i=tok.end
             n+=1
-            if (tok.start[0] != pre_token[0]):
+            i=tok.end
+            if (tok.start == pre_token):
                 a[0]=0
-            else:
-                if (tok.start == pre_token):
-                    a[0]=0
-                if (tok.start != pre_token):
-                    a[0]=1
+            if (tok.start != pre_token):
+                a[0]=1
         pre_token = tok.end
     result[4]=n
     result[0]=n-result[1]-result[2]-result[3]
@@ -349,4 +345,3 @@ def OpBl(tokens):
 #with open('bye.py', 'rb') as f:
     #tokens = tokenize.tokenize(f.readline)
     #print(CalculationOperatorBlank(tokens))
-

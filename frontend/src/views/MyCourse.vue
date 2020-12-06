@@ -25,7 +25,6 @@ export default {
   components: {
     list_stud: () => import("@/components/MyCourse/List_Stud"),
     list_prof: () => import("@/components/MyCourse/List_Prof"),
-
     side: () => import("@/components/MyCourse/Side"),
   },
   data: function () {

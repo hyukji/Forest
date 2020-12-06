@@ -305,7 +305,7 @@ def AssOpBl(tokens):
     result[0]=n-result[1]-result[2]-result[3]
     return result
 
-def OpBl(tokens):
+def EtcOpBl(tokens):
     #연산자 앞뒤의 공백
     #0: 공백없음, 1:이전만 공백, 2:이후만 공백, 3:앞뒤 공백. 4:총 개수
     result= [0, 0, 0, 0, 0]

@@ -13,7 +13,7 @@
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@toast-ui/vue-editor": "^2.3.1",
     "ace-builds": "^1.4.12",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.4",
     "pdfvuer": "^1.7.1",
     "simplemde": "^1.11.2",

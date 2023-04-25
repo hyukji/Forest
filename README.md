@@ -3,20 +3,17 @@
 
 # Forest
 
-This repository divided two parts. Web page for IDE and Code plagiarism detector algorithm.
-
-  
+This repository divided two parts. Web page 'Forest' and 'Code plagiarism detector algorithm'.
 
 
 ## Intruduction
-해당 웹사이트 forest는 WEB IDE를 통해 원활한 교육환경을 제공하기 위해 만들어졌다. 따라서 유저별로과 수업관리, 성적관리 등이 가능하며 IDE화면에서는 코드 작성 및 실행이 가능하다.
+The website Forest was created to provide a smooth educational environment through WEB IDE. Therefore, each user can manage classes and scores, and code can be written and executed on the IDE screen.
 
-aws에서 EC2 서비스를 구매해 Ubuntu 20.04 LTS에서 구동되며 DataBase는 NoSQL인 mongoDB를 사용했다. 학생들의 독립적인 코드 실행을 위해 코드를 실행할 때마다 docker python container를 생성했고 실행이 종료되면 container가 삭제된다. docker를 이용함으로써 resource 제한하고 서버의 보안성을 높일 수 있다. backend 개발은 nodejs와 express를 사용했다. 또한 실시간으로 코드 실행과 채점을 하기 때문에, 화면을 component로 나누어 효율적으로 관리할 수 있는 Vuejs를 frontend의 프레임워크로 사용하였다
+The server was provided through the EC2 service of aws,
+For independent code execution by students, Docker python container was used. This can limit the resources provided and increase the security of the server. Backend development used nodejs and express. In addition, since code execution and scoring are performed in real time, Vuejs is used as the framework of frontend to divide the screen into components and manage it efficiently.
 
 
 ## Tech stack
-  
-
 <div align="center">
 <img src="https://img.shields.io/badge/mongodb-47A248?style=for-the-badge&logo=mongodb&logoColor=white"><img src="https://img.shields.io/badge/vuetify-4FC08D?style=for-the-badge&logo=vuetify&logoColor=white"><img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=node.js&logoColor=white"><img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">
 </div>
